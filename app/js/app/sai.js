@@ -279,43 +279,44 @@
 
      // $scope.SAIScript = "-- " + $scope.selectionText + "\n\n";
 
-     $scope.SAIScript = "SQL = ";
+     $scope.SAIScript = "";
 
       // non-smart_scripts data
       switch (Number($stateParams.sourceType)) {
 
         case 0: // Creature
-          $scope.SAIScript += "-- Table creature_template\n";
-          $scope.SAIScript += "UPDATE `creature_template` SET `AIName` = 'SmartAI' WHERE `entry` = " + $scope.entityEntry + ";\n\n";
+          $scope.SAIScript += "/* Table creature_template */ ";
+          $scope.SAIScript += "UPDATE `creature_template` SET `AIName` = 'SmartAI' WHERE `entry` = " + $scope.entityEntry + "; \n\n";
           break;
 
         case 1: // GameObject
-          $scope.SAIScript += "-- Table gameobject_template\n";
-          $scope.SAIScript += "UPDATE `gameobject_template` SET `AIName` = 'SmartGameObjectAI' WHERE `entry` = " + $scope.entityEntry + ";\n\n";
+          $scope.SAIScript += "/* Table gameobject_template */ ";
+          $scope.SAIScript += "UPDATE `gameobject_template` SET `AIName` = 'SmartGameObjectAI' WHERE `entry` = " + $scope.entityEntry + "; \n\n";
           break;
 
         case 2: // AreaTrigger
-          $scope.SAIScript += "-- Table gameobject_template\n";
+          $scope.SAIScript += "/* Table gameobject_template */ ";
           $scope.SAIScript += "DELETE FROM `areatrigger_scripts` WHERE `entry` = " + $scope.entityEntry + ";\n";
-          $scope.SAIScript += "INSERT INTO `areatrigger_scripts` (`entry`, `ScriptName`) VALUES (" + $scope.entityEntry + ", 'SmartTrigger');\n\n";
+          $scope.SAIScript += "INSERT INTO `areatrigger_scripts` (`entry`, `ScriptName`) VALUES (" + $scope.entityEntry + ", 'SmartTrigger'); \n\n";
           break;
       }
 
       // smart_scripts data
-      $scope.SAIScript += "-- Table smart_scripts\n";
+      $scope.SAIScript += "/* Table smart_scripts */ ";
       if ($scope.new_smart_scripts.length > 0) {
         $scope.SAIScript += app.getFullDeleteInsertTwoKeys("smart_scripts", "source_type", "entryorguid", $scope.new_smart_scripts);
       } else {
-        $scope.SAIScript += "DELETE FROM `smart_scripts` WHERE (`source_type` = " + $stateParams.sourceType + " AND `entryorguid` = " + $stateParams.entryOrGuid + ");\n";
+        $scope.SAIScript += "DELETE FROM `smart_scripts` WHERE (`source_type` = " + $stateParams.sourceType + " AND `entryorguid` = " + $stateParams.entryOrGuid + "); \n";
       }
       
 
       
       $http({
           method  : 'POST',
-          url     : 'http://localhost/dev/sai_parser.php',
+          url     : 'http://localhost:3000/query_execute',
+          //data    :  {sql_query: $scope.SAIScript}, //forms user object
           data    :  $scope.SAIScript, //forms user object
-          headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
+          headers : {'Content-Type': 'text/plain'} 
          })
           .success(function(data) {  
 

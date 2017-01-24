@@ -26,14 +26,14 @@ if (shouldQuit) app.quit();
     
 function createWindow() {
     console.log('createWindow');
-    app.server = require('./app.js');                     // instantiate Koa app
-    win = new BrowserWindow({ width: 1200, height: 900, preload: true,
+    app.server = require('./app.js');                     
+    win = new BrowserWindow({ width: 1400, height: 900, preload: false,
     kiosk: false,
     'fullscreen': false,
-    'auto-hide-menu-bar': true,
+    'auto-hide-menu-bar': false,
     'web-preferences':{ 'javascript': true,
                         'images': true,
-                        'direct-write': true,
+                        'direct-write': false,
                         'experimental-features': false,
                         'subpixel-font-scaling': false} }); // create browser window
     win.loadURL('http://localhost:3000');                 // load koa-app home page

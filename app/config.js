@@ -6,7 +6,9 @@
   var app = angular.module('keira2');
 
   /* Edit with path of TC-JSON-API */
-  app.defaultAPI = "http://localhost/API/public/index.php/";
+  //app.defaultAPI = "http://localhost/API/public/index.php/";
+  
+  app.defaultAPI = "http://localhost:3000/";
 
   /* Edit with default version of Keira2
    * Values:

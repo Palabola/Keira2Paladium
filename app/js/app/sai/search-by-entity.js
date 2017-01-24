@@ -27,13 +27,7 @@
         return;
       }
 
-      $http.get( app.api + "search/creature/", {
-        params: {
-          id: creatureEntry,
-          name: creatureName,
-          subname: creatureSubname
-        }
-      }).success(function (data, status, header, config) {
+      $http.get( app.api + "search/creature/" + creatureEntry).success(function (data, status, header, config) {
         $scope.creatures = $rootScope.fixNumericValues(data);
       })
         .error(function (data, status, header, config) {
