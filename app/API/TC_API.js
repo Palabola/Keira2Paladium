@@ -1,6 +1,5 @@
 // LOGGER API
 var db = require('./db_connect');
-var util = require('util');
 
 
 function search_creature(params, callback){
