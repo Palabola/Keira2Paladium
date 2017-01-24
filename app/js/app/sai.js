@@ -315,7 +315,7 @@
           method  : 'POST',
           url     : 'http://localhost:3000/query_execute',
           //data    :  {sql_query: $scope.SAIScript}, //forms user object
-          data    :  $scope.SAIScript, //forms user object
+          data    :  $scope.new_smart_scripts, //forms user object
           headers : {'Content-Type': 'text/plain'} 
          })
           .success(function(data) {  

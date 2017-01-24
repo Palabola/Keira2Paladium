@@ -48,3 +48,5 @@ Temporary Items
 node_modules
 dist
 nbproject
+settings.js
+npm-debug.log

@@ -14,10 +14,35 @@ function search_creature(params, callback){
 
             var id = params.creature_id;
 
-            //console.log(id);
-
             db.query(
                 'SELECT * FROM creature_template WHERE entry =' + id, 
+                function(err,rows){
+                  if(err) throw err;
+                  callback(rows);
+                });
+
+
+         return;
+    }
+    catch(err) {
+    console.log(err.message);
+    }   
+    
+};
+
+function search_gameobject(params, callback){
+    
+    try{
+        if(typeof(params)==='undefined')
+        { 
+            console.log('wft');
+            return;
+        }
+
+            var id = params.gameobject_id;
+
+            db.query(
+                'SELECT * FROM gameobject_template WHERE entry =' + id, 
                 function(err,rows){
                   if(err) throw err;
                   callback(rows);
@@ -64,87 +89,101 @@ function search_sai(params, callback){
     
 };
 
-function run_script(text){
-    
-    try{
-        if(typeof(text)==='undefined')
+
+function setup_sai(sai_data)
+{
+     try{
+        if(typeof(sai_data)==='undefined')
         { 
             console.log('wft');
             return;
         }
-
-            console.log(util.inspect(text));
-            
-            var text = text;
-                    
-             query =  text.trim();
-            
-            console.log(util.inspect(query));
-            
-            db.query(
-                query, 
-                function(err,rows){
-                  if(err) throw err;
-                    return;
-                });
-            
-
+        
+          switch(sai_data[0].source_type) {
+                    case 0: //Creature
+                        var db_query = "UPDATE `creature_template` SET `AIName` = 'SmartAI' WHERE `entry` = "+sai_data[0].entryorguid+" ;";
+                        break;
+                    case 1: // GO
+                        var db_query = "UPDATE `gameobject_template` SET `AIName` = 'SmartGameObjectAI' WHERE `entry` = "+sai_data[0].entryorguid+" ;";
+                        break;
+                    case 2: //AreaTrigger
+                        var db_query = "REPLACE INTO `areatrigger_scripts` (`entry`, `ScriptName`) VALUES("+sai_data[0].entryorguid+",'SmartTrigger');";
+                        break; 
+                    case 9: //TimedActionList
+                        var db_query = "";
+                        break;
+                    default:
+                        break;
+                } 
+        
+                    if(sai_data[0].source_type!==9)
+                    {  
+                      db.query(db_query, function(err, result) {
+                        if (err) throw err;
+                           // console.log('Seted up SAI');
+                            return;
+                       });
+                    }
          return;
     }
     catch(err) {
     console.log(err.message);
-    }   
-    
-};
+    } 
+}
 
-
-/*
-function insert_channel(params){
-    
+function clean_up_sai(sai_data,callback)
+{
     try{
-        if(typeof(data)==='undefined')
+        if(typeof(sai_data)==='undefined')
         { 
             console.log('wft');
             return;
         }
-        for(var i=0; i < data.length; i++)
-               {
-                 var skip = 0;  
+        
+          db.query('DELETE FROM smart_scripts WHERE (source_type = '+sai_data[0].source_type+' AND entryorguid = '+sai_data[0].entryorguid+');', function(err, result) {
+            if (err) throw err;
+                return callback(sai_data);
+                });
+        
+         return;
+    }
+    catch(err) {
+    console.log(err.message);
+    } 
+};
 
-               if(typeof(cache_data)!=='undefined') 
+
+function run_script(sai_data){
+    
+       try{
+        if(typeof(sai_data)==='undefined')
+        { 
+            console.log('wft');
+            return;
+        }
+        
+        setup_sai(sai_data);
+        
+
+        for(var i=0; i < sai_data.length; i++)
                {
-                        for(var k=0; k < cache_data.length; k++)   
-                        {
-                          if(cache_data[k]._id === data[i]._id)
-                              {
-                                 skip = 1;
-                                 break;
-                              }
-                        }
-                }
-                
-                 if(skip === 0)
-                  {
-                       var post  = {name:data[i].channel.name, data: JSON.stringify(data[i])};
-                       db.query('INSERT INTO channel_meta SET ?', post, function(err, result) {
+                   
+                       var post  = sai_data[i];
+
+                       db.query('INSERT INTO smart_scripts SET ?', post, function(err, result) {
                           if (err) throw err;
                         });
-                   } 
-
-                }
-                
-        cache_data = data;
+                } 
          return;
     }
     catch(err) {
     console.log(err.message);
     }   
-    
 };
-*/
 
 
+module.exports.search_gameobject = search_gameobject;
 module.exports.search_creature = search_creature;
 module.exports.search_sai = search_sai;
 module.exports.run_script = run_script;
-
+module.exports.clean_up_sai = clean_up_sai;

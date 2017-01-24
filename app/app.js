@@ -40,6 +40,33 @@ app.get('/search/creature/:creature_id', function (req, res) {
   //res.send(req.params);
 });
 
+app.get('/creature/template/:creature_id', function (req, res) {
+    
+    TC_API.search_creature(req.params,function(result){
+     
+      res.send(result);
+        
+    });
+
+    
+
+  //res.send(req.params);
+});
+
+app.get('/gameobject/template/:gameobject_id', function (req, res) {
+    
+    TC_API.search_gameobject(req.params,function(result){
+     
+      res.send(result);
+        
+    });
+
+    
+
+  //res.send(req.params);
+});
+
+
 // Smart AI Search
 app.get('/smart_scripts/:source_type/:entry_id', function (req, res) {
     
@@ -52,13 +79,23 @@ app.get('/smart_scripts/:source_type/:entry_id', function (req, res) {
   //res.send(req.params);
 });
 
-app.use(bodyParser.text());
+  app.use(bodyParser.text());
 
 app.post('/query_execute', function (req, res) {
   
-          TC_API.run_script(req.body);
+      
+  
+  
+        TC_API.clean_up_sai(JSON.parse(req.body),function(sai_data){
+            
+          TC_API.run_script(sai_data);
+          
           res.send(req.body); 
+        });
+          
+
         
+       // console.log(JSON.parse(req.body));
     
    // res.send(req);
   
