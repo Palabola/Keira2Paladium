@@ -47,11 +47,17 @@ app.get('/creature/template/:creature_id', function (req, res) {
       res.send(result);
         
     });
-
-    
-
-  //res.send(req.params);
 });
+
+app.get('/creature/text/:creature_id', function (req, res) {
+    
+    TC_API.search_creature_text(req.params,function(result){
+     
+      res.send(result);
+        
+    });
+});
+
 
 app.get('/gameobject/template/:gameobject_id', function (req, res) {
     
@@ -83,25 +89,25 @@ app.get('/smart_scripts/:source_type/:entry_id', function (req, res) {
 
 app.post('/query_execute', function (req, res) {
   
-      
-  
-  
         TC_API.clean_up_sai(JSON.parse(req.body),function(sai_data){
             
           TC_API.run_script(sai_data);
           
-          res.send(req.body); 
+          res.send(JSON.parse(req.body)); 
         });
-          
-
-        
-       // console.log(JSON.parse(req.body));
-    
-   // res.send(req);
   
 });
 
-
+app.post('/creature_text_execute', function (req, res) {
+  
+        res.send(JSON.parse(req.body)); 
+  
+  
+        TC_API.run_text(JSON.parse(req.body),function(){
+          
+          res.send(JSON.parse(req.body)); 
+        });
+});
 
 
 

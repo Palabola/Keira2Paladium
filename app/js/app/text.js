@@ -6,36 +6,31 @@
 
   var app = angular.module('keira2');
 
-  app.controller("LootController", function ($scope, $rootScope, $stateParams) {
+  app.controller("TextController", function ($scope, $rootScope, $http, $stateParams) {
 
     /* At start we have no row selected */
     $scope.selectedRow = -1;
 
     /* The item currently selected by the user (bound to the view) */
     $scope.selected = {
-      Entry         : parseInt($stateParams.id, 10),
-      Item          : 0,
-      Reference     : 0,
-      Chance        : 100,
-      QuestRequired : 0,
-      LootMode      : 1,
-      GroupId       : 0,
-      MinCount      : 1,
-      MaxCount      : 1,
-      Comment       : ''
+      Entry         : parseInt($stateParams.entryOrGuid, 10),
+      groupid       : 0,
+      id             : 0,
+      text          : '',
+      type : 0,
+      sound      : 0,
+      BroadcastTextId       : 0,
+      comment      : ''
     };
 
     /* Type check */
     $scope.parseValues = function() {
 
-      $scope.selected.Item          = parseInt($scope.selected.Item, 10);
-      $scope.selected.Reference     = parseInt($scope.selected.Reference, 10);
-      $scope.selected.Chance        = parseFloat($scope.selected.Chance, 10);
-      $scope.selected.QuestRequired = parseInt($scope.selected.QuestRequired, 10);
-      $scope.selected.LootMode      = parseInt($scope.selected.LootMode, 10);
-      $scope.selected.GroupId       = parseInt($scope.selected.GroupId, 10);
-      $scope.selected.MinCount      = parseInt($scope.selected.MinCount, 10);
-      $scope.selected.MaxCount      = parseInt($scope.selected.MaxCount, 10);
+      $scope.selected.groupid       = parseInt($scope.selected.groupid, 10);
+      $scope.selected.id        = parseInt($scope.selected.id, 10);
+      $scope.selected.type           = parseInt($scope.selected.type, 10);
+      $scope.selected.sound      = parseInt($scope.selected.sound, 10);
+      $scope.selected.BroadcastTextId = parseInt($scope.selected.BroadcastTextId, 10);
     };
 
     /* Select a row from collection */
@@ -50,13 +45,6 @@
       var i;
       $scope.parseValues();
 
-      // check primaryKey2 uniqueness
-      for (i = 0; i < rows.length; i++) {
-        if ( (rows[i][primaryKey2] == $scope.selected[primaryKey2]) && (i !== $scope.selectedRow) ) {
-          alert("Duplicate row with `" + primaryKey2 + "` = " + $scope.selected[primaryKey2]);
-          return;
-        }
-      }
 
       rows.splice($scope.selectedRow, 1, angular.copy($scope.selected));
     };
@@ -74,16 +62,43 @@
       var i;
       $scope.parseValues();
 
-      // check primaryKey2 uniqueness
-      for (i = 0; i < rows.length; i++) {
-        if (rows[i][primaryKey2] == $scope.selected[primaryKey2]) {
-          alert("Duplicate row with `" + primaryKey2 + "` = " + $scope.selected[primaryKey2]);
-          return;
-        }
-      }
 
       rows.splice(0, 0, angular.copy($scope.selected));
     };
+    
+     $scope.sync_database = function (text_data){
+         
+       console.log(text_data); 
+       
+       $http({
+          method  : 'POST',
+          url     : 'http://localhost:3000/creature_text_execute',
+          //data    :  {sql_query: $scope.SAIScript}, //forms user object
+          data    :  $scope.new_creature_text, //forms user object
+          headers : {'Content-Type': 'text/plain'} 
+         })
+          .success(function(data) {  
+
+                $http.get( app.api + "creature/text/" + $stateParams.entryOrGuid )
+              .success(function (data, status, header, config) {
+              $scope.current_creature_text = $rootScope.fixNumericValues(data);
+              $scope.new_creature_text = angular.copy($scope.current_creature_text);
+              
+             // $scope.
+            })
+              .error(function (data, status, header, config) {
+              console.log("[ERROR] creature/onkill_reputation/ $http.get request failed");
+            });
+
+
+                }
+             );
+       
+         
+     };
+    
+    
+    
 
   });
 

@@ -22,7 +22,10 @@ const shouldQuit = app.makeSingleInstance(function(otherInstArgv, otherInstWorki
 });
 
 if (shouldQuit) app.quit();
-    
+ 
+ 
+ var shell = require('electron').shell;
+
     
 function createWindow() {
     console.log('createWindow');
@@ -30,7 +33,7 @@ function createWindow() {
     win = new BrowserWindow({ width: 1400, height: 900, preload: false,
     kiosk: false,
     'fullscreen': false,
-    'auto-hide-menu-bar': false,
+    'auto-hide-menu-bar': true,
     'web-preferences':{ 'javascript': true,
                         'images': true,
                         'direct-write': false,
@@ -49,7 +52,7 @@ function createWindow() {
          var win = webContents.getFocusedWebContents();
           win.reload();
       
-    }, 100);
+    }, 600);
     
 }
 

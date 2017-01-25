@@ -21,7 +21,8 @@
       search : false,
       create : false,
       editor : false,
-      script : false
+      script : false,
+      text: false
     };
 
     /* source_type constants */
@@ -43,6 +44,8 @@
     $scope.search_smart_scripts   = [];
     $scope.new_smart_scripts      = [];
     $scope.current_smart_scripts  = [];
+    $scope.new_creature_text  = [];
+    $scope.current_creature_text  = [];
 
     /* Default source_type of search */
     $scope.search_smart_scripts.source_type = 0;
@@ -57,11 +60,20 @@
       $scope.isEntitySelected = true;
       $scope.saiTabs.editor = true;
 
-      /*  Following lines retrieve all SAI data
-       *  current_* mantains the database state
-       *  new_*     mantains the editor state
-       *  we will use those two objects to generate the SQL queries
-       */
+
+      if($stateParams.sourceType == 0)
+      {   
+            $http.get( app.api + "creature/text/" + $stateParams.entryOrGuid )
+              .success(function (data, status, header, config) {
+              $scope.current_creature_text = $rootScope.fixNumericValues(data);
+              $scope.new_creature_text = angular.copy($scope.current_creature_text);
+              
+             // $scope.
+            })
+              .error(function (data, status, header, config) {
+              console.log("[ERROR] creature/onkill_reputation/ $http.get request failed");
+            });
+       }
 
       /* Retrieve all smart_scripts data */
       $http.get( app.api + "smart_scripts/" + $stateParams.sourceType + "/" + $stateParams.entryOrGuid )

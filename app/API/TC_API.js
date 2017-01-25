@@ -29,6 +29,35 @@ function search_creature(params, callback){
     
 };
 
+
+function search_creature_text(params, callback){
+    
+    try{
+        if(typeof(params)==='undefined')
+        { 
+            console.log('wft');
+            return;
+        }
+
+            var id = params.creature_id;
+
+            db.query(
+                'SELECT * FROM `creature_text` WHERE entry =' + id, 
+                function(err,rows){
+                  if(err) throw err;
+                  callback(rows);
+                });
+
+
+         return;
+    }
+    catch(err) {
+    console.log(err.message);
+    }   
+    
+};
+
+
 function search_gameobject(params, callback){
     
     try{
@@ -181,8 +210,37 @@ function run_script(sai_data){
 };
 
 
+function run_text(text_data){
+    
+       try{
+        if(typeof(text_data)==='undefined')
+        { 
+            console.log('wft');
+            return;
+        }
+        
+        for(var i=0; i < text_data.length; i++)
+               {
+                   
+                       var post  = text_data[i];
+
+                       db.query('REPLACE INTO `creature_text` SET ?', post, function(err, result) {
+                          if (err) throw err;
+                        });
+
+                } 
+         return;
+    }
+    catch(err) {
+    console.log(err.message);
+    }   
+};
+
+
 module.exports.search_gameobject = search_gameobject;
 module.exports.search_creature = search_creature;
+module.exports.search_creature_text = search_creature_text;
 module.exports.search_sai = search_sai;
 module.exports.run_script = run_script;
+module.exports.run_text = run_text;
 module.exports.clean_up_sai = clean_up_sai;

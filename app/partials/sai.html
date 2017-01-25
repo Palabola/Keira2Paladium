@@ -12,4 +12,7 @@
   <uib-tab  heading="SQL Script" ng-click="generateSAIScript()" active="saiTabs.script">
     <div ng-include="'partials/sai/sql-script.html'"></div>
   </uib-tab>
+  <uib-tab  heading="Creature Text" active="saiTabs.creature_text">
+    <div ng-include="'partials/sai/creature_text.html'" ng-controller="TextController"></div>
+  </uib-tab>  
 </uib-tabset>

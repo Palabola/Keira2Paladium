@@ -5,6 +5,7 @@ var settings = require('../settings');
 var connection = mysql.createConnection({
     host     : settings.host,
     user     : settings.user,
+    port  : settings.db_port,
     password : settings.password,
     database : settings.database,
     charset  : 'utf8'
