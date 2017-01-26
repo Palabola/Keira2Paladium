@@ -6,7 +6,7 @@
 
   var app = angular.module('keira2');
 
-  app.controller("SmartAIEditorController", function ($scope, $rootScope, $stateParams) {
+  app.controller("SmartAIEditorController", function ($scope, $rootScope, $http, $stateParams) {
 
     /* At start we have no row selected */
     $scope.selectedRow = -1;
@@ -212,7 +212,19 @@
     };
     
     $scope.SaveToDatabase = function() {
-       $scope.generateSAIScript();
+        
+            $http({
+                method  : 'POST',
+                url     : 'http://localhost:3000/query_execute',
+                //data    :  {sql_query: $scope.SAIScript}, //forms user object
+                data    :  $scope.new_smart_scripts, //forms user object
+                headers : {'Content-Type': 'text/plain'} 
+               })
+                .success(function(data) {  
+
+                      }
+                   );
+            console.log($scope.new_smart_scripts);
     };
 
     /* [Function] Get string by target_type */
