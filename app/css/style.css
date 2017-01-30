@@ -141,3 +141,15 @@ button.input-xs {
   position: absolute;
   width: 100%;
 }
+
+
+.input-margin {
+  padding-right: 5px;
+  padding-left: 5px;  
+    
+}
+
+.align-left {
+  text-align: left;
+
+}

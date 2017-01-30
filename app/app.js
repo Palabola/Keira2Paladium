@@ -4,8 +4,8 @@ var fs = require('fs');
 var db = require('./API/db_connect.js');
 var TC_API = require('./API/TC_API.js');
 var bodyParser = require('body-parser');
-
 var app = express();
+
     app.set("view options", {layout: false});
     app.use(express.static(__dirname + ''));
 
@@ -37,8 +37,42 @@ app.get('/search/creature/:creature_id', function (req, res) {
         
     });
 
-  //res.send(req.params);
 });
+/*
+app.get('/search/creature/equip_template/:creature_id', function (req, res) {
+    
+    TC_API.equip_template(req.params,function(result){
+     
+      res.send(result);
+        
+    });
+
+});
+
+app.get('/search/creature/template_addon/:creature_id', function (req, res) {
+    
+    TC_API.equip_template(req.params,function(result){
+     
+      res.send(result);
+        
+    });
+
+});
+
+*/
+
+app.get('/search/creature/name/:creature_name', function (req, res) {
+    
+    TC_API.search_creature_name(req.params,function(result){
+     
+      res.send(result);
+        
+    });
+
+});
+
+
+
 
 app.get('/creature/template/:creature_id', function (req, res) {
     
@@ -71,6 +105,7 @@ app.get('/gameobject/template/:gameobject_id', function (req, res) {
 
   //res.send(req.params);
 });
+
 
 
 // Smart AI Search
@@ -109,6 +144,14 @@ app.post('/creature_text_execute', function (req, res) {
         });
 });
 
+app.post('/search/gameobject', function (req, res) {
+    
+    //TC_API.search_creature(req.params,function(result){
+     
+      res.send(JSON.parse(req.body));
+        
+
+});
 
 
 

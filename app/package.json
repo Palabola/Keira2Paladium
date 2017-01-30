@@ -1,8 +1,8 @@
 {
-  "name": "Keira-App",
-  "description": "Keira App by Palabola",
+  "name": "PaladiumEditor",
+  "description": "Paladium Editor by Palabola",
   "version": "0.0.0",
-  "author": "Chris Veness",
+  "author": "Palabola",
   "license": "MIT",
   "main": "main.js",
   "scripts": {

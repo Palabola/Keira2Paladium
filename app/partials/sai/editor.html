@@ -26,7 +26,7 @@
       <div class="col-xs-9">
         <small>Event</small>
         <select class="form-control input-xs" ng-model="selected.event_type">
-          <option ng-repeat="event in saiLabels.event_type.name track by $index" value="{{ $index }}" ng-selected="selected.event_type == $index">{{ saiLabels.event_type.name[$index] }}</option>
+          <option ng-repeat="event in saiLabels.event_type.name track by $index" value="{{ $index }}" ng-selected="selected.event_type == $index">{{ $index }} - {{ saiLabels.event_type.name[$index] }}</option>
         </select>
       </div>
       <div class="col-xs-3">
@@ -38,7 +38,7 @@
       <div class="col-xs-9">
         <small>Action</small>
         <select class="form-control input-xs" ng-model="selected.action_type">
-          <option ng-repeat="action in saiLabels.action_type.name track by $index" value="{{ $index }}" ng-selected="selected.action_type == $index">{{ saiLabels.action_type.name[$index] }}</option>
+          <option ng-repeat="action in saiLabels.action_type.name track by $index" value="{{ $index }}" ng-selected="selected.action_type == $index">{{ $index }} - {{ saiLabels.action_type.name[$index] }}</option>
         </select>
       </div>
       <div class="col-xs-3">
@@ -50,7 +50,7 @@
       <div class="col-xs-9">
         <small>Target</small>
         <select class="form-control input-xs" ng-model="selected.target_type">
-          <option ng-repeat="target in saiLabels.target_type.name track by $index" value="{{ $index }}" ng-selected="selected.target_type == $index">{{ saiLabels.target_type.name[$index] }}</option>
+          <option ng-repeat="target in saiLabels.target_type.name track by $index" value="{{ $index }}" ng-selected="selected.target_type == $index">{{ $index }} - {{ saiLabels.target_type.name[$index] }}</option>
         </select>
       </div>
       <div class="col-xs-3">
@@ -77,7 +77,7 @@
         <small>Flags</small>
         <div class="input-group">
           <input class="form-control input-xs" type="text" ng-model="selected.event_flags" ng-click="toggleMin()" uib-tooltip="Sets if the event should not repeat or should only happen in a given instance/dungeon difficulty. Values can be added together (bitwise math)">
-          <div class="input-group-btn">
+          <div class="input-group-btn"  >
             <button class="btn btn-info input-xs" ng-click="openFlagModal('partials/sai/modals/flags.html', selected, 'event_flags', 9)">...</button>
           </div>
         </div>
@@ -140,7 +140,12 @@
         <small>{{ (saiLabels.action_type.param1[selected.action_type] && saiLabels.action_type.param1[selected.action_type] != "") ? saiLabels.action_type.param1[selected.action_type] : "param1" }}</small>
       </div>
       <div class="col-xs-4">
-        <input class="form-control input-xs" type="text" ng-model="selected.action_param1" ng-click="toggleMin()" uib-tooltip="{{ (saiLabels.action_type.paramTooltip1[selected.action_type]) ? saiLabels.action_type.paramTooltip1[selected.action_type] : '' }}">
+        <div class="input-group">     
+            <input class="form-control input-xs" type="text" ng-model="selected.action_param1" ng-click="toggleMin()" uib-tooltip="{{ (saiLabels.action_type.paramTooltip1[selected.action_type]) ? saiLabels.action_type.paramTooltip1[selected.action_type] : '' }}">
+            <div ng-show="saiLabels.action_type.flagger1[selected.action_type] != null"  class="input-group-btn">
+                <button class="btn btn-info input-xs" ng-click="openFlagModal(saiLabels.action_type.flagger1[selected.action_type], selected, 'action_param1', 50)">...</button>
+            </div>
+        </div>
       </div>
     </div>
     <div class="row">
@@ -148,7 +153,12 @@
         <small>{{ (saiLabels.action_type.param2[selected.action_type] && saiLabels.action_type.param2[selected.action_type] != "") ? saiLabels.action_type.param2[selected.action_type] : "param2" }}</small>
       </div>
       <div class="col-xs-4">
+          <div class="input-group">  
         <input class="form-control input-xs" type="text" ng-model="selected.action_param2" ng-click="toggleMin()" uib-tooltip="{{ (saiLabels.action_type.paramTooltip2[selected.action_type]) ? saiLabels.action_type.paramTooltip2[selected.action_type] : '' }}">
+        <div ng-show="saiLabels.action_type.flagger2[selected.action_type] != null" class="input-group-btn">
+         <button class="btn btn-info input-xs" ng-click="openFlagModal(saiLabels.action_type.flagger2[selected.action_type], selected, 'action_param2', 50)">...</button>
+          </div>
+        </div>
       </div>
     </div>
     <div class="row">
@@ -156,7 +166,12 @@
         <small>{{ (saiLabels.action_type.param3[selected.action_type] && saiLabels.action_type.param3[selected.action_type] != "") ? saiLabels.action_type.param3[selected.action_type] : "param3" }}</small>
       </div>
       <div class="col-xs-4">
+          <div class="input-group">  
         <input class="form-control input-xs" type="text" ng-model="selected.action_param3" ng-click="toggleMin()" uib-tooltip="{{ (saiLabels.action_type.paramTooltip3[selected.action_type]) ? saiLabels.action_type.paramTooltip3[selected.action_type] : '' }}">
+        <div ng-show="saiLabels.action_type.flagger3[selected.action_type] != null" class="input-group-btn">
+          <button class="btn btn-info input-xs" ng-click="openFlagModal(saiLabels.action_type.flagger3[selected.action_type], selected, 'action_param3', 50)">...</button>
+          </div>
+      </div>
       </div>
     </div>
     <div class="row">
@@ -250,10 +265,10 @@
 </div>
 <br>
 <div class="row">
-  <div class="col-xs-8">
+  <div class="col-xs-8 align-left">
     <button class="btn btn-danger" ng-click="deleteSelectedRowFrom(new_smart_scripts)" ng-disabled="selectedRow == -1"><i class="glyphicon glyphicon-remove"></i> Delete selected row</button>
     <button class="btn btn-success" ng-click="addNewRow(new_smart_scripts)"><i class="glyphicon glyphicon-plus"></i> Add new row</button>
-    <button class="btn btn" ng-click="duplicate(new_smart_scripts)"><i class="glyphicon glyphicon-refresh"></i> Duplicate</button> 
+    <button class="btn btn-warning" ng-click="duplicate(new_smart_scripts)"><i class="glyphicon glyphicon-import"></i> Duplicate</button> 
     <button class="btn btn" ng-click="Reload(new_smart_scripts)"><i class="glyphicon glyphicon-refresh"></i> Refresh</button> 
     <button class="btn btn-primary" ng-click="SaveToDatabase(new_smart_scripts)"><i class="glyphicon glyphicon-upload"></i> Upload</button>
   </div>

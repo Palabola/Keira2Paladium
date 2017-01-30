@@ -50,6 +50,13 @@
   app.saiLabels.action_type.paramTooltip5 = [];
   app.saiLabels.action_type.paramTooltip6 = [];
 
+  app.saiLabels.action_type.flagger1 = [];
+  app.saiLabels.action_type.flagger2 = [];
+  app.saiLabels.action_type.flagger3 = [];
+  app.saiLabels.action_type.flagger4 = [];
+  app.saiLabels.action_type.flagger5 = [];
+  app.saiLabels.action_type.flagger6 = [];
+
   app.saiLabels.event_type.paramTooltip1 = [];
   app.saiLabels.event_type.paramTooltip2 = [];
   app.saiLabels.event_type.paramTooltip3 = [];
@@ -63,6 +70,24 @@
   app.saiLabels.comment.action = [];
   app.saiLabels.comment.event  = [];
   app.saiLabels.comment.target = [];
+
+    /* Action Flag Picker */
+    
+   app.saiLabels.action_type.flagger1[18] = "partials/sai/modals/unit_flag.html";
+   app.saiLabels.action_type.flagger1[19] = "partials/sai/modals/unit_flag.html";
+   app.saiLabels.action_type.flagger1[81] = "partials/sai/modals/npc_flag.html";
+   app.saiLabels.action_type.flagger1[82] = "partials/sai/modals/npc_flag.html";
+   app.saiLabels.action_type.flagger1[83] = "partials/sai/modals/npc_flag.html";
+    
+  app.saiLabels.action_type.flagger2[11] = "partials/sai/modals/cast_flag.html";
+  app.saiLabels.action_type.flagger2[12] = "partials/sai/modals/summon_types.html";
+
+
+  
+  //app.saiLabels.action_type.flagger3[11] = "partials/sai/modals/cast_flag.html";
+
+
+
 
   /* ACTION NAMES */
   app.saiLabels.action_type.name[0]   = "NONE";
@@ -125,7 +150,7 @@
   app.saiLabels.action_type.name[57]  = "REMOVE_ITEM";
   app.saiLabels.action_type.name[58]  = "INSTALL_AI_TEMPLATE";
   app.saiLabels.action_type.name[59]  = "SET_RUN";
-  app.saiLabels.action_type.name[60]  = "SET_FLY";
+  app.saiLabels.action_type.name[60]  = "SMART_ACTION_SET_DISABLE_GRAVITY";
   app.saiLabels.action_type.name[61]  = "SET_SWIM";
   app.saiLabels.action_type.name[62]  = "TELEPORT";
   app.saiLabels.action_type.name[63]  = "SET_COUNTER";
@@ -177,6 +202,14 @@
   app.saiLabels.action_type.name[109] = "ADD_POWER";
   app.saiLabels.action_type.name[110] = "REMOVE_POWER";
   app.saiLabels.action_type.name[111] = "START_CLOSEST_WAYPOINT";
+  app.saiLabels.action_type.name[112] = "Notused";
+  app.saiLabels.action_type.name[113] = "Notused";
+  app.saiLabels.action_type.name[114] = "Notused";
+  app.saiLabels.action_type.name[115] = "Notused";
+  app.saiLabels.action_type.name[116] = "Notused";
+  app.saiLabels.action_type.name[117] = "SMART_ACTION_SET_CAN_FLY";
+  app.saiLabels.action_type.name[118] = "SMART_ACTION_STOP_MOTION";
+  app.saiLabels.action_type.name[119] = "SMART_ACTION_ADD_QUEST_OBJECTIVE";
 
   /* EVENT NAMES */
   app.saiLabels.event_type.name[0]  = "UPDATE_IC";
@@ -287,6 +320,7 @@
   app.saiLabels.target_type.name[25] = "CLOSEST_ENEMY";
   app.saiLabels.target_type.name[26] = "CLOSEST_FRIENDLY";
   app.saiLabels.target_type.name[27] = "LOOT_RECIPIENTS";
+  app.saiLabels.target_type.name[28] = "SMART_TARGET_FARTHEST";
 
   /* ACTION TOOLTIPS */
   app.saiLabels.action_type.tooltip[0]   = "No action type is specified. Do not use because it will cause errors on start-up.";
@@ -350,7 +384,7 @@
   app.saiLabels.action_type.tooltip[57]  = "Removes a certain item entry a specific amount of times to our player target.";
   app.saiLabels.action_type.tooltip[58]  = "Installs a SmartAI template which are basically pre-defined scripts for scripts that are used in a lot of cases. Thing of casters with specific spells, passive, turrets, etc.";
   app.saiLabels.action_type.tooltip[59]  = "Sets running flag on or off.";
-  app.saiLabels.action_type.tooltip[60]  = "Sets flying flag on or off.";
+  app.saiLabels.action_type.tooltip[60]  = "Sets disable gravity no fall down.";
   app.saiLabels.action_type.tooltip[61]  = "Sets swimming flag on or off.";
   app.saiLabels.action_type.tooltip[62]  = "Teleport target to a specific map using coordinates in the target X/Y/Z/O fields. Note: May NOT use SMART_TARGET_POSITION (8)!";
   app.saiLabels.action_type.tooltip[63]  = "Stores a decimal variable (number) under a variable id to store information for the creature during runtime.";
@@ -403,7 +437,10 @@
   app.saiLabels.action_type.tooltip[110] = "Removes a given value from a given power type";
   app.saiLabels.action_type.tooltip[112] = "Stops a game event with specified id (game_event.id)";
   app.saiLabels.action_type.tooltip[113] = "Starts moving by the closest waypoint it can find. Parameters allow to give up to 6 waypoint id's and it will start the closest.";
-
+  app.saiLabels.action_type.tooltip[117] = "Same like set antigravity with Flíing effect.";
+  app.saiLabels.action_type.tooltip[118] = "You can stop movement for any target!.";
+  app.saiLabels.action_type.tooltip[119] = "Add any Quest Objective count/complete...";
+ 
   /* EVENT TOOLTIPS */
   app.saiLabels.event_type.tooltip[0]  = "While in combat. Parameters represent a timer: 1000,2000,4000,4000 will call this event_type randomly between 1 and 2 seconds and repeat this every 4 seconds";
   app.saiLabels.event_type.tooltip[1]  = "While out of combat. Parameters represent a timer: 1000,2000,4000,4000 will call this event_type randomly between 1 and 2 seconds and repeat this every 4 seconds";
@@ -501,6 +538,16 @@
   app.saiLabels.target_type.tooltip[25] = "Takes the closest unfriendly unit (both creatures and players) within a given distance. If second parameter is set to 1, it will only target nearby friendly players";
   app.saiLabels.target_type.tooltip[26] = "Takes the closest friendly unit (both creatures and players) within a given distance. If second parameter is set to 1, it will only target nearby friendly players";
   app.saiLabels.target_type.tooltip[27] = "All tagging players";
+  app.saiLabels.target_type.tooltip[28] = "Select most distanced player!";
+
+
+
+  /*  ACTION PARAM MODAL FLAG PICKER*/
+  
+    
+
+
+
 
   /* ACTION PARAM1 NAMES */
   app.saiLabels.action_type.param1[1]   = "GroupId";
@@ -600,6 +647,8 @@
   app.saiLabels.action_type.param1[111] = "Id of the event";
   app.saiLabels.action_type.param1[112] = "Id of the event";
   app.saiLabels.action_type.param1[113] = "Waypoint 1";
+  app.saiLabels.action_type.param1[118] = "StopMovement (0/1)";
+  app.saiLabels.action_type.param1[119] = "QuestID";
 
   /* ACTION PARAM2 NAMES */
   app.saiLabels.action_type.param2[1]   = "Duration";
@@ -649,6 +698,9 @@
   app.saiLabels.action_type.param2[109] = "Power value";
   app.saiLabels.action_type.param2[110] = "Power value";
   app.saiLabels.action_type.param2[113] = "Waypoint 2";
+  app.saiLabels.action_type.param2[118] = "Movementexpired (0/1)";
+  app.saiLabels.action_type.param2[119] = "QuestObjective";
+  
 
   /* ACTION PARAM3 NAMES */
   app.saiLabels.action_type.param3[10]  = "Emote id 3";
@@ -658,23 +710,28 @@
   app.saiLabels.action_type.param3[53]  = "Repeat path (0/1)";
   app.saiLabels.action_type.param3[55]  = "Fail quest (0/1)";
   app.saiLabels.action_type.param3[67]  = "InitialMax";
+  app.saiLabels.action_type.param3[69]  = "DisablePathfinding (0/1)";
   app.saiLabels.action_type.param3[71]  = "Item entry 1";
   app.saiLabels.action_type.param3[86]  = "Target type of caster";
   app.saiLabels.action_type.param3[87]  = "Script entry 3";
   app.saiLabels.action_type.param3[92]  = "Instant (0/1)";
   app.saiLabels.action_type.param3[113] = "Waypoint 3";
+  app.saiLabels.action_type.param3[119] = "Count (0=All)";
 
   /* ACTION PARAM4 NAMES */
   app.saiLabels.action_type.param4[10]  = "Emote id 4";
+  app.saiLabels.action_type.param4[11]  = "TargetsLimit";
   app.saiLabels.action_type.param4[12]  = "Attack invoker (0/1)";
   app.saiLabels.action_type.param4[29]  = "Credit creature entry";
   app.saiLabels.action_type.param4[30]  = "Phasemask 4";
   app.saiLabels.action_type.param4[53]  = "Quest id";
   app.saiLabels.action_type.param4[67]  = "RepeatMin";
   app.saiLabels.action_type.param4[71]  = "Item entry 2";
+  app.saiLabels.action_type.param4[85]  = "TargetsLimit";
   app.saiLabels.action_type.param4[86]  = "Target parameter 1 of caster";
   app.saiLabels.action_type.param4[87]  = "Script entry 4";
   app.saiLabels.action_type.param4[113] = "Waypoint 4";
+  
 
   /* ACTION PARAM5 NAMES */
   app.saiLabels.action_type.param5[10]  = "Emote id 5";
@@ -848,6 +905,10 @@
   app.saiLabels.event_type.param4[76] = "RepeatTimer";
 
   /* TARGET PARAM1 NAMES */
+  app.saiLabels.target_type.param1[3]  = "MaxDistance";
+  app.saiLabels.target_type.param1[4]  = "MaxDistance";
+  app.saiLabels.target_type.param1[5]  = "MaxDistance";
+  app.saiLabels.target_type.param1[6]  = "MaxDistance";
   app.saiLabels.target_type.param1[9]  = "Creature entry (0 any)";
   app.saiLabels.target_type.param1[10] = "Creature guid";
   app.saiLabels.target_type.param1[11] = "Creature entry (0 any)";
@@ -861,8 +922,13 @@
   app.saiLabels.target_type.param1[21] = "Maximum distance";
   app.saiLabels.target_type.param1[25] = "Maximum distance";
   app.saiLabels.target_type.param1[26] = "Maximum distance";
+  app.saiLabels.target_type.param1[28]  = "MaxDistance";
 
   /* TARGET PARAM2 NAMES */
+  app.saiLabels.target_type.param2[3]  = "PlayerOnly";
+  app.saiLabels.target_type.param2[4]  = "PlayerOnly";
+  app.saiLabels.target_type.param2[5]  = "PlayerOnly";
+  app.saiLabels.target_type.param2[6]  = "PlayerOnly";
   app.saiLabels.target_type.param2[9]  = "Minimum distance";
   app.saiLabels.target_type.param2[10] = "Creature entry";
   app.saiLabels.target_type.param2[11] = "Maximum distance";
@@ -874,14 +940,21 @@
   app.saiLabels.target_type.param2[20] = "Maximum distance";
   app.saiLabels.target_type.param2[25] = "Player only (0/1)";
   app.saiLabels.target_type.param2[26] = "Player only (0/1)";
+  app.saiLabels.target_type.param2[28]  = "PlayerOnly";
 
   /* TARGET PARAM3 NAMES */
+  app.saiLabels.target_type.param3[3]  = "PowerType(1,4)";
+  app.saiLabels.target_type.param3[4]  = "PowerType (1,4)";
+  app.saiLabels.target_type.param3[5]  = "PowerType (1,4)";
+  app.saiLabels.target_type.param3[6]  = "PowerType (1,4)";
   app.saiLabels.target_type.param3[9]  = "Maximum distance";
   app.saiLabels.target_type.param3[13] = "Maximum distance";
   app.saiLabels.target_type.param3[19] = "Must be dead (0/1)";
+  app.saiLabels.target_type.param3[28] = "isINLos? (0/1)";
 
   /* ACTION PARAM1 TOOLTIPS */
   app.saiLabels.action_type.paramTooltip1[1]   = "creature_text.groupid";
+  app.saiLabels.action_type.paramTooltip1[11]   = "Flags Interrupt any spell casting:1 , SMARTCAST_TRIGGERED: 2, CAST_FORCE_CAST: 4, CAST_FORCE_TARGET_SELF:16, SMARTCAST_COMBAT_MOVE: 64";
   app.saiLabels.action_type.paramTooltip1[20]  = "If set to 0 it means the creature will stop attacking its current target. Otherwise it starts / continues to attack its target.";
   app.saiLabels.action_type.paramTooltip1[21]  = "If set to 0 it means the creature is no longer able to move AT ALL during combat. If set to 1 it means it's allowed to normally walk during combat.";
   app.saiLabels.action_type.paramTooltip1[25]  = "Determines whether or not the creature should say something along the lines of \"<name> starts fleeing ...\" when it flees. If 0, it won't say anything (unless set manually). If above 0 it will say the automatic text.";

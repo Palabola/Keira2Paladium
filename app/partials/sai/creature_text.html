@@ -14,13 +14,16 @@
         <input class="form-control input-xs" type="text" ng-model="selected.id">
       </div>
       <div class="col-xs-6">
-        <small>text (14 Boss red)</small>
+        <small>Text</small>
         <input class="form-control input-xs" type="text" ng-model="selected.text">
       </div>
       <div class="col-xs-2">
         <small>type</small>
         <div class="input-group">
           <input class="form-control input-xs" type="text" ng-model="selected.type">
+                  <div class="input-group-btn">
+            <button class="btn btn-info input-xs" ng-click="openValueModal(selected, 'type', 'text_type', 1)">...</button>
+          </div>
         </div>
       </div>
       <div class="col-xs-2">

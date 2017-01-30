@@ -101,17 +101,17 @@
         return;
       }
 
-      $http.get( app.api + "search/gameobject/", {
-        params: {
-          id: gameobjectEntry,
-          name: gameobjectName
-        }
-      }).success(function (data, status, header, config) {
-        $scope.gameobjects = $rootScope.fixNumericValues(data);
-      })
-        .error(function (data, status, header, config) {
-        console.log("[ERROR] GAMEOBJECT SEARCH $http.get request failed");
-      });
+            $http({
+                method  : 'POST',
+                url     : app.api + "search/gameobject",
+                //data    :  {sql_query: $scope.SAIScript}, //forms user object
+                data    :  {id: gameobjectEntry,name: gameobjectName}, //forms user object
+                headers : {'Content-Type': 'text/plain'} 
+               })
+                .success(function(data) {  
+
+                      }
+                   );
 
     };
 

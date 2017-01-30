@@ -17,7 +17,7 @@ function search_creature(params, callback){
                 'SELECT * FROM creature_template WHERE entry =' + id, 
                 function(err,rows){
                   if(err) throw err;
-                  callback(rows);
+                 return callback(rows);
                 });
 
 
@@ -28,6 +28,36 @@ function search_creature(params, callback){
     }   
     
 };
+
+function search_creature_name(params, callback){
+    
+    try{
+        if(typeof(params)==='undefined')
+        { 
+            console.log('wft');
+            return;
+        }
+
+            var name = params.creature_name;
+
+                console.log(name);
+
+            db.query(
+                'SELECT * FROM creature_template WHERE name LIKE ?', '%'+name+'%',
+                function(err,rows){
+                  if(err) throw err;
+                 return callback(rows);
+                });
+
+
+         return;
+    }
+    catch(err) {
+    console.log(err.message);
+    }   
+    
+};
+
 
 
 function search_creature_text(params, callback){
@@ -239,6 +269,7 @@ function run_text(text_data){
 
 module.exports.search_gameobject = search_gameobject;
 module.exports.search_creature = search_creature;
+module.exports.search_creature_name = search_creature_name;
 module.exports.search_creature_text = search_creature_text;
 module.exports.search_sai = search_sai;
 module.exports.run_script = run_script;

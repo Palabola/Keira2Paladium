@@ -5,7 +5,7 @@
 (function () {
   'use strict';
 
-  var app = angular.module('keira2', ['ui.router', 'ui.bootstrap', 'chieffancypants.loadingBar', 'tableSort', 'jdf.ngThemeSwitcher', 'ngStorage', 'hljs']);
+  var app = angular.module('keira2', ['ui.router', 'ui.bootstrap', 'chieffancypants.loadingBar', 'tableSort', 'jdf.ngThemeSwitcher',  'ngStorage', 'hljs']);
 
   app.run(function($rootScope, $uibModal, $stateParams, $localStorage) {
 
@@ -16,6 +16,7 @@
         app.api = app.defaultAPI;
       }
     }
+
 
     /* TrinityCore Documentation wiki */
     $rootScope.wikiLink = "http://collab.kpsn.org/display/tc/";
@@ -98,7 +99,8 @@
       });
 
     };
-
+    
+    
     /* Modal to handle generic values:
      * object      => new_tablename the object responsible of the table (example: new_creature_template)
      * property    => field of the table to modify (example: npcflag)

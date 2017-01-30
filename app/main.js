@@ -7,6 +7,7 @@ const spawn = require('child_process').spawn;       // nodejs.org/api/child_proc
 const path = require('path');                       // nodejs.org/api/path.html
 const {webContents} = require('electron');
 
+
 if (handleSquirrelCommand()) return; // squirrel event handled, app will exit in 1000ms
 
 let win = null; // keep global reference to window object to avoid automatic closing on JS GC
@@ -35,10 +36,8 @@ function createWindow() {
     'fullscreen': false,
     'auto-hide-menu-bar': true,
     'web-preferences':{ 'javascript': true,
-                        'images': true,
-                        'direct-write': false,
-                        'experimental-features': false,
-                        'subpixel-font-scaling': false} }); // create browser window
+                        'images': true
+                      } }); // create browser window
     win.loadURL('http://localhost:3000');                 // load koa-app home page
     win.on('closed', () => { win = null; });              // dereference window object
     win.hide();
@@ -49,10 +48,10 @@ function createWindow() {
     // Bcoz Chromium is a garbage!!!!
     setTimeout(function(){
         
-         var win = webContents.getFocusedWebContents();
-          win.reload();
+         var win = webContents.getAllWebContents();
+          win[0].reload();
       
-    }, 600);
+    }, 1000);
     
 }
 

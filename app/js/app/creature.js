@@ -182,7 +182,43 @@
       $scope.selectionText = "No Creature selected. Please use Search to select one.";
     }
 
-    /* [Function] Search */
+
+    $scope.search = function (creatureEntry, creatureName, creatureSubname) {
+
+      if ( creatureEntry && (!creatureName && !creatureSubname) && (creatureEntry.length > 2) ) {
+          
+      $http.get( app.api + "search/creature/" + creatureEntry).success(function (data, status, header, config) {
+        $scope.creatures = $rootScope.fixNumericValues(data);
+            })
+              .error(function (data, status, header, config) {
+              console.log("[ERROR] CREATURE SEARCH $http.get request failed");
+            });
+      }
+      
+      if ( creatureName && (!creatureEntry && !creatureSubname) && (creatureName.length > 3) ) {
+        
+         $http.get( app.api + "search/creature/name/" + creatureName).success(function (data, status, header, config) {
+        $scope.creatures = $rootScope.fixNumericValues(data);
+            })
+              .error(function (data, status, header, config) {
+              console.log("[ERROR] CREATURE SEARCH $http.get request failed");
+            });
+        
+        
+      }
+      
+      
+      if ( creatureSubname && (!creatureEntry && !creatureName) && (creatureSubname.length < 3) ) {
+        alert("Please insert a Subname of at least 3 characters");
+        return;
+      }
+
+
+
+        };
+
+
+    /*
     $scope.search = function (creatureEntry, creatureName, creatureSubname) {
 
       if ( creatureEntry && (!creatureName && !creatureSubname) && (creatureEntry.length < 2) ) {
@@ -212,7 +248,7 @@
       });
 
     };
-
+    */
     /* [Function] Generate SQL Script for Creature */
     $scope.generateCreatureScript = function() {
 

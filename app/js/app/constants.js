@@ -1548,6 +1548,16 @@
   app.modalConstants.type[12] = "Non-combat Pet";
   app.modalConstants.type[13] = "Gas Cloud";
 
+  /* text_type constants */
+  app.modalConstants.text_type = [];
+  app.modalConstants.text_type[11]  = "MONSTER_SAY";
+  app.modalConstants.text_type[12]  = "MONSTER_PARTY";
+  app.modalConstants.text_type[13]  = "MONSTER_YELL";
+  app.modalConstants.text_type[14]  = "MONSTER_WHISPER";
+  app.modalConstants.text_type[15]  = "MONSTER_EMOTE";
+  app.modalConstants.text_type[40]  = "BOSS EMOTE";
+  app.modalConstants.text_type[41]  = "BOSS_WHISPER";
+
   /* race constants */
   app.modalConstants.race = [];
   app.modalConstants.race[0]  = "HUMAN";

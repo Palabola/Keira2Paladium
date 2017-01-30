@@ -1,0 +1,37 @@
+<div class="modal-header">
+  <h3 class="modal-title">Npc Flags</h3>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <div class="col-xs-6">
+      <label class="checkbox" >
+        <input type="checkbox" class="input-xs" ng-model="values[0]">
+        <small>1  Gossip</small>
+      </label>
+      <label class="checkbox">
+        <input type="checkbox" class="input-xs" ng-model="values[1]">
+        <small>2  Quest Giver</small>
+      </label>
+      <label class="checkbox">
+        <input type="checkbox" class="input-xs" ng-model="values[7]">
+        <small>128 Vendor</small>
+      </label>
+      <label class="checkbox">
+        <input type="checkbox" class="input-xs" ng-model="values[12]">
+        <small>4096 Repair</small>
+      </label>
+      <label class="checkbox">
+        <input type="checkbox" class="input-xs" ng-model="values[13]">
+        <small>8192 Flight Master</small>
+      </label>
+      <label class="checkbox">
+        <input type="checkbox" class="input-xs" ng-model="values[24]">
+        <small>16777216 Spellclick </small>
+      </label>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-primary" ng-click="modalOk()">OK</button>
+  <button class="btn btn-danger" ng-click="modalCancel()">Cancel</button>
+</div>

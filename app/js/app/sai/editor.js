@@ -224,7 +224,7 @@
 
                       }
                    );
-            console.log($scope.new_smart_scripts);
+            
     };
 
     /* [Function] Get string by target_type */
