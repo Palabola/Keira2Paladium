@@ -72,7 +72,7 @@
        
        $http({
           method  : 'POST',
-          url     : 'http://localhost:3000/creature_text_execute',
+          url     : location.origin+'/creature_text_execute',
           //data    :  {sql_query: $scope.SAIScript}, //forms user object
           data    :  $scope.new_creature_text, //forms user object
           headers : {'Content-Type': 'text/plain'} 
