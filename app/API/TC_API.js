@@ -47,10 +47,19 @@ function getUpdateQuery(tableName, whereCondition, currentRow, newRow, callback)
 
                 let result = query.toString();
                 
-                console.log(result);
+               if(result !=="") 
+               {
+                  db.query(result, function(err, result) {
+                          if (err) throw err;
+                            return callback(result);  
+                        });
+               }
+               else
+               {
+                return callback(result);   
+               }    
                 
-                return callback(query.toString());
-                };
+      };
 
 function search_spell(params, callback){
     
