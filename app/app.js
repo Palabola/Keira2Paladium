@@ -1,16 +1,19 @@
 //var settings = require('./settings.js');
 var settings = require('electron-settings');
-var express = require("express");
+var app = require('./express');
+// var express = require("express");
 var fs = require('fs');
 var db = require('./API/db_connect.js');
 var TC_API = require('./API/TC_API.js');
-var bodyParser = require('body-parser');
-var app = express();
+// var bodyParser = require('body-parser');
+// var app = express();
 
 // Settings optionaly best at the top
-    app.set("view options", {layout: false});
-    app.use(express.static(__dirname + ''));
-    app.use(bodyParser.text());
+//     app.set("view options", {layout: false});
+//     app.use(express.static(__dirname + ''));
+//     app.use(bodyParser.text());
+
+require('./routers')({ app });
 
 app.get('/', function(req, res){
     res.render('/index.html');
