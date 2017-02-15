@@ -9,8 +9,19 @@ module.exports = ({ TC_API }) => {
                return res.send(result);
 
               }); 
-          
-           //return res.render('./../index.html');
+        },
+        
+        getCreaturebyName(req, res) {
+            
+                   TC_API.search_creature_name(req.params,function(result){
+     
+                   return res.send(result);
+        
+
+              }); 
         }
+        
+        
+        
     }
 }
