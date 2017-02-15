@@ -5,6 +5,7 @@ var app = require('./express');
 var fs = require('fs');
 var db = require('./API/db_connect.js');
 var TC_API = require('./API/TC_API.js');
+var controllers = require('./controllers')({});
 // var bodyParser = require('body-parser');
 // var app = express();
 
@@ -13,11 +14,12 @@ var TC_API = require('./API/TC_API.js');
 //     app.use(express.static(__dirname + ''));
 //     app.use(bodyParser.text());
 
-require('./routers')({ app });
 
-app.get('/', function(req, res){
-    res.render('/index.html');
-});
+require('./routers')({ app, controllers });
+
+// app.get('/', function(req, res){
+//     res.render('/index.html');
+// });
 
 settings.get('host').then(val => {
   console.log(val);
