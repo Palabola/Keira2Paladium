@@ -8,7 +8,7 @@ module.exports = ({ app, controllers }) => {
     
     app.post('/creature_text_execute', controller.CreatureTextUpdate);
     
-    app.post('/creature_template', controller.CreatureTextUpdate);
+    app.post('/creature/template/update', controller.CreatureTemplateUpdate);
     
 
 }

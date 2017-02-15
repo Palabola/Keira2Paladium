@@ -291,9 +291,8 @@
 
             $http({
                 method  : 'POST',
-                url     : 'http://localhost:3000/creature_template',
-                //data    :  {sql_query: $scope.SAIScript}, //forms user object
-                data    :  json, //forms user object
+                url     : location.origin+'/creature/template/update',
+                data    :  json, 
                 headers : {'Content-Type': 'text/plain'} 
                })
                 .success(function(data) {  

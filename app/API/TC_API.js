@@ -17,7 +17,7 @@ var spell_cache = {};
     autoQuoteFieldNames: true
   };
 
-function getUpdateQuery(tableName, whereCondition, currentRow, newRow) {
+function getUpdateQuery(tableName, whereCondition, currentRow, newRow, callback) {
 
                 var key,
                     diff = false,
@@ -40,12 +40,16 @@ function getUpdateQuery(tableName, whereCondition, currentRow, newRow) {
 
                 if (!diff) {
                   console.log("[INFO] There are no `" + tableName + "` changes");
-                  return "";
+                  result = "";
                 }
 
                 query.where(whereCondition);
 
-                return "-- Table `" + tableName + "`\n" + query.toString() + ";\n\n";
+                let result = query.toString();
+                
+                console.log(result);
+                
+                return callback(query.toString());
                 };
 
 function search_spell(params, callback){
@@ -414,3 +418,4 @@ module.exports.run_creature_template = run_creature_template;
 module.exports.run_text = run_text;
 module.exports.clean_up_sai = clean_up_sai;
 module.exports.search_spell = search_spell;
+module.exports.getUpdateQuery = getUpdateQuery;
