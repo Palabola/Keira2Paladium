@@ -5,7 +5,7 @@ var app = require('./express');
 var fs = require('fs');
 var db = require('./API/db_connect.js');
 var TC_API = require('./API/TC_API.js');
-var controllers = require('./controllers')({ TC_API });
+var controllers = require('./controllers')({ TC_API }); // call index.js from controllers folder and passing it dependencies
 // var bodyParser = require('body-parser');
 // var app = express();
 
