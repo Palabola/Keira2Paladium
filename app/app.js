@@ -21,10 +21,6 @@ require('./routers')({ app, controllers });
 //     res.render('/index.html');
 // });
 
-settings.get('host').then(val => {
-  console.log(val);
-
-});
 
 app.get('/api', function(req, res){
     
