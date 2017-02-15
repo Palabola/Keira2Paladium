@@ -33,36 +33,27 @@
       console.log("[ERROR] /api/ $http.get request failed");
     });
 
-    // Database world version
-    $http.get(app.api + "version")
-      .success(function (data, status, header, config) {
-      $scope.databaseVersion  = data[0].db_version;
-      $scope.coreVersion      = data[0].core_version;
-      $scope.coreRevision     = data[0].core_revision;
-    })
-      .error(function (data, status, header, config) {
-      console.log("[ERROR] /version/ $http.get request failed");
-    });
+   
 
     // Check for newer versions
     $scope.updateAvaialable = false;
+            /*
+                if ($scope.keiraVersion != "DEV") {
+                  $http.get( "https://api.github.com/repos/Helias/Keira2/releases" )
+                    .success(function (data, status, header, config) {
 
-    if ($scope.keiraVersion != "DEV") {
-      $http.get( "https://api.github.com/repos/Helias/Keira2/releases" )
-        .success(function (data, status, header, config) {
+                    var latestReleaseTag = data[0].tag_name;
 
-        var latestReleaseTag = data[0].tag_name;
+                    if ($scope.keiraTag != latestReleaseTag) {
+                      $scope.updateAvaialable = true;
+                    }
 
-        if ($scope.keiraTag != latestReleaseTag) {
-          $scope.updateAvaialable = true;
-        }
-
-      })
-        .error(function (data, status, header, config) {
-        console.log("[ERROR] https://api.github.com/repos/Helias/Keira2/releases $http.get request failed");
-      });
-    }
-
+                  })
+                    .error(function (data, status, header, config) {
+                    console.log("[ERROR] https://api.github.com/repos/Helias/Keira2/releases $http.get request failed");
+                  });
+                }
+            */
   });
 
 }());

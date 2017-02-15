@@ -1,4 +1,5 @@
-var settings = require('./settings.js');
+//var settings = require('./settings.js');
+var settings = require('electron-settings');
 var express = require("express");
 var fs = require('fs');
 var db = require('./API/db_connect.js');
@@ -6,24 +7,30 @@ var TC_API = require('./API/TC_API.js');
 var bodyParser = require('body-parser');
 var app = express();
 
+// Settings optionaly best at the top
     app.set("view options", {layout: false});
     app.use(express.static(__dirname + ''));
+    app.use(bodyParser.text());
 
 app.get('/', function(req, res){
     res.render('/index.html');
 });
 
+settings.get('host').then(val => {
+  console.log(val);
+
+});
 
 app.get('/api', function(req, res){
     
-    var api_json = {"api_version":"0.7", "api_branch":"master"} ;
+    var api_json = {"api_version":"0.7", "api_branch":"master", "db_version":"6.X"} ;
     
     res.send(api_json);
 });
 
 app.get('/version', function(req, res){
     
-    var api_json = {"api_version":"0.7", "api_branch":"master"} ;
+    var api_json = {"api_version":"0.7", "api_branch":"master", "db_version":"6.X"} ;
     
     res.send(api_json);
 });
@@ -38,28 +45,20 @@ app.get('/search/creature/:creature_id', function (req, res) {
     });
 
 });
-/*
-app.get('/search/creature/equip_template/:creature_id', function (req, res) {
+
+
+app.get('/dbc/spells/:spell_id', function (req, res) {
     
-    TC_API.equip_template(req.params,function(result){
+    TC_API.search_spell(req.params,function(result){
      
-      res.send(result);
+      var api_json = {"id": result.id, "spellName": result.name};
+    
+      res.send(api_json);
         
     });
 
 });
 
-app.get('/search/creature/template_addon/:creature_id', function (req, res) {
-    
-    TC_API.equip_template(req.params,function(result){
-     
-      res.send(result);
-        
-    });
-
-});
-
-*/
 
 app.get('/search/creature/name/:creature_name', function (req, res) {
     
@@ -120,7 +119,7 @@ app.get('/smart_scripts/:source_type/:entry_id', function (req, res) {
   //res.send(req.params);
 });
 
-  app.use(bodyParser.text());
+
 
 app.post('/query_execute', function (req, res) {
   
@@ -132,6 +131,22 @@ app.post('/query_execute', function (req, res) {
         });
   
 });
+
+
+app.post('/creature_template', function (req, res) {
+  
+    res.send(JSON.parse(req.body));
+  
+    /*
+        TC_API.clean_up_sai(JSON.parse(req.body),function(sai_data){
+            
+          TC_API.run_script(sai_data);
+          
+          res.send(JSON.parse(req.body)); 
+        });
+  */
+});
+
 
 app.post('/creature_text_execute', function (req, res) {
   

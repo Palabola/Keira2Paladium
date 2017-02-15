@@ -226,24 +226,6 @@
     
 
   app.synchGetSpellNameById = function(id) {
-   /*
-   $jsonp.send('http://www.wowhead.com/spell='+id+'&power', {
-    callbackName: 'handleStuff',
-    onSuccess: function(json){
-        console.log(json);
-    },
-    onTimeout: function(){
-        console.log('timeout!');
-    },
-    timeout: 5
-        });
-   */
-  };
-  
-
-  
-/*
-  app.synchGetSpellNameById = function(id) {
     var request, data;
     request = new XMLHttpRequest();
     request.open('GET', app.api + "dbc/spells/" + id, false);
@@ -251,11 +233,11 @@
 
     if (request.status === 200) {
       data = JSON.parse(request.responseText);
-      if (!Array.isArray(data) || data.length < 1) { return id; }
-      return data[0].spellName;
+      console.log(data);
+      return data.spellName+' ('+id+') ';
     } else {
       return id;
     }
   };
-*/
+
 }());

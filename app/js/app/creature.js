@@ -8,6 +8,7 @@
 
   app.controller("CreatureController", function ($rootScope, $scope, $http, $stateParams, $uibModal) {
 
+    
     /* All Creature tabs, disabled by default.
      *  Only one tab can be active at a time */
     $scope.creatureTabs = {
@@ -47,6 +48,9 @@
       /* We have a creature selected and default active tab is template */
       $scope.isCreatureSelected = true;
       $scope.creatureTabs.template = true;
+
+      $scope.gt = app.scalling;
+
 
       /*  Following lines retrieve all Creature data
        *  current_* mantains the database state
@@ -260,6 +264,9 @@
       $scope.creatureScript = "";
 
       var whereCondition = "entry = " + $scope.current_creature_template.entry;
+      
+      $scope.SaveToDatabase();
+
 
       // creature_template
       $scope.creatureScript += app.getUpdateQuery("creature_template", whereCondition, $scope.current_creature_template, $scope.new_creature_template);
@@ -273,6 +280,29 @@
       // creature_onkill_reputation
       $scope.creatureScript += app.getUpdateQuery("creature_onkill_reputation", "creature_id = " + $scope.current_creature_template.entry, $scope.current_creature_onkill_reputation, $scope.new_creature_onkill_reputation);
     };
+
+    $scope.SaveToDatabase = function() {
+        
+                  let json = {};
+
+                    json.entry = $scope.current_creature_template.entry;
+                    json.current = $scope.current_creature_template;
+                    json.new = $scope.new_creature_template;
+
+            $http({
+                method  : 'POST',
+                url     : 'http://localhost:3000/creature_template',
+                //data    :  {sql_query: $scope.SAIScript}, //forms user object
+                data    :  json, //forms user object
+                headers : {'Content-Type': 'text/plain'} 
+               })
+                .success(function(data) {  
+
+                      }
+                   );
+            
+    };
+
 
     /* [Function] disactive all tabs */
     $scope.disactiveAllTabs = function() {

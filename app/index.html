@@ -3,16 +3,17 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Keira2 PalaVer 1.0 TrinityCore Database Web-Editor">
-    <meta name="author" content="ShinDarth, Helias">
+    <meta name="description" content="Paladium 1.0 TrinityCore Database Web-Editor">
+    <meta name="author" content="Palabbola,ShinDarth, Helias">
 
     <title>Paladium Editor</title>
     <link rel="shortcut icon" href="">
 
     <!-- Disable Electron Node Integration for DOM -->
     <script>
-        //delete window.require;
-        //delete window.exports;
+        window.nodeRequire = window.require;
+        delete window.require;
+        delete window.exports;
         delete window.module;
       </script>
     
@@ -49,6 +50,7 @@
     <script src="js/app/creature.js"></script>
     <script src="js/app/creature/quest-items.js"></script>
     <script src="js/app/creature/spawns.js"></script>
+    <script src="js/app/creature/scalling.js"></script>
     <script src="js/app/quest.js"></script>
     <script src="js/app/quest/objectives.js"></script>
     <script src="js/app/quest/starters-enders.js"></script>
@@ -88,6 +90,9 @@
      <!-- <a ng-href="#/character"><button class="btn-primary btn-lg">Character</button></a> -->
       <a ng-href="#/sai"><button class="btn-primary btn-lg">SmartAI</button></a>
       <a ng-href="#/"><button class="btn-primary btn-lg">Info</button></a>
+      <div class="btn-group pull-right" uib-dropdown>
+          <button type="button" class="btn-danger btn" uib-dropdown-toggle ng-disabled="disabled">Database Setting</button>
+      </div>
     <!--  <div class="btn-group pull-right" uib-dropdown>
         <theme-switcher urls="[theme.url]"></theme-switcher> 
         <div class="btn-group" uib-dropdown is-open="status.isopen">

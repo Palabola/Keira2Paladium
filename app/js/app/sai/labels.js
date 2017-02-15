@@ -103,21 +103,21 @@
   app.saiLabels.action_type.name[10]  = "RANDOM_EMOTE";
   app.saiLabels.action_type.name[11]  = "CAST";
   app.saiLabels.action_type.name[12]  = "SUMMON_CREATURE";
-  app.saiLabels.action_type.name[13]  = "THREAT_SINGLE_PCT";
-  app.saiLabels.action_type.name[14]  = "THREAT_ALL_PCT";
-  app.saiLabels.action_type.name[15]  = "CALL_AREAEXPLOREDOREVENTHAPPENS";
+  app.saiLabels.action_type.name[13]  = "THREAT_SINGLE_%";
+  app.saiLabels.action_type.name[14]  = "THREAT_ALL_%";
+  app.saiLabels.action_type.name[15]  = "CALL AREA EXPLORED OR EVENT HAPPENS";
   app.saiLabels.action_type.name[16]  = "UNUSED_16";
-  app.saiLabels.action_type.name[17]  = "SET_EMOTE_STATE";
-  app.saiLabels.action_type.name[18]  = "SET_UNIT_FLAG";
-  app.saiLabels.action_type.name[19]  = "REMOVE_UNIT_FLAG";
+  app.saiLabels.action_type.name[17]  = "SET EMOTE STATE";
+  app.saiLabels.action_type.name[18]  = "SET UNIT FLAG";
+  app.saiLabels.action_type.name[19]  = "REMOVE UNIT FLAG";
   app.saiLabels.action_type.name[20]  = "AUTO_ATTACK";
   app.saiLabels.action_type.name[21]  = "ALLOW_COMBAT_MOVEMENT";
   app.saiLabels.action_type.name[22]  = "SET_EVENT_PHASE";
   app.saiLabels.action_type.name[23]  = "INC_EVENT_PHASE";
   app.saiLabels.action_type.name[24]  = "EVADE";
   app.saiLabels.action_type.name[25]  = "FLEE_FOR_ASSIST";
-  app.saiLabels.action_type.name[26]  = "CALL_GROUPEVENTHAPPENS";
-  app.saiLabels.action_type.name[27]  = "CALL_CASTEDCREATUREORGO";
+  app.saiLabels.action_type.name[26]  = "CALL_GROUP EVENT HAPPENS";
+  app.saiLabels.action_type.name[27]  = "CALL_CASTED CREATURE OR GO";
   app.saiLabels.action_type.name[28]  = "REMOVEAURASFROMSPELL";
   app.saiLabels.action_type.name[29]  = "FOLLOW";
   app.saiLabels.action_type.name[30]  = "RANDOM_PHASE";
@@ -153,7 +153,7 @@
   app.saiLabels.action_type.name[60]  = "SMART_ACTION_SET_DISABLE_GRAVITY";
   app.saiLabels.action_type.name[61]  = "SET_SWIM";
   app.saiLabels.action_type.name[62]  = "TELEPORT";
-  app.saiLabels.action_type.name[63]  = "SET_COUNTER";
+  app.saiLabels.action_type.name[63]  = "STORE VARIABLE DECIMAL";
   app.saiLabels.action_type.name[64]  = "STORE_TARGET_LIST";
   app.saiLabels.action_type.name[65]  = "WP_RESUME";
   app.saiLabels.action_type.name[66]  = "SET_ORIENTATION";
@@ -212,10 +212,10 @@
   app.saiLabels.action_type.name[119] = "SMART_ACTION_ADD_QUEST_OBJECTIVE";
 
   /* EVENT NAMES */
-  app.saiLabels.event_type.name[0]  = "UPDATE_IC";
-  app.saiLabels.event_type.name[1]  = "UPDATE_OOC";
-  app.saiLabels.event_type.name[2]  = "HEALT_PCT";
-  app.saiLabels.event_type.name[3]  = "MANA_PCT";
+  app.saiLabels.event_type.name[0]  = "UPDATE_IC(Or TimedEvent)";
+  app.saiLabels.event_type.name[1]  = "UPDATE_OUT_OF_COMBAT";
+  app.saiLabels.event_type.name[2]  = "HEALT_%";
+  app.saiLabels.event_type.name[3]  = "MANA_%";
   app.saiLabels.event_type.name[4]  = "AGGRO";
   app.saiLabels.event_type.name[5]  = "KILL";
   app.saiLabels.event_type.name[6]  = "DEATH";
@@ -224,13 +224,13 @@
   app.saiLabels.event_type.name[9]  = "RANGE";
   app.saiLabels.event_type.name[10] = "OOC_LOS";
   app.saiLabels.event_type.name[11] = "RESPAWN";
-  app.saiLabels.event_type.name[12] = "TARGET_HEALTH_PCT";
-  app.saiLabels.event_type.name[13] = "VICTIM_CASTING";
+  app.saiLabels.event_type.name[12] = "TARGET_HEALTH_%";
+  app.saiLabels.event_type.name[13] = "TARGET_CASTING(Victim)";
   app.saiLabels.event_type.name[14] = "FRIENDLY_HEALTH";
   app.saiLabels.event_type.name[15] = "FRIENDLY_IS_CC";
   app.saiLabels.event_type.name[16] = "FRIENDLY_MISSING_BUFF";
   app.saiLabels.event_type.name[17] = "SUMMONED_UNIT";
-  app.saiLabels.event_type.name[18] = "TARGET_MANA_PCT";
+  app.saiLabels.event_type.name[18] = "TARGET_MANA_%";
   app.saiLabels.event_type.name[19] = "ACCEPTED_QUEST";
   app.saiLabels.event_type.name[20] = "REWARD_QUEST";
   app.saiLabels.event_type.name[21] = "REACHED_HOME";
@@ -246,7 +246,7 @@
   app.saiLabels.event_type.name[31] = "SPELLHIT_TARGET";
   app.saiLabels.event_type.name[32] = "DAMAGED";
   app.saiLabels.event_type.name[33] = "DAMAGED_TARGET";
-  app.saiLabels.event_type.name[34] = "MOVEMENTINFORM";
+  app.saiLabels.event_type.name[34] = "MOVEMENT INFORM";
   app.saiLabels.event_type.name[35] = "SUMMON_DESPAWNED";
   app.saiLabels.event_type.name[36] = "CORPSE_REMOVED";
   app.saiLabels.event_type.name[37] = "AI_INIT";
@@ -917,6 +917,7 @@
   app.saiLabels.target_type.param1[14] = "Gameobject guid";
   app.saiLabels.target_type.param1[15] = "Gameobject entry (0 any)";
   app.saiLabels.target_type.param1[17] = "Minimum distance";
+  app.saiLabels.target_type.param1[18] = "MaxDistance";
   app.saiLabels.target_type.param1[19] = "Creature entry (0 any)";
   app.saiLabels.target_type.param1[20] = "Gameobject entry (0 any)";
   app.saiLabels.target_type.param1[21] = "Maximum distance";

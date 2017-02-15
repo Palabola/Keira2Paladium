@@ -98,48 +98,34 @@
             <small>maxgold</small>
             <input type="text" class="form-control input-xs" ng-model="new_creature_template.maxgold">
           </div>
-          <div class="col-xs-3 text-left">
-            <small>minlevel</small>
-            <input type="text" class="form-control input-xs" ng-model="new_creature_template.minlevel">
-          </div>
-          <div class="col-xs-3 text-left">
-            <small>maxlevel</small>
-            <input type="text" class="form-control input-xs" ng-model="new_creature_template.maxlevel">
-          </div>
         </div>
         <div class="row">
           <div class="col-xs-2 text-left">
-            <small>Health_mod</small>
-            <input type="text" class="form-control input-xs" ng-model="new_creature_template.HealthModifier">
+            <small>MinLevel</small>
+            <input type="text" class="form-control input-xs" ng-model="new_creature_template.minlevel">
           </div>
           <div class="col-xs-2 text-left">
-            <small>Mana_mod</small>
-            <input type="text" class="form-control input-xs" ng-model="new_creature_template.ManaModifier">
+            <small>MaxLevel</small>
+            <input type="text" class="form-control input-xs" ng-model="new_creature_template.maxlevel">
+          </div>  
+          <div class="col-xs-2 text-left">
+            <small>ScaleLvlMin</small>
+            <input type="text" class="form-control input-xs" ng-model="new_creature_template.scale_level_min">
           </div>
+          <div class="col-xs-2 text-left">
+            <small>ScaleLvlMax</small>
+            <input type="text" class="form-control input-xs" ng-model="new_creature_template.scale_level_max">
+          </div>
+          <div class="col-xs-2 text-left">
+            <small>ScaleLvlDelta</small>
+            <input type="text" class="form-control input-xs" ng-model="new_creature_template.scale_level_delta">
+          </div>  
           <div class="col-xs-3 text-left">
             <small>Vehicleid</small>
             <input type="text" class="form-control input-xs" ng-model="new_creature_template.Vehicleid">
           </div>
-          <div class="col-xs-2 text-left">
-            <small>exp</small>
-            <input type="text" class="form-control input-xs" ng-model="new_creature_template.exp">
-          </div>
         </div>
         <div class="row">
-          <div ng-show="version.name == '6.x'">
-            <div class="col-xs-3 text-left">
-              <small>HealthModifierExtra</small>
-              <input type="text" class="form-control input-xs" ng-model="new_creature_template.HealthModifierExtra">
-            </div>
-            <div class="col-xs-3 text-left">
-              <small>ManaModifierExtra</small>
-              <input type="text" class="form-control input-xs" ng-model="new_creature_template.ManaModifierExtra">
-            </div>
-          </div>
-          <div class="col-xs-2 text-left" ng-show="version.name == '6.x'">
-            <small>exp_unk</small>
-            <input type="text" class="form-control input-xs" ng-model="new_creature_template.exp_unk">
-          </div>
         </div>
       </div>
     </div>
@@ -158,6 +144,62 @@
 
       </div>
       <div class="col-xs-8 text-left borders">
+
+        <h5 class="text-left">Combat Stats</h5> <small>Scalling Expansion</small>
+            
+        <div class="row">
+         <div class="col-xs-6 text-left">   
+          <input type="text" class="form-control input-xs" ng-model="new_creature_template.HealthScalingExpansion">  
+         </div>
+            
+          <div class="col-xs-12 text-left">
+            <div class="row">   
+               <div class="col-xs-6 text-left"> 
+                    <small>Healt mod</small>
+                    <input type="text" class="form-control input-xs" ng-model="new_creature_template.HealthModifier">
+                </div>
+                <div class="col-xs-6 text-left"> 
+                    <small>Real-amount HP</small>
+                    {{new_creature_template.HealthModifier*gt.hp.lvl[new_creature_template.HealthScalingExpansion][new_creature_template.maxlevel][new_creature_template.unit_class]}}
+                </div>
+            </div>  
+            <div class="row">   
+               <div class="col-xs-6 text-left"> 
+                    <small>Armor mod</small>
+                    <input type="text" class="form-control input-xs" ng-model="new_creature_template.ArmorModifier">
+                </div>
+                <div class="col-xs-6 text-left"> 
+                    <small>Real-amount Armor</small>
+                    {{new_creature_template.HealthModifier*gt.lvl[new_creature_template.HealthScalingExpansion][new_creature_template.maxlevel][new_creature_template.unit_class]}}
+                </div>
+            </div> 
+            <div class="row">   
+               <div class="col-xs-6 text-left"> 
+                    <small>Mana mod</small>
+                    <input type="text" class="form-control input-xs" ng-model="new_creature_template.ManaModifier">
+                </div>
+                <div class="col-xs-6 text-left"> 
+                    <small>Real-amount Mana</small>
+                    {{new_creature_template.HealthModifier*gt.lvl[new_creature_template.HealthScalingExpansion][new_creature_template.maxlevel][new_creature_template.unit_class]}}
+                </div>
+            </div>  
+             <div class="row">   
+               <div class="col-xs-6 text-left"> 
+                    <small>Damage mod</small>
+                    <input type="text" class="form-control input-xs" ng-model="new_creature_template.DamageModifier">
+                </div>
+                <div class="col-xs-6 text-left"> 
+                    <small>Real-amount DPS</small>
+                    {{new_creature_template.DamageModifier*gt.dmg.lvl[new_creature_template.HealthScalingExpansion][new_creature_template.maxlevel]}} / sec
+                </div>
+            </div>   
+              
+          </div>
+
+        </div>
+
+      </div>
+      <!-- <div class="col-xs-8 text-left borders">
 
         <h5 class="text-left">Resistance</h5>
         <div class="row">
@@ -179,7 +221,7 @@
           </div>
         </div>
 
-      </div>
+      </div> -->  
     </div>
 
     <br>

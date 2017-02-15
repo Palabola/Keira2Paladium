@@ -6,13 +6,26 @@ const { app, BrowserWindow } = require('electron'); // www.npmjs.com/package/ele
 const spawn = require('child_process').spawn;       // nodejs.org/api/child_process.html
 const path = require('path');                       // nodejs.org/api/path.html
 const {webContents} = require('electron');
-
+const settings = require('electron-settings');
 
 if (handleSquirrelCommand()) return; // squirrel event handled, app will exit in 1000ms
 
 let win = null; // keep global reference to window object to avoid automatic closing on JS GC
 
-process.env.NODE_ENV = process.env.NODE_ENV || 'debug'; // default to production environment
+process.env.NODE_ENV = process.env.NODE_ENV || 'default'; // default to production environment
+
+settings.defaults({
+   host     : '127.0.0.1',
+   user     : 'root',
+   password : 'ascent',
+   database : 'world'
+});
+
+
+global.sharedObject = {
+  someProperty: 'default value'
+};
+
 
 const shouldQuit = app.makeSingleInstance(function(otherInstArgv, otherInstWorkingDir) {
     // someone tried to run a second instance, we should focus our window
@@ -42,8 +55,6 @@ function createWindow() {
     win.on('closed', () => { win = null; });              // dereference window object
     win.hide();
     win.show();
-
-    win.reload();
     
     // Bcoz Chromium is a garbage!!!!
     setTimeout(function(){
