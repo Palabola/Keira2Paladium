@@ -15,6 +15,7 @@
   },
   "build": {
     "appId": "koa-app.id",
+    "asar" : true,
     "category": "public.app-category.developer-tools",
     "win": {
       "iconUrl": "http://eatodo.s3.amazonaws.com/icon.ico"
