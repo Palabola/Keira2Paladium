@@ -2,16 +2,13 @@
 
 module.exports = ({ app, controllers }) => {
     const controller = controllers.creature;
-
-    app.get('/creature/template/:creature_id', controller.getCreaturebyID);
-    app.get('/creature/text/:creature_id', controller.getCreatureTextbyID);
     
-    app.post('/creature_text_execute', controller.CreatureTextUpdate);
-    
-    app.post('/creature/template/update', controller.CreatureTemplateUpdate);
-    
-
-}
+    app
+      .get('/creature/template/:creature_id', controller.getCreatureByID)
+      .get('/creature/text/:creature_id', controller.getCreatureTextByID)
+      .post('/creature_text_execute', controller.CreatureTextUpdate)
+      .post('/creature/template/update', controller.CreatureTemplateUpdate);
+};
 
 /*
  * 

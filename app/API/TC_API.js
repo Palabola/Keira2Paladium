@@ -10,411 +10,342 @@ var squel = require("squel");
 
 var spell_cache = {};
 
- var globalQueryConfig = {
-    replaceSingleQuotes : true,
-    singleQuoteReplacement : "\\'",
+var globalQueryConfig = {
+    replaceSingleQuotes: true,
+    singleQuoteReplacement: "\\'",
     autoQuoteTableNames: true,
     autoQuoteFieldNames: true
-  };
+};
 
 function getUpdateQuery(tableName, whereCondition, currentRow, newRow, callback) {
 
-                var key,
-                    diff = false,
-                    query = squel.update(globalQueryConfig);
+    var key,
+        diff = false,
+        query = squel.update(globalQueryConfig);
 
-                query.table(tableName);
+    query.table(tableName);
 
-                for (key in currentRow) {
-                  if (currentRow[key] !== newRow[key]) {
+    for (key in currentRow) {
+        if (currentRow[key] !== newRow[key]) {
 
-                    // Convert numeric values
-                    if (!isNaN(currentRow[key]) && !isNaN(newRow[key]) && newRow[key] != "") {
-                      newRow[key] = Number(newRow[key]);
-                    }
+            // Convert numeric values
+            if (!isNaN(currentRow[key]) && !isNaN(newRow[key]) && newRow[key] != "") {
+                newRow[key] = Number(newRow[key]);
+            }
 
-                    query.set(key, newRow[key]);
-                    diff = true;
-                  }
-                }
-
-                if (!diff) {
-                  console.log("[INFO] There are no `" + tableName + "` changes");
-                  result = "";
-                }
-
-                query.where(whereCondition);
-
-                let result = query.toString();
-                
-               if(result !=="") 
-               {
-                  db.query(result, function(err, result) {
-                          if (err) throw err;
-                            return callback(result);  
-                        });
-               }
-               else
-               {
-                return callback(result);   
-               }    
-                
-      };
-
-function search_spell(params, callback){
-    
-        // Store Cache
-        if(spell_cache[params.spell_id])
-        {
-             data = {};
-             data.id = params.spell_id;
-             data.name = spell_cache[params.spell_id]; 
-            
-             return callback(data); 
+            query.set(key, newRow[key]);
+            diff = true;
         }
-    
-    try{
-        fetch('http://www.wowhead.com/spell='+params.spell_id)
-    .then(function(res) {
-        return res.text();
-    }).then(function(body) {
-        
-       // console.log(body);
-        
-        var result = '';
-        
-        
-        var $ = cheerio.load(body);
-        
-        try{
-        var str = $.html();
-        }
-        catch(err)
-        {
-          console.log(err);  
-        }
+    }
 
-        try{
-            
-             data = {};
-             data.id = params.spell_id;
-             data.name = $('h1.heading-size-1').html();
-            
-            spell_cache[params.spell_id] = data.name;
-            
-        return callback(data); 
-        
-        }
-        catch(err)
-        {
-          console.log(err);  
-        }
+    if (!diff) {
+        console.log("[INFO] There are no `" + tableName + "` changes");
+        result = "";
+    }
 
+    query.where(whereCondition);
+
+    let result = query.toString();
+
+    if (result !== "") {
+        db.query(result, function (err, result) {
+            if (err) throw err;
+            return callback(result);
         });
-       
     }
-    catch(err) {
-    console.log(err.message);
-    }   
-    
-}; 
- 
-
-
-function search_creature(params, callback){
-    
-    try{
-        if(typeof(params)==='undefined')
-        { 
-            console.log('wft');
-            return;
-        }
-
-            var id = params.creature_id;
-
-            db.query(
-                'SELECT * FROM creature_template WHERE entry =' + id, 
-                function(err,rows){
-                  if(err) throw err;
-                 return callback(rows);
-                });
-
-
-         return;
+    else {
+        return callback(result);
     }
-    catch(err) {
-    console.log(err.message);
-    }   
-    
+
 };
 
-function search_creature_name(params, callback){
-    
-    try{
-        if(typeof(params)==='undefined')
-        { 
-            console.log('wft');
-            return;
-        }
+function search_spell(params, callback) {
 
-            var name = params.creature_name;
+    // Store Cache
+    if (spell_cache[params.spell_id]) {
+        data = {};
+        data.id = params.spell_id;
+        data.name = spell_cache[params.spell_id];
 
-                console.log(name);
-
-            db.query(
-                'SELECT * FROM creature_template WHERE name LIKE ?', '%'+name+'%',
-                function(err,rows){
-                  if(err) throw err;
-                 return callback(rows);
-                });
-
-
-         return;
+        return callback(data);
     }
-    catch(err) {
-    console.log(err.message);
-    }   
-    
+
+    try {
+        fetch('http://www.wowhead.com/spell=' + params.spell_id)
+            .then(function (res) {
+                return res.text();
+            }).then(function (body) {
+
+                // console.log(body);
+
+                var result = '';
+
+
+                var $ = cheerio.load(body);
+
+                try {
+                    var str = $.html();
+                }
+                catch (err) {
+                    console.log(err);
+                }
+
+                try {
+
+                    data = {};
+                    data.id = params.spell_id;
+                    data.name = $('h1.heading-size-1').html();
+
+                    spell_cache[params.spell_id] = data.name;
+
+                    return callback(data);
+
+                }
+                catch (err) {
+                    console.log(err);
+                }
+
+            });
+
+    }
+    catch (err) {
+        console.log(err.message);
+    }
+
 };
 
+/**
+ * Returns a promise of all records with entry matching the creature_id parameter.
+ * @param {string} creature_id - creature entry id from wowhead
+ * @returns {Promise.<[Object]>}
+ */
+function search_creature(creature_id) {
+    const creatureQueryStr = 'SELECT * FROM creature_template WHERE entry =' + creature_id;
 
-
-function search_creature_text(params, callback){
-    
-    try{
-        if(typeof(params)==='undefined')
-        { 
-            console.log('wft');
-            return;
-        }
-
-            var id = params.creature_id;
-
-            db.query(
-                'SELECT * FROM `creature_text` WHERE entry =' + id, 
-                function(err,rows){
-                  if(err) throw err;
-                  callback(rows);
-                });
-
-
-         return;
-    }
-    catch(err) {
-    console.log(err.message);
-    }   
-    
+    return new Promise((resolve, reject) => {
+        db.query(creatureQueryStr, (err, rows) => err ? reject(err) : resolve(rows));
+    });
 };
 
+/**
+ * Returns a promise of all creatures whose name matches the pattern of the provided name.
+ * @param {string} name - name or part of the creature name
+ * @returns {Promise.<[Object]>}
+ */
+function search_creature_name(name) {
+    const queryString = 'SELECT * FROM creature_template WHERE name LIKE ?',
+        pattern = '%' + name + '%';
 
-function search_gameobject(params, callback){
-    
-    try{
-        if(typeof(params)==='undefined')
-        { 
-            console.log('wft');
-            return;
-        }
+    return new Promise((resolve, reject) => {
+        db.query(queryString, pattern, (err, rows) => err ? reject(err) : resolve(rows));
+    });
+};
 
-            var id = params.gameobject_id;
+function search_creature_text(creature_id, callback) {
 
-            db.query(
-                'SELECT * FROM gameobject_template WHERE entry =' + id, 
-                function(err,rows){
-                  if(err) throw err;
-                  callback(rows);
-                });
+    const creatureTextQueryString = 'SELECT * FROM `creature_text` WHERE entry =' + creature_id;
 
-
-         return;
-    }
-    catch(err) {
-    console.log(err.message);
-    }   
-    
+    return new Promise((resolve, reject) => {
+        db.query(creatureTextQueryString, (err, rows) => err ? reject(err) : resolve(rows));
+    });
 };
 
 
-function search_sai(params, callback){
-    
-    try{
-        if(typeof(params)==='undefined')
-        { 
+function search_gameobject(params, callback) {
+
+    try {
+        if (typeof (params) === 'undefined') {
             console.log('wft');
             return;
         }
 
-            var entry_id = params.entry_id;
-            var source_type = params.source_type;
+        var id = params.gameobject_id;
 
-          //  console.log(entry_id);
-         //   console.log(source_type);
-
-            db.query(
-                'SELECT * FROM `smart_scripts` WHERE `entryorguid` = '+entry_id+' and `source_type` = '+source_type+';', 
-                function(err,rows){
-                  if(err) throw err;
-                  callback(rows);
-                });
+        db.query(
+            'SELECT * FROM gameobject_template WHERE entry =' + id,
+            function (err, rows) {
+                if (err) throw err;
+                callback(rows);
+            });
 
 
-         return;
+        return;
     }
-    catch(err) {
-    console.log(err.message);
-    }   
-    
+    catch (err) {
+        console.log(err.message);
+    }
+
 };
 
 
-function setup_sai(sai_data)
-{
-     try{
-        if(typeof(sai_data)==='undefined')
-        { 
+function search_sai(params, callback) {
+
+    try {
+        if (typeof (params) === 'undefined') {
             console.log('wft');
             return;
         }
-        
-          switch(sai_data[0].source_type) {
-                    case 0: //Creature
-                        var db_query = "UPDATE `creature_template` SET `AIName` = 'SmartAI' WHERE `entry` = "+sai_data[0].entryorguid+" ;";
-                        break;
-                    case 1: // GO
-                        var db_query = "UPDATE `gameobject_template` SET `AIName` = 'SmartGameObjectAI' WHERE `entry` = "+sai_data[0].entryorguid+" ;";
-                        break;
-                    case 2: //AreaTrigger
-                        var db_query = "REPLACE INTO `areatrigger_scripts` (`entry`, `ScriptName`) VALUES("+sai_data[0].entryorguid+",'SmartTrigger');";
-                        break; 
-                    case 9: //TimedActionList
-                        var db_query = "";
-                        break;
-                    default:
-                        break;
-                } 
-        
-                    if(sai_data[0].source_type!==9)
-                    {  
-                      db.query(db_query, function(err, result) {
-                        if (err) throw err;
-                           // console.log('Seted up SAI');
-                            return;
-                       });
-                    }
-         return;
+
+        var entry_id = params.entry_id;
+        var source_type = params.source_type;
+
+        //  console.log(entry_id);
+        //   console.log(source_type);
+
+        db.query(
+            'SELECT * FROM `smart_scripts` WHERE `entryorguid` = ' + entry_id + ' and `source_type` = ' + source_type + ';',
+            function (err, rows) {
+                if (err) throw err;
+                callback(rows);
+            });
+
+
+        return;
     }
-    catch(err) {
-    console.log(err.message);
-    } 
+    catch (err) {
+        console.log(err.message);
+    }
+
+};
+
+
+function setup_sai(sai_data) {
+    try {
+        if (typeof (sai_data) === 'undefined') {
+            console.log('wft');
+            return;
+        }
+
+        switch (sai_data[0].source_type) {
+            case 0: //Creature
+                var db_query = "UPDATE `creature_template` SET `AIName` = 'SmartAI' WHERE `entry` = " + sai_data[0].entryorguid + " ;";
+                break;
+            case 1: // GO
+                var db_query = "UPDATE `gameobject_template` SET `AIName` = 'SmartGameObjectAI' WHERE `entry` = " + sai_data[0].entryorguid + " ;";
+                break;
+            case 2: //AreaTrigger
+                var db_query = "REPLACE INTO `areatrigger_scripts` (`entry`, `ScriptName`) VALUES(" + sai_data[0].entryorguid + ",'SmartTrigger');";
+                break;
+            case 9: //TimedActionList
+                var db_query = "";
+                break;
+            default:
+                break;
+        }
+
+        if (sai_data[0].source_type !== 9) {
+            db.query(db_query, function (err, result) {
+                if (err) throw err;
+                // console.log('Seted up SAI');
+                return;
+            });
+        }
+        return;
+    }
+    catch (err) {
+        console.log(err.message);
+    }
 }
 
-function clean_up_sai(sai_data,callback)
-{
-    try{
-        if(typeof(sai_data)==='undefined')
-        { 
+function clean_up_sai(sai_data, callback) {
+    try {
+        if (typeof (sai_data) === 'undefined') {
             console.log('wft');
             return;
         }
-        
-          db.query('DELETE FROM smart_scripts WHERE (source_type = '+sai_data[0].source_type+' AND entryorguid = '+sai_data[0].entryorguid+');', function(err, result) {
+
+        db.query('DELETE FROM smart_scripts WHERE (source_type = ' + sai_data[0].source_type + ' AND entryorguid = ' + sai_data[0].entryorguid + ');', function (err, result) {
             if (err) throw err;
-                return callback(sai_data);
-                });
-        
-         return;
+            return callback(sai_data);
+        });
+
+        return;
     }
-    catch(err) {
-    console.log(err.message);
-    } 
+    catch (err) {
+        console.log(err.message);
+    }
 };
 
 
-function run_script(sai_data){
-    
-       try{
-        if(typeof(sai_data)==='undefined')
-        { 
+function run_script(sai_data) {
+
+    try {
+        if (typeof (sai_data) === 'undefined') {
             console.log('wft');
             return;
         }
-        
+
         setup_sai(sai_data);
-        
 
-        for(var i=0; i < sai_data.length; i++)
-               {
-                   
-                       var post  = sai_data[i];
 
-                       db.query('INSERT INTO smart_scripts SET ?', post, function(err, result) {
-                          if (err) throw err;
-                        });
-                } 
-         return;
+        for (var i = 0; i < sai_data.length; i++) {
+
+            var post = sai_data[i];
+
+            db.query('INSERT INTO smart_scripts SET ?', post, function (err, result) {
+                if (err) throw err;
+            });
+        }
+        return;
     }
-    catch(err) {
-    console.log(err.message);
-    }   
+    catch (err) {
+        console.log(err.message);
+    }
 };
 
 
-function run_text(text_data){
-    
-       try{
-        if(typeof(text_data)==='undefined')
-        { 
+function run_text(text_data) {
+
+    try {
+        if (typeof (text_data) === 'undefined') {
             console.log('wft');
             return;
         }
-        
-        for(var i=0; i < text_data.length; i++)
-               {
-                   
-                       var post  = text_data[i];
 
-                       db.query('REPLACE INTO `creature_text` SET ?', post, function(err, result) {
-                          if (err) throw err;
-                        });
+        for (var i = 0; i < text_data.length; i++) {
 
-                } 
-         return;
+            var post = text_data[i];
+
+            db.query('REPLACE INTO `creature_text` SET ?', post, function (err, result) {
+                if (err) throw err;
+            });
+
+        }
+        return;
     }
-    catch(err) {
-    console.log(err.message);
-    }   
+    catch (err) {
+        console.log(err.message);
+    }
 };
 
 
 
 
-function run_creature_template(creature_data,callback)
-{
-    try{
-        if(typeof(sai_data)==='undefined')
-        { 
+function run_creature_template(creature_data, callback) {
+    try {
+        if (typeof (sai_data) === 'undefined') {
             console.log('wft');
             return;
         }
- 
 
-        
-        
-        
-        
-        
-        
-        
-          db.query('DELETE FROM smart_scripts WHERE (source_type = '+sai_data[0].source_type+' AND entryorguid = '+sai_data[0].entryorguid+');', function(err, result) {
+
+
+
+
+
+
+
+
+        db.query('DELETE FROM smart_scripts WHERE (source_type = ' + sai_data[0].source_type + ' AND entryorguid = ' + sai_data[0].entryorguid + ');', function (err, result) {
             if (err) throw err;
-                return callback(sai_data);
-                });
-        
-         return;
+            return callback(sai_data);
+        });
+
+        return;
     }
-    catch(err) {
-    console.log(err.message);
-    } 
+    catch (err) {
+        console.log(err.message);
+    }
 };
 
 module.exports.search_gameobject = search_gameobject;

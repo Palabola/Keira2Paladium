@@ -4,8 +4,8 @@ module.exports = ({ app, controllers }) => {
     const controller = controllers.search;
     
     //Creature
-    app.get('/search/creature/:creature_id', controller.getCreaturebyID);
-    app.get('/search/creature/name/:creature_name', controller.getCreaturebyName);
+    app.get('/search/creature/:creature_id', controller.getCreatureByID);
+    app.get('/search/creature/name/:creature_name', controller.getCreatureByName);
     //Gameobject
     //app.get('/search/gameobject/', controller.getCreaturebyName);
 }
