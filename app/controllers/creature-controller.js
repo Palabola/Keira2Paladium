@@ -15,7 +15,6 @@ module.exports = ({ TC_API }) => {
         .then(data => res.json(data))
         .catch(err => res.status(500).json(err));
     },
-
     getCreatureTextByID(req, res) {
       const creature_id = req.params.creature_id;
 
@@ -28,7 +27,6 @@ module.exports = ({ TC_API }) => {
         .then(result => res.json(result))
         .catch(err => res.status(500).json(err));
     },
-
     CreatureTextUpdate(req, res) {
       res.send(JSON.parse(req.body));
 
@@ -37,7 +35,6 @@ module.exports = ({ TC_API }) => {
         return res.send(JSON.parse(req.body));
       });
     },
-
     CreatureTemplateUpdate(req, res) {
 
       let creature_data = JSON.parse(req.body);
@@ -51,6 +48,5 @@ module.exports = ({ TC_API }) => {
       });
 
     }
-
-  }
-}
+  };
+};

@@ -3,10 +3,7 @@
 module.exports = ({ app, controllers }) => {
     const controller = controllers.gameobject;
 
-    app.get('/gameobject/template/:gameobject_id', controller.getGameobjectbyID);
-
-    
-
+    app.get('/gameobject/template/:gameobject_id', controller.getGameobjectByID);
 }
 
 /*

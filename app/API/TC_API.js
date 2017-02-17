@@ -1,16 +1,14 @@
+'use strict';
+
 // LOGGER API
-var db = require('./db_connect');
-var express = require("express");
-var request = require('request');
-var cheerio = require('cheerio');
-var async = require("async");
-var app = express();
-var fetch = require('node-fetch');
-var squel = require("squel");
+const db = require('./db_connect'),
+    cheerio = require('cheerio'),
+    fetch = require('node-fetch'),
+    squel = require("squel");
 
-var spell_cache = {};
+const spell_cache = {};
 
-var globalQueryConfig = {
+const globalQueryConfig = {
     replaceSingleQuotes: true,
     singleQuoteReplacement: "\\'",
     autoQuoteTableNames: true,
@@ -141,7 +139,12 @@ function search_creature_name(name) {
     });
 };
 
-function search_creature_text(creature_id, callback) {
+/**
+ * Returns a promise of all creature texts for a creature with given enty
+ * @param {string} creature_id
+ * @returns {Promise.<[Object]>}
+ */
+function search_creature_text(creature_id) {
 
     const creatureTextQueryString = 'SELECT * FROM `creature_text` WHERE entry =' + creature_id;
 
@@ -150,62 +153,31 @@ function search_creature_text(creature_id, callback) {
     });
 };
 
+/**
+ * Returns a promise of the provided game objects that have their entry equal to the passed id.
+ * @param {string} gameobject_id
+ * @returns {Promise.<[Object]>}
+ */
+function search_gameobject(gameobject_id) {
+    const gameobjectQuery = 'SELECT * FROM gameobject_template WHERE entry = ' + gameobject_id + ';';
 
-function search_gameobject(params, callback) {
-
-    try {
-        if (typeof (params) === 'undefined') {
-            console.log('wft');
-            return;
-        }
-
-        var id = params.gameobject_id;
-
-        db.query(
-            'SELECT * FROM gameobject_template WHERE entry =' + id,
-            function (err, rows) {
-                if (err) throw err;
-                callback(rows);
-            });
-
-
-        return;
-    }
-    catch (err) {
-        console.log(err.message);
-    }
-
+    return new Promise((resolve, reject) => {
+        db.query(gameobjectQuery, (err, rows) => err ? reject(err) : resolve(rows));
+    });
 };
 
+/**
+ * Return a promise of all smart scripts that match both the passed entry id and the source type.
+ * @param {string} entry_id
+ * @param {string} source_type
+ * @returns {Promise.<[Object]>}
+ */
+function search_sai(entry_id, source_type) {
+    const smartSaiQueryString = 'SELECT * FROM `smart_scripts` WHERE `entryorguid` = ' + entry_id + ' and `source_type` = ' + source_type + ';';
 
-function search_sai(params, callback) {
-
-    try {
-        if (typeof (params) === 'undefined') {
-            console.log('wft');
-            return;
-        }
-
-        var entry_id = params.entry_id;
-        var source_type = params.source_type;
-
-        //  console.log(entry_id);
-        //   console.log(source_type);
-
-        db.query(
-            'SELECT * FROM `smart_scripts` WHERE `entryorguid` = ' + entry_id + ' and `source_type` = ' + source_type + ';',
-            function (err, rows) {
-                if (err) throw err;
-                callback(rows);
-            });
-
-
-        return;
-    }
-    catch (err) {
-        console.log(err.message);
-    }
-
+    return new Promise((resolve, reject) => {
+        db.query(smartSaiQueryString, (err, rows) => err ? reject(err) : resolve(rows));
+    });
 };
 
 
