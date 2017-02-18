@@ -57,7 +57,7 @@ module.exports = ({ TC_API }) => {
       const table = req.params.table;
       
       // Use Promise
-      TC_API.get_object_entitiesbyEntry(creature_id, table).then(result => {res.send(result);});
+      TC_API.get_object_entitiesbyEntry(creature_id, table).then(result => {res.send(result);}).catch(err => {console.log(err); res.send('SQL Error!')});
     },
   };
 };

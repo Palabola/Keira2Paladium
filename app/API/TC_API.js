@@ -149,7 +149,7 @@ function get_object_entitiesbyEntry(entry,table) {
     }
     else
     {
-      return;
+      return Promise.resolve(new Error('Whatever'));
     } 
 };
 

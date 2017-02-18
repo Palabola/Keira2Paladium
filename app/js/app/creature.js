@@ -191,7 +191,7 @@
 
     $scope.search = function (creatureEntry, creatureName, creatureSubname) {
 
-      if ( creatureEntry && (!creatureName && !creatureSubname) && (creatureEntry.length > 2) ) {
+      if ( creatureEntry && (!creatureName && !creatureSubname) && (creatureEntry.length >= 1) ) {
           
       $http.get( app.api + "search/creature/" + creatureEntry).success(function (data, status, header, config) {
         $scope.creatures = $rootScope.fixNumericValues(data);
