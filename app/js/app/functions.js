@@ -50,7 +50,7 @@
   app.synchGetCreatureNameById = function(id) {
     var request, data;
     request = new XMLHttpRequest();
-    request.open('GET', app.api + "creature/template/" + id, false);
+    request.open('GET', app.api + "creature/creature_template/" + id, false);
     request.send(null);
 
     if (request.status === 200) {
@@ -65,7 +65,7 @@
   app.synchGetCreatureNameByGuid = function(guid) {
     var request, data, id;
     request = new XMLHttpRequest();
-    request.open('GET', app.api + "creature/spawn/guid/" + guid, false);
+    request.open('GET', app.api + "creature/creature_addon/guid/" + guid, false);
     request.send(null);
 
     if (request.status === 200) {
@@ -75,7 +75,7 @@
       id = data[0].id;
 
       request = new XMLHttpRequest();
-      request.open('GET', app.api + "creature/template/" + id, false);
+      request.open('GET', app.api + "creature/creature_template/" + id, false);
       request.send(null);
 
       if (!Array.isArray(data) || request.status === 200) {
@@ -181,7 +181,7 @@
   app.synchGetGameObjectNameById = function(id) {
     var request, data;
     request = new XMLHttpRequest();
-    request.open('GET', app.api + "gameobject/template/" + id, false);
+    request.open('GET', app.api + "gameobject/gameobject_template/" + id, false);
     request.send(null);
 
     if (request.status === 200) {
@@ -196,7 +196,7 @@
   app.synchGetGameObjectNameByGuid = function(guid) {
     var request, data, id;
     request = new XMLHttpRequest();
-    request.open('GET', app.api + "gameobject/spawn/guid/" + guid, false);
+    request.open('GET', app.api + "gameobject/gameobject/guid/" + guid, false);
     request.send(null);
 
     if (request.status === 200) {
@@ -206,7 +206,7 @@
       id = data[0].id;
 
       request = new XMLHttpRequest();
-      request.open('GET', app.api + "gameobject/template/" + id, false);
+      request.open('GET', app.api + "gameobject/gameobject_template/" + id, false);
       request.send(null);
 
       if (!Array.isArray(data) || request.status === 200) {

@@ -79,7 +79,7 @@
          })
           .success(function(data) {  
 
-                $http.get( app.api + "creature/text/" + $stateParams.entryOrGuid )
+                $http.get( app.api + "creature/creature_text/" + $stateParams.entryOrGuid )
               .success(function (data, status, header, config) {
               $scope.current_creature_text = $rootScope.fixNumericValues(data);
               $scope.new_creature_text = angular.copy($scope.current_creature_text);
@@ -87,7 +87,7 @@
              // $scope.
             })
               .error(function (data, status, header, config) {
-              console.log("[ERROR] creature/onkill_reputation/ $http.get request failed");
+              console.log("[ERROR] creature/creature_text/ $http.get request failed");
             });
 
 
