@@ -1,4 +1,7 @@
 /* Store Database Primary/Indexed keys for databases for proper Search and validating */
+
+/* Possible support, version handling, Type validation, Database Join, Field Limitation */
+
 database_enum ={  
 "creature":{"entry":"id"},
 "creature_addon":{"entry":""},
