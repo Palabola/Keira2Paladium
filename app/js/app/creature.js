@@ -265,9 +265,6 @@
 
       var whereCondition = "entry = " + $scope.current_creature_template.entry;
       
-      $scope.SaveToDatabase();
-
-
       // creature_template
       $scope.creatureScript += app.getUpdateQuery("creature_template", whereCondition, $scope.current_creature_template, $scope.new_creature_template);
 
@@ -315,6 +312,11 @@
       $scope.disactiveAllTabs();
       $scope.generateCreatureScript();
       $scope.creatureTabs.script = true;
+    };
+    
+    /* [Function] Send JSON and run Query at API */
+    $scope.runSaveToDatabase = function() {
+       $scope.SaveToDatabase();
     };
 
   });
