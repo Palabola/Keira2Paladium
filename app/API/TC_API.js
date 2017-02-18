@@ -4,6 +4,7 @@ const http = require('http');
 
 // LOGGER API
 const db = require('./db_connect'),
+    db_enum = require('./TC_API_ENUM'),    
     squel = require('squel');
 
 const SPELL_CACHE = {},
@@ -127,6 +128,32 @@ function search_creature(creature_id) {
     return new Promise((resolve, reject) => {
         db.query(creatureQueryStr, (err, rows) => err ? reject(err) : resolve(rows));
     });
+};
+
+/**
+ * Returns a promise of all records with entry matching the ObjectId(Creature,Gameobject,Areatrigger...) parameters in specify databases.
+ * @param {string} creature_id - creature entry id from wowhead
+ * @returns {Promise.<[Object]>}
+ */
+function get_object_entities(entry,table) {
+    
+    var table = table;
+    console.log(db_enum.database_enum.table); // Why, it isn't work?
+    
+    let where = db_enum.database_enum[table].entry;
+    
+    if(where!="")
+    {    
+    const creatureQueryStr = 'SELECT * FROM creature_template WHERE entry =' + creature_id;
+
+    return new Promise((resolve, reject) => {
+        db.query(creatureQueryStr, (err, rows) => err ? reject(err) : resolve(rows));
+    });
+    }
+    else
+    {
+      return "Non-definied Database";  
+    }    
 };
 
 /**
@@ -335,3 +362,4 @@ module.exports.run_text = run_text;
 module.exports.clean_up_sai = clean_up_sai;
 module.exports.search_spell = search_spell;
 module.exports.getUpdateQuery = getUpdateQuery;
+module.exports.get_object_entities = get_object_entities;

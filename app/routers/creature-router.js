@@ -6,6 +6,7 @@ module.exports = ({ app, controllers }) => {
     app
       .get('/creature/template/:creature_id', controller.getCreatureByID)
       .get('/creature/text/:creature_id', controller.getCreatureTextByID)
+      .get('/creature/:table/:creature_id',controller.get_object_entities)
       .post('/creature_text_execute', controller.CreatureTextUpdate)
       .post('/creature/template/update', controller.CreatureTemplateUpdate);
 };

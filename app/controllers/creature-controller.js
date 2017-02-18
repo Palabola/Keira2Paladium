@@ -2,6 +2,7 @@
 
 module.exports = ({ TC_API }) => {
   return {
+    // getCreatureByID  
     getCreatureByID(req, res) {
 
       const creature_id = req.params.creature_id;
@@ -15,6 +16,7 @@ module.exports = ({ TC_API }) => {
         .then(data => res.json(data))
         .catch(err => res.status(500).json(err));
     },
+    // getCreatureTextByID
     getCreatureTextByID(req, res) {
       const creature_id = req.params.creature_id;
 
@@ -35,6 +37,7 @@ module.exports = ({ TC_API }) => {
         return res.send(JSON.parse(req.body));
       });
     },
+    // CreatureTemplateUpdate
     CreatureTemplateUpdate(req, res) {
 
       let creature_data = JSON.parse(req.body);
@@ -46,7 +49,18 @@ module.exports = ({ TC_API }) => {
         return res.send(result);
 
       });
+    },
+    // GetCreatureEntities
+    get_object_entities(req, res) {
 
-    }
+      const creature_entry = req.params.creature_id;
+      const table = req.params.table;
+      
+      TC_API.get_object_entities(creature_entry, table, (result) => {
+
+        return res.send(result);
+
+      });
+    },
   };
 };
