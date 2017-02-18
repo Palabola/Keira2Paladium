@@ -51,12 +51,12 @@ module.exports = ({ TC_API }) => {
       });
     },
     // GetCreatureEntities
-    get_object_entities(req, res) {
+    get_object_entitiesbyEntry(req, res) {
 
       const creature_id = req.params.creature_id;
       const table = req.params.table;
       // Use Promise
-      TC_API.get_object_entities(creature_id, table).then(result => { res.send(result)});
+      TC_API.get_object_entitiesbyEntry(creature_id, table).then(result => { res.send(result)});
     },
   };
 };

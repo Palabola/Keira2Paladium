@@ -101,18 +101,18 @@
         console.log("[ERROR] creature/creature_onkill_reputation/ $http.get request failed");
       });
 
-      /* Retrieve all creature_template_loot data */
-      $http.get( app.api + "creature/creature_template_loot/" + $stateParams.id )
+      /* Retrieve all creature_loot_template data */
+      $http.get( app.api + "creature/creature_loot_template/" + $stateParams.id )
         .success(function (data, status, header, config) {
         $scope.current_creature_loot_template = $rootScope.fixNumericValues(data);
         $scope.new_creature_loot_template = angular.copy($scope.current_creature_loot_template);
       })
         .error(function (data, status, header, config) {
-        console.log("[ERROR] creature/creature_template_loot/" + $stateParams.id + " $http.get request failed");
+        console.log("[ERROR] creature/creature_loot_template/" + $stateParams.id + " $http.get request failed");
       });
 
       /* Retrieve all skinning_template_loot data */
-      $http.get( app.api + "creature/skinning_loot_template" + $stateParams.id )
+      $http.get( app.api + "creature/skinning_loot_template/" + $stateParams.id )
         .success(function (data, status, header, config) {
         $scope.current_skinning_loot_template = $rootScope.fixNumericValues(data);
         $scope.new_skinning_loot_template = angular.copy($scope.current_skinning_loot_template);
@@ -122,7 +122,7 @@
       });
 
       /* Retrieve all pickpocketing_template_loot data */
-      $http.get( app.api + "creature/pickpocketing_loot_template" + $stateParams.id )
+      $http.get( app.api + "creature/pickpocketing_loot_template/" + $stateParams.id )
         .success(function (data, status, header, config) {
         $scope.current_pickpocketing_loot_template = $rootScope.fixNumericValues(data);
         $scope.new_pickpocketing_loot_template = angular.copy($scope.current_pickpocketing_loot_template);

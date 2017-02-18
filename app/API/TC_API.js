@@ -135,15 +135,17 @@ function search_creature(creature_id) {
  * @param {string} creature_id - creature entry id from wowhead
  * @returns {Promise.<[Object]>}
  */
-function get_object_entities(entry,table) {
+function get_object_entitiesbyEntry(entry,table) {
     
-    console.log(db_enum.database_enum[table]); // Why, it isn't work?
+    console.log(table);
+    
+    //console.log(db_enum.database_enum[table]); 
     
     let where = db_enum.database_enum[table].entry;
     
     if(where!="")
     {    
-    const creatureQueryStr = 'SELECT * FROM creature_template WHERE entry =' + creature_id;
+    const creatureQueryStr = 'SELECT * FROM '+table+' WHERE '+where+' =' + entry;
 
     return new Promise((resolve, reject) => {
         db.query(creatureQueryStr, (err, rows) => err ? reject(err) : resolve(rows));
@@ -353,7 +355,6 @@ function run_creature_template(creature_data, callback) {
 module.exports.search_gameobject = search_gameobject;
 module.exports.search_creature = search_creature;
 module.exports.search_creature_name = search_creature_name;
-module.exports.search_creature_text = search_creature_text;
 module.exports.search_sai = search_sai;
 module.exports.run_script = run_script;
 module.exports.run_creature_template = run_creature_template;
@@ -361,4 +362,4 @@ module.exports.run_text = run_text;
 module.exports.clean_up_sai = clean_up_sai;
 module.exports.search_spell = search_spell;
 module.exports.getUpdateQuery = getUpdateQuery;
-module.exports.get_object_entities = get_object_entities;
+module.exports.get_object_entitiesbyEntry = get_object_entitiesbyEntry;
