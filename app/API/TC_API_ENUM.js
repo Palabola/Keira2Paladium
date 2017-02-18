@@ -14,7 +14,12 @@ database_enum ={
 "creature_template":{"entry":"entry"},
 "creature_template_addon":{"entry":"entry"},
 "creature_template_locale":{"entry":"entry"},
-"creature_text":{"entry":"entry"}   
+"creature_text":{"entry":"Entry"},
+"npc_trainer":{"entry":"ID"},
+"npc_vendor":{"entry":"entry"},  
+"npc_text":{"entry":"ID"},  
+"skinning_loot_template":{"entry":"Entry"},  
+"pickpocketing_loot_template":{"entry":"Entry"},  
 };
 
 module.exports.database_enum = database_enum;
