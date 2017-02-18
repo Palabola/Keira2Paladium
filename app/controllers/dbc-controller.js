@@ -3,14 +3,16 @@
 module.exports = ({ TC_API }) => {
     return {
         getSpellbyID(req, res) {
-            
-                   TC_API.search_spell(req.params,function(result){
-     
-                        let spell = {"id": result.id, "spellName": result.name};
+            const spell_id = req.params.spell_id;
 
-                        return res.send(spell);
+            if(!spell_id) {
+                return res.status(400).json({ message: 'Search for spell by id requires spell id' });
+            }
 
-                      });
+            TC_API
+                .search_spell(spell_id)
+                .then(spell => res.json(spell))
+                .catch(err => res.status(500).json(err));
         }
     }
 }

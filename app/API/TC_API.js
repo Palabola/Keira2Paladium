@@ -1,12 +1,13 @@
 'use strict';
 
+const http = require('http');
+
 // LOGGER API
 const db = require('./db_connect'),
-    cheerio = require('cheerio'),
-    fetch = require('node-fetch'),
-    squel = require("squel");
+    squel = require('squel');
 
-const spell_cache = {};
+const SPELL_CACHE = {},
+    wowheadSpellNameRegexp = /<h1.*class=".*heading-size-1.*">(.*)<\/h1>/gi;
 
 const globalQueryConfig = {
     replaceSingleQuotes: true,
@@ -57,59 +58,62 @@ function getUpdateQuery(tableName, whereCondition, currentRow, newRow, callback)
 
 };
 
-function search_spell(params, callback) {
-
-    // Store Cache
-    if (spell_cache[params.spell_id]) {
-        data = {};
-        data.id = params.spell_id;
-        data.name = spell_cache[params.spell_id];
-
-        return callback(data);
+/**
+ * Returns a promise of an object with spell id and spell name. 
+ * The spell id is used to make a GET request to wowhead and extract the name of the spell
+ * with the matching id from the html page. If the request has an error, the promise is rejected.
+ * If the spell is not matched in the html, the promise is resolve with null.
+ * Successful requests to wowhead are cached.
+ * @param {string} spell_id - the wowhead id of the spell to search for
+ * @returns {Promise.<{ id: string, name: string }>}
+ */
+function search_spell(spell_id) {
+    if (SPELL_CACHE[spell_id] !== undefined) {
+        return Promise.resolve(SPELL_CACHE[spell_id]);
     }
 
-    try {
-        fetch('http://www.wowhead.com/spell=' + params.spell_id)
-            .then(function (res) {
-                return res.text();
-            }).then(function (body) {
+    const options = {
+        hostname: 'www.wowhead.com',
+        path: '/spell=' + spell_id,
+        method: 'get'
+    };
 
-                // console.log(body);
+    return new Promise((resolve, reject) => {
+        /** http GET request to www.wowhead.com/spell={spell_id} */
+        http.request(
+            options,
+            response => {
+                /** subscribe to response object events in this callback */
 
-                var result = '';
+                /** if the resposne object is in wrong state, reject */
+                response.on('error', reject)
+                    /** if the wowhead page has been read but no spell name has matches, resolve with null */
+                    .on('end', () => {
+                        if (!SPELL_CACHE[spell_id]) {
+                            SPELL_CACHE[spell_id] = null;
+                            resolve(null);
+                        }
+                    })
+                    /** match a chunk against the regexp, if match succeeds, save the name
+                     *  in cache, close the response stream and resolve the promise */
+                    .on('data', chunk => {
+                        const wowheadHtmlMatches = wowheadSpellNameRegexp.exec(chunk.toString());
 
+                        if (wowheadHtmlMatches !== null) {
+                            /** cache the request result */
+                            SPELL_CACHE[spell_id] = {
+                                id: spell_id,
+                                name: wowheadHtmlMatches[1]
+                            };
 
-                var $ = cheerio.load(body);
-
-                try {
-                    var str = $.html();
-                }
-                catch (err) {
-                    console.log(err);
-                }
-
-                try {
-
-                    data = {};
-                    data.id = params.spell_id;
-                    data.name = $('h1.heading-size-1').html();
-
-                    spell_cache[params.spell_id] = data.name;
-
-                    return callback(data);
-
-                }
-                catch (err) {
-                    console.log(err);
-                }
-
-            });
-
-    }
-    catch (err) {
-        console.log(err.message);
-    }
-
+                            response.destroy();
+                            resolve(SPELL_CACHE[spell_id]);
+                        }
+                    })
+            })
+            /** fire the request */
+            .end();
+    });
 };
 
 /**
