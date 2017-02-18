@@ -58,6 +58,8 @@
        *  we will use those two objects to generate the SQL queries
        */
 
+       /* Use real table names, to make API less incostintent*/
+
       /* Retrieve all creature_template data */
       $http.get( app.api + "creature/template/" + $stateParams.id )
         .success(function (data, status, header, config) {
@@ -70,7 +72,7 @@
       });
 
       /* Retrieve all creature_equip_template data */
-      $http.get( app.api + "creature/equip_template/" + $stateParams.id )
+      $http.get( app.api + "creature/creature_equip_template/" + $stateParams.id )
         .success(function (data, status, header, config) {
         $scope.current_creature_equip_template = $rootScope.fixNumericValues(data[0]);
         $scope.new_creature_equip_template = angular.copy($scope.current_creature_equip_template);
@@ -80,7 +82,7 @@
       });
 
       /* Retrieve all creature_template_addon data */
-      $http.get( app.api + "creature/template_addon/" + $stateParams.id )
+      $http.get( app.api + "creature/creature_template_addon/" + $stateParams.id )
         .success(function (data, status, header, config) {
         $scope.current_creature_template_addon = $rootScope.fixNumericValues(data[0]);
         $scope.new_creature_template_addon = angular.copy($scope.current_creature_template_addon);
@@ -90,7 +92,7 @@
       });
 
       /* Retrieve all creature_onkill_reputation data */
-      $http.get( app.api + "creature/onkill_reputation/" + $stateParams.id )
+      $http.get( app.api + "creature/creature_onkill_reputation/" + $stateParams.id )
         .success(function (data, status, header, config) {
         $scope.current_creature_onkill_reputation = $rootScope.fixNumericValues(data[0]);
         $scope.new_creature_onkill_reputation = angular.copy($scope.current_creature_onkill_reputation);

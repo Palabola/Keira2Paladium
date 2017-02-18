@@ -53,14 +53,10 @@ module.exports = ({ TC_API }) => {
     // GetCreatureEntities
     get_object_entities(req, res) {
 
-      const creature_entry = req.params.creature_id;
+      const creature_id = req.params.creature_id;
       const table = req.params.table;
-      
-      TC_API.get_object_entities(creature_entry, table, (result) => {
-
-        return res.send(result);
-
-      });
+      // Use Promise
+      TC_API.get_object_entities(creature_id, table).then(result => { res.send(result)});
     },
   };
 };

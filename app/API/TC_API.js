@@ -137,8 +137,7 @@ function search_creature(creature_id) {
  */
 function get_object_entities(entry,table) {
     
-    var table = table;
-    console.log(db_enum.database_enum.table); // Why, it isn't work?
+    console.log(db_enum.database_enum[table]); // Why, it isn't work?
     
     let where = db_enum.database_enum[table].entry;
     
