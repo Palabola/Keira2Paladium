@@ -3,9 +3,9 @@
 module.exports = ({ TC_API }) => {
     return {
         getCreatureByID(req, res) {
-            const creature_id = req.params.creature_id;
+            const creature_id = parseInt(req.params.creature_id);
 
-            if (!creature_id) {
+            if (!creature_id || !Number.isInteger(creature_id) || creature_id < 0) {
                 return res.status(400).json({ message: 'Searching for a creature by id requires creature id' });
             }
 
