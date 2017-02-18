@@ -136,11 +136,7 @@ function search_creature(creature_id) {
  * @returns {Promise.<[Object]>}
  */
 function get_object_entitiesbyEntry(entry,table) {
-    
-    console.log(table);
-    
-    //console.log(db_enum.database_enum[table]); 
-    
+
     let where = db_enum.database_enum[table].entry;
     
     if(where!="")
@@ -153,8 +149,8 @@ function get_object_entitiesbyEntry(entry,table) {
     }
     else
     {
-      return "Non-definied Database";  
-    }    
+      return;
+    } 
 };
 
 /**
