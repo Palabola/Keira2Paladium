@@ -7,7 +7,7 @@
 
   var app = angular.module('keira2', ['ui.router', 'ui.bootstrap', 'chieffancypants.loadingBar', 'tableSort', 'jdf.ngThemeSwitcher',  'ngStorage', 'hljs']);
 
-  app.run(function($rootScope, $uibModal, $stateParams, $localStorage) {
+  app.run(function($rootScope, $uibModal, $stateParams, $localStorage, $http) {
 
     if (!app.api) {
       if ($localStorage.api) {
@@ -317,14 +317,33 @@
     };
     
     /* Run AJAX Post Diff SQL Script */
+    /* TODO: OpenModal at Error!*/
     $rootScope.sendDiffScriptAJAX = function(tableName, primaryKey1, primaryKey2, currentRows, newRows) {
 
       if ( !$rootScope.isEntrySelected() ) { return; }
 
-        var SQLCode = app.getDiffDeleteInsert(tableName, primaryKey1, primaryKey2, currentRows, newRows);
+        //var SQLCode = app.getDiffDeleteInsert(tableName, primaryKey1, primaryKey2, currentRows, newRows);
 
-        console.log(SQLCode);
+        //console.log(SQLCode);
         
+            let json = {};
+
+                    json.tableName = tableName;
+                    json.primaryKey1 = primaryKey1;
+                    json.primaryKey2 = primaryKey2;
+                    json.currentRows = currentRows;
+                    json.newRows = newRows;
+
+            $http({
+                method  : 'POST',
+                url     : location.origin+'/TC_API/DiffScript',
+                data    :  json, 
+                headers : {'Content-Type': 'text/plain'} 
+               })
+                .success(function(data) {  
+
+                      }
+                   );
 
     };
 

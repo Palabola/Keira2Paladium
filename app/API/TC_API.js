@@ -17,6 +17,9 @@ const globalQueryConfig = {
     autoQuoteFieldNames: true
 };
 
+    /* Query Building TODO: */
+    /* Save Query history to make it commitable into TC */
+
   /* [Function] getUpdateQuery
    *  Description: Tracks difference between two row objects and generate UPDATE query
    *  Inputs:
