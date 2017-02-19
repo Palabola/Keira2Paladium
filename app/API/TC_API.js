@@ -28,47 +28,36 @@ const globalQueryConfig = {
    *  - currentRow -> object of the original table
    *  - newRow -> object bound with ng-model to view
    */
-function getUpdateQuery(tableName, whereCondition, currentRow, newRow, callback) {
+  function getUpdateQuery(tableName, whereCondition, currentRow, newRow) {
 
     var key,
         diff = false,
-        query = squel.update(globalQueryConfig);
+        query = squel.update(app.globalQueryConfig);
 
     query.table(tableName);
 
     for (key in currentRow) {
-        if (currentRow[key] !== newRow[key]) {
+      if (currentRow[key] !== newRow[key]) {
 
-            // Convert numeric values
-            if (!isNaN(currentRow[key]) && !isNaN(newRow[key]) && newRow[key] != "") {
-                newRow[key] = Number(newRow[key]);
-            }
-
-            query.set(key, newRow[key]);
-            diff = true;
+        // Convert numeric values
+        if (!isNaN(currentRow[key]) && !isNaN(newRow[key]) && newRow[key] != "") {
+          newRow[key] = Number(newRow[key]);
         }
+
+        query.set(key, newRow[key]);
+        diff = true;
+      }
     }
 
     if (!diff) {
-        console.log("[INFO] There are no `" + tableName + "` changes");
-        result = "";
+      console.log("[INFO] There are no `" + tableName + "` changes");
+      return "";
     }
 
     query.where(whereCondition);
 
-    let result = query.toString();
-
-    if (result !== "") {
-        db.query(result, function (err, result) {
-            if (err) throw err;
-            return callback(result);
-        });
-    }
-    else {
-        return callback(result);
-    }
-
-};
+    return "-- Table `" + tableName + "`\n" + query.toString() + ";\n\n";
+  };
 
 /* [Function] getDiffDeleteInsert (TWO PRIMARY KEYS)
    *  Description: Tracks difference between two groups of rows and generate DELETE/INSERT query
@@ -164,6 +153,85 @@ function getUpdateQuery(tableName, whereCondition, currentRow, newRow, callback)
 
     return query;
 
+  };
+
+/* [Function] getDiffDeleteInsertOneKey (ONE PRIMARY KEY)
+   *  Description: Tracks difference between two groups of rows and generate DELETE/INSERT query
+   *  Inputs:
+   *  - tableName -> the name of the table (example: "creature_loot_template")
+   *  - primaryKeyName -> name of the primary key (example: "guid")
+   *  - currentRows -> object of the original table   (group of rows)
+   *  - newRows -> object bound with ng-model to view (group of rows)
+   */
+  function getDiffDeleteInsertOneKey(tableName, primaryKey, entityType, entity, currentRows, newRows) {
+
+    if ( newRows === undefined && currentRows === undefined) { return; }
+
+    var query, i, deleteQuery, insertQuery, cleanedNewRows, row,
+        involvedRows      = [], // -> needed for DELETE
+        addedOrEditedRows = []; // -> needed for INSERT
+
+    // prepare rows for query generation
+    cleanedNewRows = app.cleanRows(newRows);
+
+    deleteQuery = squel.delete(app.globalQueryConfig).from(tableName);
+    insertQuery = squel.insert(app.globalQueryConfig).into(tableName);
+
+    // find deleted or edited rows
+    for (i = 0; i < currentRows.length; i++) {
+
+      row = app.containsRow(primaryKey, currentRows[i], cleanedNewRows);
+      if (!row) {
+
+        // currentRows[i] was deleted
+        involvedRows.push(currentRows[i][primaryKey]);
+
+      } else if ( JSON.stringify(row) !== JSON.stringify(currentRows[i]) ) {
+
+        // row was edited
+        involvedRows.push(row[primaryKey]);
+        addedOrEditedRows.push(row);
+      }
+    }
+
+    // find added rows
+    for (i = 0; i < cleanedNewRows.length; i++) {
+
+      if ( !app.containsRow(primaryKey, cleanedNewRows[i], currentRows) ) {
+
+        // cleanedNewRows[i] was added
+        involvedRows.push(cleanedNewRows[i][primaryKey]);
+        addedOrEditedRows.push(cleanedNewRows[i]);
+      }
+    }
+
+    // return if there are no changes
+    if ( involvedRows.length <= 0 ) { return "-- There are no changes"; }
+
+    // convert any numbers to numeric values
+    for (i = 0; i < involvedRows.length; i++) {
+      if (!isNaN(involvedRows[i]) && involvedRows[i] != "") {
+        involvedRows[i] = Number(involvedRows[i]);
+      }
+    }
+
+    // build queries
+    deleteQuery.where(primaryKey + " IN ?", involvedRows);
+    insertQuery.setFieldsRows(addedOrEditedRows);
+
+    // compose final query
+    query = "-- DIFF `" + tableName + "` of " + entityType + " " + entity + "\n";
+    query += deleteQuery.toString() + ";\n";
+
+    if (addedOrEditedRows.length > 0) {
+      query += insertQuery.toString() + ";\n";
+    }
+
+    // format query
+    query = query.replace(") VALUES (", ") VALUES\n(");
+    query = query.replace(/\)\, \(/g, "),\n(");
+
+    return query;
   };
 
 /**
