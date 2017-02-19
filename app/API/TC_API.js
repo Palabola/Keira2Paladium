@@ -19,6 +19,46 @@ const globalQueryConfig = {
 
     /* Query Building TODO: */
     /* Save Query history to make it commitable into TC */
+    
+   /* Private Functions */ 
+   
+  function  cleanRows(rows) {
+    var cleanedRows, i, key;
+            /* Here we need to remove the $$hashKey field from all newRows objects
+             * because we don't want it inside our query
+             * if we remove $$hashKey field directly from newRows objects we will break the DOM
+             * then we create a copy of newRows without that field
+             * clearedNewRows will be the copy of newRows objects without the $$hashKey field */
+
+            cleanedRows = rows;
+
+            // Convert numeric values
+            for (i = 0; i < cleanedRows.length; i++) {
+              for (key in cleanedRows[i]) {
+                if (cleanedRows[i].hasOwnProperty(key)) {
+                  if (!isNaN(cleanedRows[i][key]) && cleanedRows[i][key] != null && cleanedRows[i][key] != "") {
+                    cleanedRows[i][key] = Number(cleanedRows[i][key]);
+                  }
+                }
+              }
+            }
+            
+    return cleanedRows;
+  };
+    
+   function containsRow(key, object, array) {
+    var i;
+
+    for (i = 0; i < array.length; i++) {
+      if (array[i][key] == object[key]) {
+        return array[i];
+      }
+    }
+
+    return false;
+  };  
+   /* Private Functions */ 
+
 
   /* [Function] getUpdateQuery
    *  Description: Tracks difference between two row objects and generate UPDATE query
@@ -32,7 +72,7 @@ const globalQueryConfig = {
 
     var key,
         diff = false,
-        query = squel.update(app.globalQueryConfig);
+        query = squel.update(globalQueryConfig);
 
     query.table(tableName);
 
@@ -91,15 +131,15 @@ const globalQueryConfig = {
     }
 
     // prepare rows for query generation
-    cleanedNewRows = app.cleanRows(newRows);
+    cleanedNewRows = cleanRows(newRows);
 
-    deleteQuery = squel.delete(app.globalQueryConfig).from(tableName);
-    insertQuery = squel.insert(app.globalQueryConfig).into(tableName);
+    deleteQuery = squel.delete(globalQueryConfig).from(tableName);
+    insertQuery = squel.insert(globalQueryConfig).into(tableName);
 
     // find deleted or edited rows
     for (i = 0; i < currentRows.length; i++) {
 
-      row = app.containsRow(primaryKey2, currentRows[i], cleanedNewRows);
+      row = containsRow(primaryKey2, currentRows[i], cleanedNewRows);
       if (!row) {
 
         // currentRows[i] was deleted
@@ -112,11 +152,11 @@ const globalQueryConfig = {
         addedOrEditedRows.push(row);
       }
     }
-
+    
     // find added rows
     for (i = 0; i < cleanedNewRows.length; i++) {
 
-      if ( !app.containsRow(primaryKey2, cleanedNewRows[i], currentRows) ) {
+      if ( !containsRow(primaryKey2, cleanedNewRows[i], currentRows) ) {
 
         // cleanedNewRows[i] was added
         involvedRows.push(cleanedNewRows[i][primaryKey2]);
@@ -163,7 +203,7 @@ const globalQueryConfig = {
    *  - currentRows -> object of the original table   (group of rows)
    *  - newRows -> object bound with ng-model to view (group of rows)
    */
-  function getDiffDeleteInsertOneKey(tableName, primaryKey, entityType, entity, currentRows, newRows) {
+  function getDiffDeleteInsertOneKey(tableName, primaryKey, currentRows, newRows,callback) {
 
     if ( newRows === undefined && currentRows === undefined) { return; }
 
@@ -172,15 +212,15 @@ const globalQueryConfig = {
         addedOrEditedRows = []; // -> needed for INSERT
 
     // prepare rows for query generation
-    cleanedNewRows = app.cleanRows(newRows);
+    cleanedNewRows = cleanRows(newRows);
 
-    deleteQuery = squel.delete(app.globalQueryConfig).from(tableName);
-    insertQuery = squel.insert(app.globalQueryConfig).into(tableName);
+    deleteQuery = squel.delete(globalQueryConfig).from(tableName);
+    insertQuery = squel.insert(globalQueryConfig).into(tableName);
 
     // find deleted or edited rows
     for (i = 0; i < currentRows.length; i++) {
 
-      row = app.containsRow(primaryKey, currentRows[i], cleanedNewRows);
+      row = containsRow(primaryKey, currentRows[i], cleanedNewRows);
       if (!row) {
 
         // currentRows[i] was deleted
@@ -194,10 +234,11 @@ const globalQueryConfig = {
       }
     }
 
+
     // find added rows
     for (i = 0; i < cleanedNewRows.length; i++) {
 
-      if ( !app.containsRow(primaryKey, cleanedNewRows[i], currentRows) ) {
+      if ( !containsRow(primaryKey, cleanedNewRows[i], currentRows) ) {
 
         // cleanedNewRows[i] was added
         involvedRows.push(cleanedNewRows[i][primaryKey]);
@@ -205,8 +246,10 @@ const globalQueryConfig = {
       }
     }
 
+            console.log(cleanedNewRows.length);
+
     // return if there are no changes
-    if ( involvedRows.length <= 0 ) { return "-- There are no changes"; }
+    if ( involvedRows.length <= 0 ) { return callback("-- There are no changes"); }
 
     // convert any numbers to numeric values
     for (i = 0; i < involvedRows.length; i++) {
@@ -214,6 +257,8 @@ const globalQueryConfig = {
         involvedRows[i] = Number(involvedRows[i]);
       }
     }
+
+
 
     // build queries
     deleteQuery.where(primaryKey + " IN ?", involvedRows);
@@ -231,7 +276,9 @@ const globalQueryConfig = {
     query = query.replace(") VALUES (", ") VALUES\n(");
     query = query.replace(/\)\, \(/g, "),\n(");
 
-    return query;
+    console.log(query);
+
+    return callback(query);
   };
 
 /**
@@ -534,3 +581,4 @@ module.exports.clean_up_sai = clean_up_sai;
 module.exports.search_spell = search_spell;
 module.exports.getUpdateQuery = getUpdateQuery;
 module.exports.get_object_entitiesbyEntry = get_object_entitiesbyEntry;
+module.exports.getDiffDeleteInsertOneKey = getDiffDeleteInsertOneKey;
