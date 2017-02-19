@@ -315,6 +315,18 @@
         }
       });
     };
+    
+    /* Run AJAX Post Diff SQL Script */
+    $rootScope.sendDiffScriptAJAX = function(tableName, primaryKey1, primaryKey2, currentRows, newRows) {
+
+      if ( !$rootScope.isEntrySelected() ) { return; }
+
+        var SQLCode = app.getDiffDeleteInsert(tableName, primaryKey1, primaryKey2, currentRows, newRows);
+
+        console.log(SQLCode);
+        
+
+    };
 
   });
 
