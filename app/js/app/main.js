@@ -316,9 +316,9 @@
       });
     };
     
-    /* Run AJAX Post Diff SQL Script */
+    /* Run AJAX Post Diff Multiple Key Param SQL Script */
     /* TODO: OpenModal at Error!*/
-    $rootScope.sendDiffScriptAJAX = function(tableName, primaryKey1, primaryKey2, currentRows, newRows) {
+    $rootScope.sendDiffMultiScriptAJAX = function(tableName, primaryKey1, primaryKey2, currentRows, newRows) {
 
       if ( !$rootScope.isEntrySelected() ) { return; }
 
@@ -336,7 +336,7 @@
 
             $http({
                 method  : 'POST',
-                url     : location.origin+'/TC_API/DiffScript',
+                url     : location.origin+'/TC_API/DiffMultiScript',
                 data    :  json, 
                 headers : {'Content-Type': 'text/plain'} 
                })
@@ -345,6 +345,34 @@
                       }
                    );
 
+    };
+    
+    /* Run AJAX Post Diff Single Key Param SQL Script */
+    /* TODO: OpenModal at Error!*/
+    $rootScope.sendDiffSingleScriptAJAX = function(tableName, primaryKey, entityType, entity, currentRows, newRows) {
+
+      if ( !$rootScope.isEntrySelected() ) { return; }
+
+          let json = {};
+
+                    json.tableName = tableName;
+                    json.primaryKey = primaryKey;
+                    json.entityType = entityType;
+                    json.entity = entity;
+                    json.currentRows = currentRows;
+                    json.newRows = newRows;
+
+            $http({
+                method  : 'POST',
+                url     : location.origin+'/TC_API/DiffSingleScript',
+                data    :  json, 
+                headers : {'Content-Type': 'text/plain'} 
+               })
+                .success(function(data) {  
+
+                      }
+                   );
+ 
     };
 
   });

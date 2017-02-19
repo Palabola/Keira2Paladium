@@ -79,7 +79,7 @@ function getUpdateQuery(tableName, whereCondition, currentRow, newRow, callback)
    *  - currentRows -> object of the original table   (group of rows)
    *  - newRows -> object bound with ng-model to view (group of rows)
    */
-  app.getDiffDeleteInsert = function(tableName, primaryKey1, primaryKey2, currentRows, newRows) {
+  function getDiffDeleteInsert(tableName, primaryKey1, primaryKey2, currentRows, newRows) {
 
     if ( newRows === undefined ) { return; }
 
