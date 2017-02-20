@@ -223,6 +223,38 @@
 
         };
 
+
+    /*
+    $scope.search = function (creatureEntry, creatureName, creatureSubname) {
+
+      if ( creatureEntry && (!creatureName && !creatureSubname) && (creatureEntry.length < 2) ) {
+        alert("Please insert an Entry of at least 2 characters");
+        return;
+      }
+      if ( creatureName && (!creatureEntry && !creatureSubname) && (creatureName.length < 3) ) {
+        alert("Please insert a Name of at least 3 characters");
+        return;
+      }
+      if ( creatureSubname && (!creatureEntry && !creatureName) && (creatureSubname.length < 3) ) {
+        alert("Please insert a Subname of at least 3 characters");
+        return;
+      }
+
+      $http.get( app.api + "search/creature/", {
+        params: {
+          id: creatureEntry,
+          name: creatureName,
+          subname: creatureSubname
+        }
+      }).success(function (data, status, header, config) {
+        $scope.creatures = $rootScope.fixNumericValues(data);
+      })
+        .error(function (data, status, header, config) {
+        console.log("[ERROR] CREATURE SEARCH $http.get request failed");
+      });
+
+    };
+    */
     /* [Function] Generate SQL Script for Creature */
     $scope.generateCreatureScript = function() {
 
@@ -248,6 +280,27 @@
       $scope.creatureScript += app.getUpdateQuery("creature_onkill_reputation", "creature_id = " + $scope.current_creature_template.entry, $scope.current_creature_onkill_reputation, $scope.new_creature_onkill_reputation);
     };
 
+    $scope.SaveToDatabase = function() {
+        
+                  let json = {};
+
+                    json.entry = $scope.current_creature_template.entry;
+                    json.current = $scope.current_creature_template;
+                    json.new = $scope.new_creature_template;
+
+            $http({
+                method  : 'POST',
+                url     : location.origin+'/creature/template/update',
+                data    :  json, 
+                headers : {'Content-Type': 'text/plain'} 
+               })
+                .success(function(data) {  
+
+                      }
+                   );
+            
+    };
+
 
     /* [Function] disactive all tabs */
     $scope.disactiveAllTabs = function() {
@@ -263,6 +316,10 @@
       $scope.creatureTabs.script = true;
     };
     
+    /* [Function] Send JSON and run Query at API */
+    $scope.runSaveToDatabase = function() {
+       $scope.SaveToDatabase();
+    };
 
   });
 

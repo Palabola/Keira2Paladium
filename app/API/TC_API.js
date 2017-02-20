@@ -68,7 +68,7 @@ const globalQueryConfig = {
    *  - currentRow -> object of the original table
    *  - newRow -> object bound with ng-model to view
    */
-  function getUpdateQuery(tableName, whereCondition, currentRow, newRow) {
+function getUpdateQuery(tableName, whereCondition, currentRow, newRow, callback) {
 
     var key,
         diff = false,
@@ -77,27 +77,38 @@ const globalQueryConfig = {
     query.table(tableName);
 
     for (key in currentRow) {
-      if (currentRow[key] !== newRow[key]) {
+        if (currentRow[key] !== newRow[key]) {
 
-        // Convert numeric values
-        if (!isNaN(currentRow[key]) && !isNaN(newRow[key]) && newRow[key] != "") {
-          newRow[key] = Number(newRow[key]);
+            // Convert numeric values
+            if (!isNaN(currentRow[key]) && !isNaN(newRow[key]) && newRow[key] != "") {
+                newRow[key] = Number(newRow[key]);
+            }
+
+            query.set(key, newRow[key]);
+            diff = true;
         }
-
-        query.set(key, newRow[key]);
-        diff = true;
-      }
     }
 
     if (!diff) {
-      console.log("[INFO] There are no `" + tableName + "` changes");
-      return "";
+        console.log("[INFO] There are no `" + tableName + "` changes");
+        result = "";
     }
 
     query.where(whereCondition);
 
-    return "-- Table `" + tableName + "`\n" + query.toString() + ";\n\n";
-  };
+    let result = query.toString();
+
+    if (result !== "") {
+        db.query(result, function (err, result) {
+            if (err) throw err;
+            return callback(result);
+        });
+    }
+    else {
+        return callback(result);
+    }
+
+};
 
 /* [Function] getDiffDeleteInsert (TWO PRIMARY KEYS)
    *  Description: Tracks difference between two groups of rows and generate DELETE/INSERT query
@@ -195,6 +206,7 @@ const globalQueryConfig = {
 
   };
 
+<<<<<<< HEAD
 /* [Function] getDiffDeleteInsertOneKey (ONE PRIMARY KEY)
    *  Description: Tracks difference between two groups of rows and generate DELETE/INSERT query
    *  Inputs:
@@ -281,6 +293,8 @@ const globalQueryConfig = {
     return callback(query);
   };
 
+=======
+>>>>>>> parent of 21a9da1... Re-factor make some logic Front-End
 /**
  * Returns a promise of an object with spell id and spell name. 
  * The spell id is used to make a GET request to wowhead and extract the name of the spell
