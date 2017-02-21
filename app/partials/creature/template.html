@@ -122,7 +122,7 @@
           </div>  
           <div class="col-xs-3 text-left">
             <small>Vehicleid</small>
-            <input type="text" class="form-control input-xs" ng-model="new_creature_template.Vehicleid">
+            <input type="text" class="form-control input-xs" ng-model="new_creature_template.VehicleId">
           </div>
         </div>
         <div class="row">
@@ -654,8 +654,8 @@
   </div>
 </div>
 <div class="row">
-  <div class="col-xs-2 col-xs-offset-8">
-    <button class="btn btn-success" ng-click="POST_DeleteInstert('creature_template', 'Entry', current_creature_template, new_creature_template)"><i class="glyphicon glyphicon-upload"></i> UPDATE SQL Script</button>
+  <div class="col-xs-2 col-xs-offset-8"> <!-- API_URI, tableName, currentRow, newRow -->
+    <button class="btn btn-success" ng-click="POST_UpdateQuery('/creature/template/', 'creature_template', current_creature_template, new_creature_template)"><i class="glyphicon glyphicon-upload"></i> UPDATE SQL Script</button>
   </div>  
   <div class="col-xs-2">
     <button class="btn btn-primary" ng-click="openFullScriptModal(new_creature_template, 'creature_template', 'entry')">FULL SQL Script</button>

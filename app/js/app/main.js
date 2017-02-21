@@ -316,27 +316,22 @@
       });
     };
     
-    /* Run AJAX Post Diff Multiple Key Param SQL Script */
+    /* Run AJAX Post SQL Query Detail for Server Side Query Builder */
     /* TODO: OpenModal at Error!*/
-    $rootScope.sendDiffMultiScriptAJAX = function(tableName, primaryKey1, primaryKey2, currentRows, newRows) {
+    $rootScope.POST_DeleteInstert = function(tableName, primaryKeys, currentRows, newRows) {
 
       if ( !$rootScope.isEntrySelected() ) { return; }
 
-        //var SQLCode = app.getDiffDeleteInsert(tableName, primaryKey1, primaryKey2, currentRows, newRows);
-
-        //console.log(SQLCode);
-        
-            let json = {};
+          let json = {};
 
                     json.tableName = tableName;
-                    json.primaryKey1 = primaryKey1;
-                    json.primaryKey2 = primaryKey2;
+                    json.primaryKeys = primaryKeys;
                     json.currentRows = currentRows;
                     json.newRows = newRows;
 
             $http({
                 method  : 'POST',
-                url     : location.origin+'/TC_API/DiffMultiScript',
+                url     : location.origin+'/TC_API/DeleteInstert',
                 data    :  json, 
                 headers : {'Content-Type': 'text/plain'} 
                })
@@ -344,27 +339,22 @@
 
                       }
                    );
-
+ 
     };
     
-    /* Run AJAX Post Diff Single Key Param SQL Script */
-    /* TODO: OpenModal at Error!*/
-    $rootScope.sendDiffSingleScriptAJAX = function(tableName, primaryKey, entityType, entity, currentRows, newRows) {
+    $rootScope.POST_UpdateQuery = function(API_URI, tableName, currentRow, newRow) {
 
       if ( !$rootScope.isEntrySelected() ) { return; }
 
           let json = {};
 
                     json.tableName = tableName;
-                    json.primaryKey = primaryKey;
-                    json.entityType = entityType;
-                    json.entity = entity;
-                    json.currentRows = currentRows;
-                    json.newRows = newRows;
+                    json.currentRows = currentRow;
+                    json.newRows = newRow;
 
             $http({
                 method  : 'POST',
-                url     : location.origin+'/TC_API/DiffSingleScript',
+                url     : location.origin+API_URI,
                 data    :  json, 
                 headers : {'Content-Type': 'text/plain'} 
                })

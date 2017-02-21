@@ -28,7 +28,7 @@ const globalQueryConfig = {
    *  - currentRow -> object of the original table
    *  - newRow -> object bound with ng-model to view
    */
-function getUpdateQuery(tableName, whereCondition, currentRow, newRow, callback) {
+function UpdateQuery(tableName, whereCondition, currentRow, newRow, callback) {
 
     var key,
         diff = false,
@@ -79,90 +79,30 @@ function getUpdateQuery(tableName, whereCondition, currentRow, newRow, callback)
    *  - currentRows -> object of the original table   (group of rows)
    *  - newRows -> object bound with ng-model to view (group of rows)
    */
-  function getDiffDeleteInsert(tableName, primaryKey1, primaryKey2, currentRows, newRows) {
+  function getDiffDeleteInsert(tableName, primaryKeys, currentRows, newRows) {
 
     if ( newRows === undefined ) { return; }
 
-    var query, i, deleteQuery, insertQuery, cleanedNewRows, row,
-        involvedRows      = [], // -> needed for DELETE
-        addedOrEditedRows = []; // -> needed for INSERT
+    var key,
+        diff = false,
+        query = squel.update(globalQueryConfig);
 
-    if (Array.isArray(newRows) && newRows.length <= 0) {
 
-      if ( (currentRows === undefined) || (Array.isArray(currentRows) &&  currentRows.length <= 0)) {
-        return;
-      } else {
+         for (key in currentRow) {
+                if (currentRow[key] !== newRow[key]) {
 
-        // all rows were deleted
-        query = "-- DIFF `" + tableName + "` of " + primaryKey1 + " " + currentRows[0][primaryKey1] + "\n";
-        query += "DELETE * FROM `" + tableName + "` WHERE `" + primaryKey1 + "` = " + currentRows[0][primaryKey1] + ";";
+                    // Convert numeric values
+                    if (!isNaN(currentRow[key]) && !isNaN(newRow[key]) && newRow[key] != "") {
+                        newRow[key] = Number(newRow[key]);
+                    }
 
-        return query;
-      }
-    }
+                    query.set(key, newRow[key]);
+                    diff = true;
+                }
+            }
 
-    // prepare rows for query generation
-    cleanedNewRows = cleanRows(newRows);
-
-    deleteQuery = squel.delete(globalQueryConfig).from(tableName);
-    insertQuery = squel.insert(globalQueryConfig).into(tableName);
-
-    // find deleted or edited rows
-    for (i = 0; i < currentRows.length; i++) {
-
-      row = containsRow(primaryKey2, currentRows[i], cleanedNewRows);
-      if (!row) {
-
-        // currentRows[i] was deleted
-        involvedRows.push(currentRows[i][primaryKey2]);
-
-      } else if ( JSON.stringify(row) !== JSON.stringify(currentRows[i]) ) {
-
-        // row was edited
-        involvedRows.push(row[primaryKey2]);
-        addedOrEditedRows.push(row);
-      }
-    }
-    
-    // find added rows
-    for (i = 0; i < cleanedNewRows.length; i++) {
-
-      if ( !containsRow(primaryKey2, cleanedNewRows[i], currentRows) ) {
-
-        // cleanedNewRows[i] was added
-        involvedRows.push(cleanedNewRows[i][primaryKey2]);
-        addedOrEditedRows.push(cleanedNewRows[i]);
-      }
-    }
-
-    // return if there are no changes
-    if ( involvedRows.length <= 0 ) { return "-- There are no changes"; }
-
-    // convert any numbers to numeric values
-    for (i = 0; i < involvedRows.length; i++) {
-      if (!isNaN(involvedRows[i]) && involvedRows[i] != "") {
-        involvedRows[i] = Number(involvedRows[i]);
-      }
-    }
-
-    // build queries
-    deleteQuery.where(primaryKey1 + " = " + cleanedNewRows[0][primaryKey1]);
-    deleteQuery.where(primaryKey2 + " IN ?", involvedRows);
-    insertQuery.setFieldsRows(addedOrEditedRows);
-
-    // compose final query
-    query = "-- DIFF `" + tableName + "` of " + primaryKey1 + " " + newRows[0][primaryKey1] + "\n";
-    query += deleteQuery.toString() + ";\n";
-
-    if (addedOrEditedRows.length > 0) {
-      query += insertQuery.toString() + ";\n";
-    }
-
-    // format query
-    query = query.replace(") VALUES (", ") VALUES\n(");
-    query = query.replace(/\)\, \(/g, "),\n(");
-
-    return query;
+   
+   
 
   };
 
@@ -465,5 +405,5 @@ module.exports.run_creature_template = run_creature_template;
 module.exports.run_text = run_text;
 module.exports.clean_up_sai = clean_up_sai;
 module.exports.search_spell = search_spell;
-module.exports.getUpdateQuery = getUpdateQuery;
+module.exports.UpdateQuery = UpdateQuery;
 module.exports.get_object_entitiesbyEntry = get_object_entitiesbyEntry;

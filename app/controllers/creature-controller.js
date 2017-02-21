@@ -42,9 +42,9 @@ module.exports = ({ TC_API }) => {
 
       let creature_data = JSON.parse(req.body);
 
-      let where = 'entry = ' + creature_data.entry;
+      let where = 'entry = ' + creature_data.currentRows.entry;
 
-      TC_API.getUpdateQuery('creature_template', where, creature_data.current, creature_data.new, (result) => {
+      TC_API.UpdateQuery('creature_template', where, creature_data.currentRows, creature_data.newRows, (result) => {
 
         return res.send(result);
 

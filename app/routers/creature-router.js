@@ -7,7 +7,7 @@ module.exports = ({ app, controllers }) => {
       .get('/creature/:table/id/:creature_id',controller.get_object_entitiesbyEntry)
       .get('/creature/:table/:creature_id',controller.get_object_entitiesbyEntry)
       .post('/creature_text_execute', controller.CreatureTextUpdate)
-      .post('/creature/template/update', controller.CreatureTemplateUpdate);
+      .post('/creature/template/', controller.CreatureTemplateUpdate);
 };
 
 /*
