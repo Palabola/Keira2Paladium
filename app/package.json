@@ -11,10 +11,8 @@
   "dependencies": {
     "async": "^2.1.4",
     "body-parser": "^1.16.0",
-    "cheerio": "^0.22.0",
     "electron-settings": "^2.2.2",
     "express": "^4.14.0",
-    "lowdb": "^0.15.4",
     "mysql": "^2.13.0",
     "node-fetch": "^1.6.3",
     "node-json-db": "^0.7.3",
