@@ -79,30 +79,33 @@ function UpdateQuery(tableName, whereCondition, currentRow, newRow, callback) {
    *  - currentRows -> object of the original table   (group of rows)
    *  - newRows -> object bound with ng-model to view (group of rows)
    */
-  function getDiffDeleteInsert(tableName, primaryKeys, currentRows, newRows) {
+  function DeleteInsertQuery(tableName, primaryKeys, Rows) {
 
-    if ( newRows === undefined ) { return; }
+    if ( Rows === undefined ) { return; }
+    
+        var key,
+        query_del = squel.delete(globalQueryConfig);
 
-    var key,
-        diff = false,
-        query = squel.update(globalQueryConfig);
-
-
-         for (key in currentRow) {
-                if (currentRow[key] !== newRow[key]) {
-
-                    // Convert numeric values
-                    if (!isNaN(currentRow[key]) && !isNaN(newRow[key]) && newRow[key] != "") {
-                        newRow[key] = Number(newRow[key]);
-                    }
-
-                    query.set(key, newRow[key]);
-                    diff = true;
-                }
+        query_del.from(tableName);
+        
+        console.log(Rows);
+        
+          for(key in primaryKeys)
+            {     
+             if(Rows.length === undefined) // Single JSON
+             {
+             query_del.where(key+" = "+Rows[key]);
+             }
+             else
+             {
+              query_del.where(key+" = "+Rows[0][key]);   
+             }    
             }
-
-   
-   
+            
+        // Print Result 
+        console.log(query_del.toString()); // UPDATE exmaple SET entry = 1 WHERE (entry = 12) AND (guid = 13)
+        
+        return;
 
   };
 
@@ -406,4 +409,5 @@ module.exports.run_text = run_text;
 module.exports.clean_up_sai = clean_up_sai;
 module.exports.search_spell = search_spell;
 module.exports.UpdateQuery = UpdateQuery;
+module.exports.DeleteInsertQuery = DeleteInsertQuery;
 module.exports.get_object_entitiesbyEntry = get_object_entitiesbyEntry;

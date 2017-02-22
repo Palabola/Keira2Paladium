@@ -318,7 +318,7 @@
     
     /* Run AJAX Post SQL Query Detail for Server Side Query Builder */
     /* TODO: OpenModal at Error!*/
-    $rootScope.POST_DeleteInstert = function(tableName, primaryKeys, currentRows, newRows) {
+    $rootScope.POST_DeleteInstert = function(tableName, primaryKeys, Rows) {
 
       if ( !$rootScope.isEntrySelected() ) { return; }
 
@@ -326,8 +326,7 @@
 
                     json.tableName = tableName;
                     json.primaryKeys = primaryKeys;
-                    json.currentRows = currentRows;
-                    json.newRows = newRows;
+                    json.Rows = Rows;
 
             $http({
                 method  : 'POST',
