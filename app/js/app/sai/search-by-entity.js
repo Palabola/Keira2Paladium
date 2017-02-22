@@ -48,11 +48,11 @@
     
     $scope.searchGameObjects = function (goEntry, goName) {
 
-      $http.get( app.api + "gameobject/template/" + goEntry).success(function (data, status, header, config) {
+      $http.get( app.api + "gameobject/gameobject_template/" + goEntry).success(function (data, status, header, config) {
         $scope.gameobjects = $rootScope.fixNumericValues(data);
       })
         .error(function (data, status, header, config) {
-        console.log("[ERROR] CREATURE SEARCH $http.get request failed");
+        console.log("[ERROR] gameobject/gameobject_template/ $http.get request failed");
       });
 
     };

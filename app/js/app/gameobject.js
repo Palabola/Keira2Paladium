@@ -42,14 +42,14 @@
        */
 
       /* Retrieve all gameobject_template data */
-      $http.get( app.api + "gameobject/template/" + $stateParams.id )
+      $http.get( app.api + "gameobject/gameobject_template//" + $stateParams.id )
         .success(function (data, status, header, config) {
         $scope.current_gameobject_template = $rootScope.fixNumericValues(data[0]);
         $scope.new_gameobject_template = angular.copy($scope.current_gameobject_template);
         $scope.selectionText = $scope.current_gameobject_template.name + " (" + $scope.current_gameobject_template.entry + ")";
       })
         .error(function (data, status, header, config) {
-        console.log("[ERROR] gameobject/template/" + $stateParams.id + " $http.get request failed");
+        console.log("[ERROR] gameobject/gameobject_template/" + $stateParams.id + " $http.get request failed");
       });
 
       /* Retrieve all gameobject_loot_template data */

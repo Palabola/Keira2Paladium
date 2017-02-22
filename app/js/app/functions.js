@@ -135,6 +135,7 @@
   };
 
   app.synchGetQuestTitleByCriteriaFunc2 = function(requiredNpcOrGo1, requiredNpcOrGo2, requiredNpcOrGo3, requiredNpcOrGo4, requiredSpellCast1) {
+     /* 
     if (requiredNpcOrGo1 == undefined) { requiredNpcOrGo1 = ""; }
     if (requiredNpcOrGo2 == undefined) { requiredNpcOrGo2 = ""; }
     if (requiredNpcOrGo3 == undefined) { requiredNpcOrGo3 = ""; }
@@ -161,6 +162,7 @@
     } else {
       return "";
     }
+    */
   };
 
   app.synchGetItemNameById = function(id) {

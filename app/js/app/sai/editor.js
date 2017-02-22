@@ -345,7 +345,7 @@
             break;
 
           case 9: //! Actionlist
-            // TODO: comment generation of actionlist scripts
+            fullLine += "ActionList ";
             break;
         }
 

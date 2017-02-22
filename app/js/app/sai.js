@@ -60,7 +60,8 @@
       $scope.isEntitySelected = true;
       $scope.saiTabs.editor = true;
 
-
+      
+      
       if($stateParams.sourceType == 0)
       {   
             $http.get( app.api + "creature/creature_text/" + $stateParams.entryOrGuid )
