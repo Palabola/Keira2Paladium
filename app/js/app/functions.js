@@ -236,7 +236,7 @@
     if (request.status === 200) {
       data = JSON.parse(request.responseText);
       console.log(data);
-      return data.spellName+' ('+id+') ';
+      return data.name+' ('+id+') ';
     } else {
       return id;
     }

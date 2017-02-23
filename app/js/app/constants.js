@@ -3635,6 +3635,15 @@
   app.modalConstants.rank[2] = "Rare Elite";
   app.modalConstants.rank[3] = "Boss";
   app.modalConstants.rank[4] = "Rare";
+  
+  /* Predefinied Immune */
+  app.modalConstants.mechanic_immune_mask = [];
+  app.modalConstants.mechanic_immune_mask[2147467263] = "Immune All Boss";
+  //app.modalConstants.rank[1] = "Elite";
+  //app.modalConstants.rank[2] = "Rare Elite";
+  //app.modalConstants.rank[3] = "Boss";
+  //app.modalConstants.rank[4] = "Rare";
+  
 
   /* trainer type constants */
   app.modalConstants.trainer_type = [];

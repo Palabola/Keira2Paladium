@@ -100,6 +100,47 @@
 
     };
     
+    /* Modal to handle generic values:
+     * object      => new_tablename the object responsible of the table (example: new_creature_template)
+     * property    => field of the table to modify (example: npcflag)
+     * constant    => name of the constant that will be passed to ValueModalController
+     * modifier    => an additional value to constant
+     */
+    $rootScope.openBigValueModal = function (object, property, constant, modifier) {
+
+      if ( !$rootScope.isEntrySelected() ) { return; }
+
+      if (constant == null) {
+        constant = property;
+      }
+
+      if (modifier == null) {
+        modifier = 0;
+      }
+
+      var modalInstance = $uibModal.open({
+        templateUrl: "partials/modals/value.html",
+        controller: "ValueModalController",
+        size: '',
+        resolve: {
+          property: function () {
+            return property;
+          },
+          constant: function () {
+            return constant;
+          },
+          modifier: function () {
+            return modifier;
+          }
+        }
+      });
+
+      // When the modal will be closed this function takes the new value to assign
+      modalInstance.result.then(function (Res) {
+        object[property] = Res + modifier;
+      });
+
+    };
     
     /* Modal to handle generic values:
      * object      => new_tablename the object responsible of the table (example: new_creature_template)
