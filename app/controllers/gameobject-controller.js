@@ -11,9 +11,9 @@ module.exports = ({ TC_API }) => {
             }
 
             TC_API
-                .search_gameobject(gameobject_id)
-                .then(result => console.log(result) || res.json(result))
-                .catch(err => res.status(500).json(err));
+                .search_gameobject(gameobject_id) // Search
+                .then(result => console.log(result) || res.json(result)) // Resolve
+                .catch(err => res.status(500).json(err)); // Reject
         }
     };
 };

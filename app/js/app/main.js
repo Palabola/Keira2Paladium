@@ -92,9 +92,9 @@
       // When the modal will be closed this function takes the new value to assign
       modalInstance.result.then(function (Res) {
         // if all the flags are choosen assign -1 to Res why???? Never,nope!
-        if (Res == (Math.pow(2, numValues)-1)) {
+       /* if (Res == (Math.pow(2, numValues)-1)) {
           Res = (Math.pow(2, numValues)-1);
-        }
+        }*/
         object[property] = Res;
       });
 

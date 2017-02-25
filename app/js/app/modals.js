@@ -41,13 +41,25 @@
 
     $scope.modalOk = function () {
       var i = 0, Res = 0;
-      for (i = 0; i < numValuesVal; i++)
+      
+      if($scope.values['All'] ===true)
       {
-        if($scope.values[i] === true)
-        {
-          Res += Math.pow(2, i);
-        }
+         for (i = 0; i < numValuesVal; i++)
+            {
+                Res += Math.pow(2, i);
+            } 
+      } 
+      else
+      {
+            for (i = 0; i < numValuesVal; i++)
+            {
+              if($scope.values[i] === true)
+              {
+                Res += Math.pow(2, i);
+              }
+            }
       }
+      
       $uibModalInstance.close(Res);
     };
 
