@@ -6,7 +6,7 @@
 
   var app = angular.module('keira2');
 
-  app.controller("SmartAIEditorController", function ($scope, $rootScope, $http, $stateParams) {
+  app.controller("ConditionEditorController", function ($scope, $rootScope, $http, $stateParams) {
 
     /* At start we have no row selected */
     $scope.selectedRow = -1;

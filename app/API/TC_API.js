@@ -151,6 +151,8 @@ function search_spell(spell_id) {
                     .on('data', chunk => {
                         const wowheadHtmlMatches = wowheadSpellNameRegexp.exec(chunk.toString());
 
+                        //console.log(chunk.toString());
+
                         if (wowheadHtmlMatches !== null) {
                             /** cache the request result */
                             SPELL_CACHE[spell_id] = {

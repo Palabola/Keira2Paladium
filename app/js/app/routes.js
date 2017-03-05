@@ -74,6 +74,11 @@
       controller: 'SmartAIController',
       templateUrl: 'partials/sai.html'
     })
+      .state('condition', {
+      url: '/condition',
+      controller: 'ConditionController',
+      templateUrl: 'partials/condition.html'
+    })
       .state('saiSelected', {
       url: '/sai/:sourceType/:entryOrGuid',
       controller: 'SmartAIController',
@@ -81,5 +86,6 @@
     });
 
   });
+
 
 }());

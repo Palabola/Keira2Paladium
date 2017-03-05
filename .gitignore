@@ -50,3 +50,4 @@ dist
 nbproject
 settings.js
 npm-debug.log
+.vscode/settings.json

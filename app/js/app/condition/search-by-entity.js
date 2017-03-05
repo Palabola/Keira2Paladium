@@ -6,7 +6,7 @@
 
   var app = angular.module('keira2');
 
-  app.controller("SearchByEntitySAIController", function ($scope, $rootScope, $stateParams, $http) {
+  app.controller("SearchByEntityConditionController", function ($scope, $rootScope, $stateParams, $http) {
 
     /* Default selectedSourceType */
     $scope.selectedSourceType = 0;
