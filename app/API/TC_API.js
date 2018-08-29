@@ -221,16 +221,31 @@ function search_creature_name(name) {
 };
 
 /**
- * Returns a promise of all creature texts for a creature with given enty
- * @param {string} creature_id
+ * Returns a promise of all creatures whose name matches the pattern of the provided name.
+ * @param {string} name - name or part of the creature name
  * @returns {Promise.<[Object]>}
  */
-function search_creature_text(creature_id) {
-
-    const creatureTextQueryString = 'SELECT * FROM `creature_text` WHERE entry =' + creature_id;
+function search_creature_name(name) {
+    const queryString = 'SELECT * FROM creature_template WHERE name LIKE ?',
+        pattern = '%' + name + '%';
 
     return new Promise((resolve, reject) => {
-        db.query(creatureTextQueryString, (err, rows) => err ? reject(err) : resolve(rows));
+        db.query(queryString, pattern, (err, rows) => err ? reject(err) : resolve(rows));
+    });
+};
+
+/**
+ * Returns a promise of all creature texts for a creature with given enty
+ * @param {string} quest_title
+ * @param {string} quest_id
+ * @returns {Promise.<[Object]>}
+ */
+function search_quest(quest_id,quest_title) {
+
+    const questQueryString = 'SELECT * FROM `quest_template` WHERE `ID` = '+quest_id+' LIMIT 1;';
+
+    return new Promise((resolve, reject) => {
+        db.query(questQueryString, (err, rows) => err ? reject(err) : resolve(rows));
     });
 };
 
@@ -404,6 +419,8 @@ function run_creature_template(creature_data, callback) {
 module.exports.search_gameobject = search_gameobject;
 module.exports.search_creature = search_creature;
 module.exports.search_creature_name = search_creature_name;
+module.exports.search_quest = search_quest;
+
 module.exports.search_sai = search_sai;
 module.exports.run_script = run_script;
 module.exports.run_creature_template = run_creature_template;
