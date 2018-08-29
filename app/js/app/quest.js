@@ -177,12 +177,8 @@
         return;
       }
 
-      $http.get( app.api + "search/quest/", {
-        params: {
-          id: questId,
-          name: questTitle
-        }
-      }).success(function (data, status, header, config) {
+      $http.get( app.api + "search/quest/" + questId + "/" + questTitle)
+      .success(function (data, status, header, config) {
         $scope.quests = $rootScope.fixNumericValues(data);
       })
         .error(function (data, status, header, config) {

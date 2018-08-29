@@ -24,6 +24,19 @@ module.exports = ({ TC_API }) => {
             TC_API
                 .search_creature_name(creature_name)
                 .then(result => res.json(result));
-        }
+        },
+
+        getQuestByIdorName(req, res) {
+            
+            console.log(req.params);
+
+            if (!creature_name) {
+                return res.status(400).json({ message: 'Searching for a creature by name requires creature name' });
+            }
+
+            TC_API
+                .search_creature_name(creature_name)
+                .then(result => res.json(result));
+        },
     }
 }
