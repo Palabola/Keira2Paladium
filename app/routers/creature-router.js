@@ -1,13 +1,20 @@
-'use strict';
+"use strict";
 
 module.exports = ({ app, controllers }) => {
-    const controller = controllers.creature;
-    
-    app
-      .get('/creature/:table/id/:creature_id',controller.get_object_entitiesbyEntry)
-      .get('/creature/:table/:creature_id',controller.get_object_entitiesbyEntry)
-      .post('/creature_text_execute', controller.CreatureTextUpdate)
-      .post('/creature/template/', controller.CreatureTemplateUpdate);
+  const controller = controllers.creature;
+
+  app
+    .get(
+      "/creature/creature_addon/id/:creature_id",
+      controller.getCreatureAddon
+    )
+    .get(
+      "/creature/:table/id/:creature_id",
+      controller.get_object_entitiesbyEntry
+    )
+    .get("/creature/:table/:creature_id", controller.get_object_entitiesbyEntry)
+    .post("/creature_text_execute", controller.CreatureTextUpdate)
+    .post("/creature/template/", controller.CreatureTemplateUpdate);
 };
 
 /*
@@ -27,4 +34,4 @@ app.post('/creature_template', function (req, res) {
         });
   */
 //});
- //*/
+//*/

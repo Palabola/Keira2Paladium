@@ -1,10 +1,10 @@
 /*jslint browser: true, eqeq: true, white: true, plusplus: true */
 /*global angular, console, alert*/
 
-(function () {
-  'use strict';
+(function() {
+  "use strict";
 
-  var app = angular.module('keira2');
+  var app = angular.module("keira2");
 
   /* Constants mostly taken from https://github.com/Discover-/SAI-Editor/blob/master/SAI-Editor/Enumerators/PublicEnums.cs */
 
@@ -13,424 +13,423 @@
   app.saiConstants = [];
   app.modalConstants = [];
 
-
   /* UNIT_FLAG constants */
   app.constants.unitFlag = {
-    NONE              : 0x00000000,
-    SERVER_CONTROLLED : 0x00000001,
-    NON_ATTACKABLE    : 0x00000002,
-    DISABLE_MOVE      : 0x00000004,
-    PVP_ATTACKABLE    : 0x00000008,
-    RENAME            : 0x00000010,
-    PREPARATION       : 0x00000020,
-    UNK_6             : 0x00000040,
-    NOT_ATTACKABLE_1  : 0x00000080,
-    IMMUNE_TO_PC      : 0x00000100,
-    IMMUNE_TO_NPC     : 0x00000200,
-    LOOTING           : 0x00000400,
-    PET_IN_COMBAT     : 0x00000800,
-    PVP               : 0x00001000,
-    SILENCED          : 0x00002000,
-    UNK_14            : 0x00004000,
-    UNK_15            : 0x00008000,
-    UNK_16            : 0x00010000,
-    PACIFIED          : 0x00020000,
-    STUNNED           : 0x00040000,
-    IN_COMBAT         : 0x00080000,
-    TAXI_FLIGHT       : 0x00100000,
-    DISARMED          : 0x00200000,
-    CONFUSED          : 0x00400000,
-    FLEEING           : 0x00800000,
-    PLAYER_CONTROLLED : 0x01000000,
-    NOT_SELECTABLE    : 0x02000000,
-    SKINNABLE         : 0x04000000,
-    MOUNT             : 0x08000000,
-    UNK_28            : 0x10000000,
-    UNK_29            : 0x20000000,
-    SHEATHE           : 0x40000000
+    NONE: 0x00000000,
+    SERVER_CONTROLLED: 0x00000001,
+    NON_ATTACKABLE: 0x00000002,
+    DISABLE_MOVE: 0x00000004,
+    PVP_ATTACKABLE: 0x00000008,
+    RENAME: 0x00000010,
+    PREPARATION: 0x00000020,
+    UNK_6: 0x00000040,
+    NOT_ATTACKABLE_1: 0x00000080,
+    IMMUNE_TO_PC: 0x00000100,
+    IMMUNE_TO_NPC: 0x00000200,
+    LOOTING: 0x00000400,
+    PET_IN_COMBAT: 0x00000800,
+    PVP: 0x00001000,
+    SILENCED: 0x00002000,
+    UNK_14: 0x00004000,
+    UNK_15: 0x00008000,
+    UNK_16: 0x00010000,
+    PACIFIED: 0x00020000,
+    STUNNED: 0x00040000,
+    IN_COMBAT: 0x00080000,
+    TAXI_FLIGHT: 0x00100000,
+    DISARMED: 0x00200000,
+    CONFUSED: 0x00400000,
+    FLEEING: 0x00800000,
+    PLAYER_CONTROLLED: 0x01000000,
+    NOT_SELECTABLE: 0x02000000,
+    SKINNABLE: 0x04000000,
+    MOUNT: 0x08000000,
+    UNK_28: 0x10000000,
+    UNK_29: 0x20000000,
+    SHEATHE: 0x40000000
   };
 
   /* NPC_FLAG constants */
   app.constants.npcFlag = {
-    NONE               : 0x00000000,
-    GOSSIP             : 0x00000001,
-    QUESTGIVER         : 0x00000002,
-    UNK1               : 0x00000004,
-    UNK2               : 0x00000008,
-    TRAINER            : 0x00000010,
-    TRAINER_CLASS      : 0x00000020,
-    TRAINER_PROFESSION : 0x00000040,
-    VENDOR             : 0x00000080,
-    VENDOR_AMMO        : 0x00000100,
-    VENDOR_FOOD        : 0x00000200,
-    VENDOR_POISON      : 0x00000400,
-    VENDOR_REAGENT     : 0x00000800,
-    REPAIR             : 0x00001000,
-    FLIGHTMASTER       : 0x00002000,
-    SPIRITHEALER       : 0x00004000,
-    SPIRITGUIDE        : 0x00008000,
-    INNKEEPER          : 0x00010000,
-    BANKER             : 0x00020000,
-    PETITIONER         : 0x00040000,
-    TABARDDESIGNER     : 0x00080000,
-    BATTLEMASTER       : 0x00100000,
-    AUCTIONEER         : 0x00200000,
-    STABLEMASTER       : 0x00400000,
-    GUILD_BANKER       : 0x00800000,
-    SPELLCLICK         : 0x01000000,
-    PLAYER_VEHICLE     : 0x02000000
+    NONE: 0x00000000,
+    GOSSIP: 0x00000001,
+    QUESTGIVER: 0x00000002,
+    UNK1: 0x00000004,
+    UNK2: 0x00000008,
+    TRAINER: 0x00000010,
+    TRAINER_CLASS: 0x00000020,
+    TRAINER_PROFESSION: 0x00000040,
+    VENDOR: 0x00000080,
+    VENDOR_AMMO: 0x00000100,
+    VENDOR_FOOD: 0x00000200,
+    VENDOR_POISON: 0x00000400,
+    VENDOR_REAGENT: 0x00000800,
+    REPAIR: 0x00001000,
+    FLIGHTMASTER: 0x00002000,
+    SPIRITHEALER: 0x00004000,
+    SPIRITGUIDE: 0x00008000,
+    INNKEEPER: 0x00010000,
+    BANKER: 0x00020000,
+    PETITIONER: 0x00040000,
+    TABARDDESIGNER: 0x00080000,
+    BATTLEMASTER: 0x00100000,
+    AUCTIONEER: 0x00200000,
+    STABLEMASTER: 0x00400000,
+    GUILD_BANKER: 0x00800000,
+    SPELLCLICK: 0x01000000,
+    PLAYER_VEHICLE: 0x02000000
   };
 
   /* GameObject Flags */
   app.constants.goFlag = {
-    NONE           : 0x00000000,
-    IN_USE         : 0x00000001,
-    LOCKED         : 0x00000002,
-    INTERACT_COND  : 0x00000004,
-    TRANSPORT      : 0x00000008,
-    NOT_SELECTABLE : 0x00000010,
-    NODESPAWN      : 0x00000020,
-    TRIGGERED      : 0x00000040,
-    DAMAGED        : 0x00000200,
-    DESTROYED      : 0x00000400
+    NONE: 0x00000000,
+    IN_USE: 0x00000001,
+    LOCKED: 0x00000002,
+    INTERACT_COND: 0x00000004,
+    TRANSPORT: 0x00000008,
+    NOT_SELECTABLE: 0x00000010,
+    NODESPAWN: 0x00000020,
+    TRIGGERED: 0x00000040,
+    DAMAGED: 0x00000200,
+    DESTROYED: 0x00000400
   };
 
   /* Dynamic Flags */
   app.constants.dynamicFlag = {
-    NONE                      : 0x0000,
-    LOOTABLE                  : 0x0001,
-    TRACK_UNIT                : 0x0002,
-    TAPPED                    : 0x0004,
-    TAPPED_BY_PLAYER          : 0x0008,
-    SPECIALINFO               : 0x0010,
-    DEAD                      : 0x0020,
-    REFER_A_FRIEND            : 0x0040,
-    TAPPED_BY_ALL_THREAT_LIST : 0x0080
+    NONE: 0x0000,
+    LOOTABLE: 0x0001,
+    TRACK_UNIT: 0x0002,
+    TAPPED: 0x0004,
+    TAPPED_BY_PLAYER: 0x0008,
+    SPECIALINFO: 0x0010,
+    DEAD: 0x0020,
+    REFER_A_FRIEND: 0x0040,
+    TAPPED_BY_ALL_THREAT_LIST: 0x0080
   };
 
   /* Unit Field Bytes1 Types */
   app.constants.unitFieldBytes1Type = {
-    STAND_STAND_STATE_TYPE : 0,
-    PET_TALENTS_TYPE       : 1,
-    STAND_FLAGS_TYPE       : 2,
-    BYTES1_FLAGS_TYPE      : 3
+    STAND_STAND_STATE_TYPE: 0,
+    PET_TALENTS_TYPE: 1,
+    STAND_FLAGS_TYPE: 2,
+    BYTES1_FLAGS_TYPE: 3
   };
 
   /* Unit Stand State Types */
   app.constants.unitStandStateType = {
-    STAND            : 0,
-    SIT              : 1,
-    SIT_CHAIR        : 2,
-    SLEEP            : 3,
-    SIT_LOW_CHAIR    : 4,
-    SIT_MEDIUM_CHAIR : 5,
-    SIT_HIGH_CHAIR   : 6,
-    DEAD             : 7,
-    KNEEL            : 8,
-    SUBMERGED        : 9
+    STAND: 0,
+    SIT: 1,
+    SIT_CHAIR: 2,
+    SLEEP: 3,
+    SIT_LOW_CHAIR: 4,
+    SIT_MEDIUM_CHAIR: 5,
+    SIT_HIGH_CHAIR: 6,
+    DEAD: 7,
+    KNEEL: 8,
+    SUBMERGED: 9
   };
 
   /* Unit Stand Flags */
   app.constants.unitStandFlags = {
-    NONE        : 0x00,
-    UNK1        : 0x01,
-    CREEP       : 0x02,
-    UNTRACKABLE : 0x04,
-    UNK4        : 0x08,
-    UNK5        : 0x10,
-    ALL         : 0xFF
+    NONE: 0x00,
+    UNK1: 0x01,
+    CREEP: 0x02,
+    UNTRACKABLE: 0x04,
+    UNK4: 0x08,
+    UNK5: 0x10,
+    ALL: 0xff
   };
 
   /* Unit Bytes1 Flags */
   app.constants.unitBytes1Flags = {
-    UNIT_BYTE1_FLAG_ALWAYS_STAND : 0x01,
-    UNIT_BYTE1_FLAG_HOVER        : 0x02,
-    UNIT_BYTE1_FLAG_UNK_3        : 0x04,
-    UNIT_BYTE1_FLAG_ALL          : 0xFF
+    UNIT_BYTE1_FLAG_ALWAYS_STAND: 0x01,
+    UNIT_BYTE1_FLAG_HOVER: 0x02,
+    UNIT_BYTE1_FLAG_UNK_3: 0x04,
+    UNIT_BYTE1_FLAG_ALL: 0xff
   };
 
   /*  SAI event constants */
   app.saiConstants.event = {
-    UPDATE_IC : 0,
-    UPDATE_OOC : 1,
-    HEALT_PCT : 2,
-    MANA_PCT : 3,
-    AGGRO : 4,
-    KILL : 5,
-    DEATH : 6,
-    EVADE : 7,
-    SPELLHIT : 8,
-    RANGE : 9,
-    OOC_LOS : 10,
-    RESPAWN : 11,
-    TARGET_HEALTH_PCT : 12,
-    VICTIM_CASTING : 13,
-    FRIENDLY_HEALTH : 14,
-    FRIENDLY_IS_CC : 15,
-    FRIENDLY_MISSING_BUFF : 16,
-    SUMMONED_UNIT : 17,
-    TARGET_MANA_PCT : 18,
-    ACCEPTED_QUEST : 19,
-    REWARD_QUEST : 20,
-    REACHED_HOME : 21,
-    RECEIVE_EMOTE : 22,
-    HAS_AURA : 23,
-    TARGET_BUFFED : 24,
-    RESET : 25,
-    IC_LOS : 26,
-    PASSENGER_BOARDED : 27,
-    PASSENGER_REMOVED : 28,
-    CHARMED : 29,
-    CHARMED_TARGET : 30,
-    SPELLHIT_TARGET : 31,
-    DAMAGED : 32,
-    DAMAGED_TARGET : 33,
-    MOVEMENTINFORM : 34,
-    SUMMON_DESPAWNED : 35,
-    CORPSE_REMOVED : 36,
-    AI_INIT : 37,
-    DATA_SET : 38,
-    WAYPOINT_START : 39,
-    WAYPOINT_REACHED : 40,
-    TRANSPORT_ADDPLAYER_NYI : 41,
-    TRANSPORT_ADDCREATURE_NYI : 42,
-    TRANSPORT_REMOVE_PLAYER_NYI : 43,
-    TRANSPORT_RELOCATE_NYI : 44,
-    INSTANCE_PLAYER_ENTER_NYI : 45,
-    AREATRIGGER_ONTRIGGER : 46,
-    QUEST_ACCEPTED_NYI : 47,
-    QUEST_OBJ_COPLETETION_NYI : 48,
-    QUEST_COMPLETION_NYI : 49,
-    QUEST_REWARDED_NYI : 50,
-    QUEST_FAIL_NYI : 51,
-    TEXT_OVER : 52,
-    RECEIVE_HEAL : 53,
-    JUST_SUMMONED : 54,
-    WAYPOINT_PAUSED : 55,
-    WAYPOINT_RESUMED : 56,
-    WAYPOINT_STOPPED : 57,
-    WAYPOINT_ENDED : 58,
-    TIMED_EVENT_TRIGGERED : 59,
-    UPDATE : 60,
-    LINK : 61,
-    GOSSIP_SELECT : 62,
-    JUST_CREATED : 63,
-    GOSSIP_HELLO : 64,
-    FOLLOW_COMPLETED : 65,
-    DUMMY_EFFECT_NYI : 66,
-    IS_BEHIND_TARGET : 67,
-    GAME_EVENT_START : 68,
-    GAME_EVENT_END : 69,
-    GO_STATE_CHANGED : 70,
-    GO_EVENT_INFORM : 71,
-    ACTION_DONE : 72,
-    ON_SPELLCLICK : 73,
-    FRIENDLY_HEALTH_PCT : 74,
-    DISTANCE_CREATURE : 75,
-    DISTANCE_GAMEOBJECT : 76,
-    MAX : 77
+    UPDATE_IC: 0,
+    UPDATE_OOC: 1,
+    HEALT_PCT: 2,
+    MANA_PCT: 3,
+    AGGRO: 4,
+    KILL: 5,
+    DEATH: 6,
+    EVADE: 7,
+    SPELLHIT: 8,
+    RANGE: 9,
+    OOC_LOS: 10,
+    RESPAWN: 11,
+    TARGET_HEALTH_PCT: 12,
+    VICTIM_CASTING: 13,
+    FRIENDLY_HEALTH: 14,
+    FRIENDLY_IS_CC: 15,
+    FRIENDLY_MISSING_BUFF: 16,
+    SUMMONED_UNIT: 17,
+    TARGET_MANA_PCT: 18,
+    ACCEPTED_QUEST: 19,
+    REWARD_QUEST: 20,
+    REACHED_HOME: 21,
+    RECEIVE_EMOTE: 22,
+    HAS_AURA: 23,
+    TARGET_BUFFED: 24,
+    RESET: 25,
+    IC_LOS: 26,
+    PASSENGER_BOARDED: 27,
+    PASSENGER_REMOVED: 28,
+    CHARMED: 29,
+    CHARMED_TARGET: 30,
+    SPELLHIT_TARGET: 31,
+    DAMAGED: 32,
+    DAMAGED_TARGET: 33,
+    MOVEMENTINFORM: 34,
+    SUMMON_DESPAWNED: 35,
+    CORPSE_REMOVED: 36,
+    AI_INIT: 37,
+    DATA_SET: 38,
+    WAYPOINT_START: 39,
+    WAYPOINT_REACHED: 40,
+    TRANSPORT_ADDPLAYER_NYI: 41,
+    TRANSPORT_ADDCREATURE_NYI: 42,
+    TRANSPORT_REMOVE_PLAYER_NYI: 43,
+    TRANSPORT_RELOCATE_NYI: 44,
+    INSTANCE_PLAYER_ENTER_NYI: 45,
+    AREATRIGGER_ONTRIGGER: 46,
+    QUEST_ACCEPTED_NYI: 47,
+    QUEST_OBJ_COPLETETION_NYI: 48,
+    QUEST_COMPLETION_NYI: 49,
+    QUEST_REWARDED_NYI: 50,
+    QUEST_FAIL_NYI: 51,
+    TEXT_OVER: 52,
+    RECEIVE_HEAL: 53,
+    JUST_SUMMONED: 54,
+    WAYPOINT_PAUSED: 55,
+    WAYPOINT_RESUMED: 56,
+    WAYPOINT_STOPPED: 57,
+    WAYPOINT_ENDED: 58,
+    TIMED_EVENT_TRIGGERED: 59,
+    UPDATE: 60,
+    LINK: 61,
+    GOSSIP_SELECT: 62,
+    JUST_CREATED: 63,
+    GOSSIP_HELLO: 64,
+    FOLLOW_COMPLETED: 65,
+    DUMMY_EFFECT_NYI: 66,
+    IS_BEHIND_TARGET: 67,
+    GAME_EVENT_START: 68,
+    GAME_EVENT_END: 69,
+    GO_STATE_CHANGED: 70,
+    GO_EVENT_INFORM: 71,
+    ACTION_DONE: 72,
+    ON_SPELLCLICK: 73,
+    FRIENDLY_HEALTH_PCT: 74,
+    DISTANCE_CREATURE: 75,
+    DISTANCE_GAMEOBJECT: 76,
+    MAX: 77
   };
 
   /* SAI action constants */
   app.saiConstants.action = {
-    NONE : 0,
-    TALK : 1,
-    SET_FACTION : 2,
-    MORPH_TO_ENTRY_OR_MODEL : 3,
-    SOUND : 4,
-    EMOTE : 5,
-    FAIL_QUEST : 6,
-    ADD_QUEST : 7,
-    SET_REACT_STATE : 8,
-    ACTIVATE_GOBJECT : 9,
-    RANDOM_EMOTE : 10,
-    CAST : 11,
-    SUMMON_CREATURE : 12,
-    THREAT_SINGLE_PCT : 13,
-    THREAT_ALL_PCT : 14,
-    CALL_AREAEXPLOREDOREVENTHAPPENS : 15,
-    UNUSED_16 : 16,
-    SET_EMOTE_STATE : 17,
-    SET_UNIT_FLAG : 18,
-    REMOVE_UNIT_FLAG : 19,
-    AUTO_ATTACK : 20,
-    COMBAT_MOVEMENT : 21,
-    SET_EVENT_PHASE : 22,
-    INC_EVENT_PHASE : 23,
-    EVADE : 24,
-    FLEE_FOR_ASSIST : 25,
-    CALL_GROUPEVENTHAPPENS : 26,
-    CALL_CASTEDCREATUREORGO : 27,
-    REMOVEAURASFROMSPELL : 28,
-    FOLLOW : 29,
-    RANDOM_PHASE : 30,
-    RANDOM_PHASE_RANGE : 31,
-    RESET_GOBJECT : 32,
-    KILLED_MONSTER : 33,
-    SET_INST_DATA : 34,
-    SET_INST_DATA64 : 35,
-    UPDATE_TEMPLATE : 36,
-    DIE : 37,
-    SET_IN_COMBAT_WITH_ZONE : 38,
-    CALL_FOR_HELP : 39,
-    SET_SHEATH : 40,
-    FORCE_DESPAWN : 41,
-    SET_INVINCIBILITY_HP_LEVEL : 42,
-    MOUNT_TO_ENTRY_OR_MODEL : 43,
-    SET_PHASE_MASK : 44,
-    SET_DATA : 45,
-    MOVE_FORWARD : 46,
-    SET_VISIBILITY : 47,
-    SET_ACTIVE : 48,
-    ATTACK_START : 49,
-    SUMMON_GO : 50,
-    KILL_UNIT : 51,
-    ACTIVATE_TAXI : 52,
-    WP_START : 53,
-    WP_PAUSE : 54,
-    WP_STOP : 55,
-    ADD_ITEM : 56,
-    REMOVE_ITEM : 57,
-    INSTALL_AI_TEMPLATE : 58,
-    SET_RUN : 59,
-    SET_FLY : 60,
-    SET_SWIM : 61,
-    TELEPORT : 62,
-    UNUSED_63 : 63,
-    STORE_TARGET_LIST : 64,
-    WP_RESUME : 65,
-    SET_ORIENTATION : 66,
-    CREATE_TIMED_EVENT : 67,
-    PLAYMOVIE : 68,
-    MOVE_TO_POS : 69,
-    RESPAWN_TARGET : 70,
-    EQUIP : 71,
-    CLOSE_GOSSIP : 72,
-    TRIGGER_TIMED_EVENT : 73,
-    REMOVE_TIMED_EVENT : 74,
-    ADD_AURA : 75,
-    OVERRIDE_SCRIPT_BASE_OBJECT : 76,
-    RESET_SCRIPT_BASE_OBJECT : 77,
-    CALL_SCRIPT_RESET : 78,
-    SET_RANGED_MOVEMENT : 79,
-    CALL_TIMED_ACTIONLIST : 80,
-    SET_NPC_FLAG : 81,
-    ADD_NPC_FLAG : 82,
-    REMOVE_NPC_FLAG : 83,
-    SIMPLE_TALK : 84,
-    INVOKER_CAST : 85,
-    CROSS_CAST : 86,
-    CALL_RANDOM_TIMED_ACTIONLIST : 87,
-    CALL_RANDOM_RANGE_TIMED_ACTIONLIST : 88,
-    RANDOM_MOVE : 89,
-    SET_UNIT_FIELD_BYTES_1 : 90,
-    REMOVE_UNIT_FIELD_BYTES_1 : 91,
-    INTERRUPT_SPELL : 92,
-    SEND_GO_CUSTOM_ANIM : 93,
-    SET_DYNAMIC_FLAG : 94,
-    ADD_DYNAMIC_FLAG : 95,
-    REMOVE_DYNAMIC_FLAG : 96,
-    JUMP_TO_POS : 97,
-    SEND_GOSSIP_MENU : 98,
-    GO_SET_LOOT_STATE : 99,
-    SEND_TARGET_TO_TARGET : 100,
-    SET_HOME_POS : 101,
-    SET_HEALTH_REGEN : 102,
-    SET_ROOT : 103,
-    SET_GO_FLAG : 104,
-    ADD_GO_FLAG : 105,
-    REMOVE_GO_FLAG : 106,
-    SUMMON_CREATURE_GROUP : 107,
-    SET_POWER : 108,
-    ADD_POWER : 109,
-    REMOVE_POWER : 110,
-    GAME_EVENT_STOP : 111,
-    GAME_EVENT_START : 112,
-    START_CLOSEST_WAYPOINT : 113,
-    MAX : 114
+    NONE: 0,
+    TALK: 1,
+    SET_FACTION: 2,
+    MORPH_TO_ENTRY_OR_MODEL: 3,
+    SOUND: 4,
+    EMOTE: 5,
+    FAIL_QUEST: 6,
+    ADD_QUEST: 7,
+    SET_REACT_STATE: 8,
+    ACTIVATE_GOBJECT: 9,
+    RANDOM_EMOTE: 10,
+    CAST: 11,
+    SUMMON_CREATURE: 12,
+    THREAT_SINGLE_PCT: 13,
+    THREAT_ALL_PCT: 14,
+    CALL_AREAEXPLOREDOREVENTHAPPENS: 15,
+    UNUSED_16: 16,
+    SET_EMOTE_STATE: 17,
+    SET_UNIT_FLAG: 18,
+    REMOVE_UNIT_FLAG: 19,
+    AUTO_ATTACK: 20,
+    COMBAT_MOVEMENT: 21,
+    SET_EVENT_PHASE: 22,
+    INC_EVENT_PHASE: 23,
+    EVADE: 24,
+    FLEE_FOR_ASSIST: 25,
+    CALL_GROUPEVENTHAPPENS: 26,
+    CALL_CASTEDCREATUREORGO: 27,
+    REMOVEAURASFROMSPELL: 28,
+    FOLLOW: 29,
+    RANDOM_PHASE: 30,
+    RANDOM_PHASE_RANGE: 31,
+    RESET_GOBJECT: 32,
+    KILLED_MONSTER: 33,
+    SET_INST_DATA: 34,
+    SET_INST_DATA64: 35,
+    UPDATE_TEMPLATE: 36,
+    DIE: 37,
+    SET_IN_COMBAT_WITH_ZONE: 38,
+    CALL_FOR_HELP: 39,
+    SET_SHEATH: 40,
+    FORCE_DESPAWN: 41,
+    SET_INVINCIBILITY_HP_LEVEL: 42,
+    MOUNT_TO_ENTRY_OR_MODEL: 43,
+    SET_PHASE_MASK: 44,
+    SET_DATA: 45,
+    MOVE_FORWARD: 46,
+    SET_VISIBILITY: 47,
+    SET_ACTIVE: 48,
+    ATTACK_START: 49,
+    SUMMON_GO: 50,
+    KILL_UNIT: 51,
+    ACTIVATE_TAXI: 52,
+    WP_START: 53,
+    WP_PAUSE: 54,
+    WP_STOP: 55,
+    ADD_ITEM: 56,
+    REMOVE_ITEM: 57,
+    INSTALL_AI_TEMPLATE: 58,
+    SET_RUN: 59,
+    SET_FLY: 60,
+    SET_SWIM: 61,
+    TELEPORT: 62,
+    UNUSED_63: 63,
+    STORE_TARGET_LIST: 64,
+    WP_RESUME: 65,
+    SET_ORIENTATION: 66,
+    CREATE_TIMED_EVENT: 67,
+    PLAYMOVIE: 68,
+    MOVE_TO_POS: 69,
+    RESPAWN_TARGET: 70,
+    EQUIP: 71,
+    CLOSE_GOSSIP: 72,
+    TRIGGER_TIMED_EVENT: 73,
+    REMOVE_TIMED_EVENT: 74,
+    ADD_AURA: 75,
+    OVERRIDE_SCRIPT_BASE_OBJECT: 76,
+    RESET_SCRIPT_BASE_OBJECT: 77,
+    CALL_SCRIPT_RESET: 78,
+    SET_RANGED_MOVEMENT: 79,
+    CALL_TIMED_ACTIONLIST: 80,
+    SET_NPC_FLAG: 81,
+    ADD_NPC_FLAG: 82,
+    REMOVE_NPC_FLAG: 83,
+    SIMPLE_TALK: 84,
+    INVOKER_CAST: 85,
+    CROSS_CAST: 86,
+    CALL_RANDOM_TIMED_ACTIONLIST: 87,
+    CALL_RANDOM_RANGE_TIMED_ACTIONLIST: 88,
+    RANDOM_MOVE: 89,
+    SET_UNIT_FIELD_BYTES_1: 90,
+    REMOVE_UNIT_FIELD_BYTES_1: 91,
+    INTERRUPT_SPELL: 92,
+    SEND_GO_CUSTOM_ANIM: 93,
+    SET_DYNAMIC_FLAG: 94,
+    ADD_DYNAMIC_FLAG: 95,
+    REMOVE_DYNAMIC_FLAG: 96,
+    JUMP_TO_POS: 97,
+    SEND_GOSSIP_MENU: 98,
+    GO_SET_LOOT_STATE: 99,
+    SEND_TARGET_TO_TARGET: 100,
+    SET_HOME_POS: 101,
+    SET_HEALTH_REGEN: 102,
+    SET_ROOT: 103,
+    SET_GO_FLAG: 104,
+    ADD_GO_FLAG: 105,
+    REMOVE_GO_FLAG: 106,
+    SUMMON_CREATURE_GROUP: 107,
+    SET_POWER: 108,
+    ADD_POWER: 109,
+    REMOVE_POWER: 110,
+    GAME_EVENT_STOP: 111,
+    GAME_EVENT_START: 112,
+    START_CLOSEST_WAYPOINT: 113,
+    MAX: 114
   };
 
   /* SAI target constants */
   app.saiConstants.target = {
-    NONE : 0,
-    SELF : 1,
-    VICTIM : 2,
-    HOSTILE_SECOND_AGGRO : 3,
-    HOSTILE_LAST_AGGRO : 4,
-    HOSTILE_RANDOM : 5,
-    HOSTILE_RANDOM_NOT_TOP : 6,
-    ACTION_INVOKER : 7,
-    POSITION : 8,
-    CREATURE_RANGE : 9,
-    CREATURE_GUID : 10,
-    CREATURE_DISTANCE : 11,
-    STORED : 12,
-    GAMEOBJECT_RANGE : 13,
-    GAMEOBJECT_GUID : 14,
-    GAMEOBJECT_DISTANCE : 15,
-    INVOKER_PARTY : 16,
-    PLAYER_RANGE : 17,
-    PLAYER_DISTANCE : 18,
-    CLOSEST_CREATURE : 19,
-    CLOSEST_GAMEOBJECT : 20,
-    CLOSEST_PLAYER : 21,
-    ACTION_INVOKER_VEHICLE : 22,
-    OWNER_OR_SUMMONER : 23,
-    THREAT_LIST : 24,
-    CLOSEST_ENEMY : 25,
-    CLOSEST_FRIENDLY : 26,
-    LOOT_RECIPIENTS : 27,
-    MAX : 28
+    NONE: 0,
+    SELF: 1,
+    VICTIM: 2,
+    HOSTILE_SECOND_AGGRO: 3,
+    HOSTILE_LAST_AGGRO: 4,
+    HOSTILE_RANDOM: 5,
+    HOSTILE_RANDOM_NOT_TOP: 6,
+    ACTION_INVOKER: 7,
+    POSITION: 8,
+    CREATURE_RANGE: 9,
+    CREATURE_GUID: 10,
+    CREATURE_DISTANCE: 11,
+    STORED: 12,
+    GAMEOBJECT_RANGE: 13,
+    GAMEOBJECT_GUID: 14,
+    GAMEOBJECT_DISTANCE: 15,
+    INVOKER_PARTY: 16,
+    PLAYER_RANGE: 17,
+    PLAYER_DISTANCE: 18,
+    CLOSEST_CREATURE: 19,
+    CLOSEST_GAMEOBJECT: 20,
+    CLOSEST_PLAYER: 21,
+    ACTION_INVOKER_VEHICLE: 22,
+    OWNER_OR_SUMMONER: 23,
+    THREAT_LIST: 24,
+    CLOSEST_ENEMY: 25,
+    CLOSEST_FRIENDLY: 26,
+    LOOT_RECIPIENTS: 27,
+    MAX: 28
   };
 
   /* SAI template constants */
   app.saiConstants.templates = {
-    BASIC           : 0,
-    CASTER          : 1,
-    TURRET          : 2,
-    PASSIVE         : 3,
-    CAGED_GO_PART   : 4,
-    CAGED_NPC_PART  : 5
+    BASIC: 0,
+    CASTER: 1,
+    TURRET: 2,
+    PASSIVE: 3,
+    CAGED_GO_PART: 4,
+    CAGED_NPC_PART: 5
   };
 
   /* SAI phase masks */
   app.saiConstants.phaseMask = {
-    ALWAYS : 0x000,
-    1      : 0x001,
-    2      : 0x002,
-    3      : 0x004,
-    4      : 0x008,
-    5      : 0x010,
-    6      : 0x020,
-    7      : 0x040,
-    8      : 0x080,
-    9      : 0x100
+    ALWAYS: 0x000,
+    1: 0x001,
+    2: 0x002,
+    3: 0x004,
+    4: 0x008,
+    5: 0x010,
+    6: 0x020,
+    7: 0x040,
+    8: 0x080,
+    9: 0x100
   };
 
   /* SAI event flags */
   app.saiConstants.eventFlags = {
-    NONE           : 0x00,
-    NOT_REPEATABLE : 0x01,
-    NORMAL_DUNGEON : 0x02,
-    HEROIC_DUNGEON : 0x04,
-    NORMAL_RAID    : 0x08,
-    HEROIC_RAID    : 0x10,
-    DEBUG_ONLY     : 0x80
+    NONE: 0x00,
+    NOT_REPEATABLE: 0x01,
+    NORMAL_DUNGEON: 0x02,
+    HEROIC_DUNGEON: 0x04,
+    NORMAL_RAID: 0x08,
+    HEROIC_RAID: 0x10,
+    DEBUG_ONLY: 0x80
   };
 
   /* GO constants */
   app.goConstants = {};
 
-  app.goConstants.data0     = [];
-  app.goConstants.data0[0]  = "startOpen";
-  app.goConstants.data0[1]  = "startOpen";
-  app.goConstants.data0[2]  = "open";
-  app.goConstants.data0[3]  = "open";
-  app.goConstants.data0[5]  = "floatingTooltip";
-  app.goConstants.data0[6]  = "open";
-  app.goConstants.data0[7]  = "chairslots";
-  app.goConstants.data0[8]  = "spellFocusType";
-  app.goConstants.data0[9]  = "pageID";
+  app.goConstants.data0 = [];
+  app.goConstants.data0[0] = "startOpen";
+  app.goConstants.data0[1] = "startOpen";
+  app.goConstants.data0[2] = "open";
+  app.goConstants.data0[3] = "open";
+  app.goConstants.data0[5] = "floatingTooltip";
+  app.goConstants.data0[6] = "open";
+  app.goConstants.data0[7] = "chairslots";
+  app.goConstants.data0[8] = "spellFocusType";
+  app.goConstants.data0[9] = "pageID";
   app.goConstants.data0[10] = "open";
   app.goConstants.data0[13] = "open";
   app.goConstants.data0[15] = "taxiPathID";
@@ -449,16 +448,16 @@
   app.goConstants.data0[33] = "intactNumHits";
   app.goConstants.data0[35] = "whenToPause";
 
-  app.goConstants.data1     = [];
-  app.goConstants.data1[0]  = "open";
-  app.goConstants.data1[1]  = "open";
-  app.goConstants.data1[2]  = "questList";
-  app.goConstants.data1[3]  = "che stLoot";
-  app.goConstants.data1[5]  = "highlight";
-  app.goConstants.data1[6]  = "level";
-  app.goConstants.data1[7]  = "chairorientation";
-  app.goConstants.data1[8]  = "diameter";
-  app.goConstants.data1[9]  = "language";
+  app.goConstants.data1 = [];
+  app.goConstants.data1[0] = "open";
+  app.goConstants.data1[1] = "open";
+  app.goConstants.data1[2] = "questList";
+  app.goConstants.data1[3] = "che stLoot";
+  app.goConstants.data1[5] = "highlight";
+  app.goConstants.data1[6] = "level";
+  app.goConstants.data1[7] = "chairorientation";
+  app.goConstants.data1[8] = "diameter";
+  app.goConstants.data1[9] = "language";
   app.goConstants.data1[10] = "questID";
   app.goConstants.data1[13] = "camera";
   app.goConstants.data1[15] = "moveSpeed";
@@ -475,15 +474,15 @@
   app.goConstants.data1[33] = "creditProxyCreature";
   app.goConstants.data1[35] = "startOpen";
 
-  app.goConstants.data2     = [];
-  app.goConstants.data2[0]  = "autoClose";
-  app.goConstants.data2[1]  = "autoClose";
-  app.goConstants.data2[2]  = "pageMaterial";
-  app.goConstants.data2[3]  = "chestRestockTime";
-  app.goConstants.data2[5]  = "serverOnly";
-  app.goConstants.data2[6]  = "diameter";
-  app.goConstants.data2[8]  = "linkedTrap";
-  app.goConstants.data2[9]  = "pageMaterial";
+  app.goConstants.data2 = [];
+  app.goConstants.data2[0] = "autoClose";
+  app.goConstants.data2[1] = "autoClose";
+  app.goConstants.data2[2] = "pageMaterial";
+  app.goConstants.data2[3] = "chestRestockTime";
+  app.goConstants.data2[5] = "serverOnly";
+  app.goConstants.data2[6] = "diameter";
+  app.goConstants.data2[8] = "linkedTrap";
+  app.goConstants.data2[9] = "pageMaterial";
   app.goConstants.data2[10] = "eventID";
   app.goConstants.data2[15] = "accelRate";
   app.goConstants.data2[18] = "animSpell";
@@ -497,15 +496,14 @@
   app.goConstants.data2[33] = "state1Name";
   app.goConstants.data2[35] = "autoClose";
 
-
-  app.goConstants.data3     = [];
-  app.goConstants.data3[0]  = "noDamageImmune";
-  app.goConstants.data3[1]  = "linkedTrap";
-  app.goConstants.data3[2]  = "gossipID";
-  app.goConstants.data3[3]  = "consumable";
-  app.goConstants.data3[5]  = "large";
-  app.goConstants.data3[6]  = "spell";
-  app.goConstants.data3[8]  = "serverOnly";
+  app.goConstants.data3 = [];
+  app.goConstants.data3[0] = "noDamageImmune";
+  app.goConstants.data3[1] = "linkedTrap";
+  app.goConstants.data3[2] = "gossipID";
+  app.goConstants.data3[3] = "consumable";
+  app.goConstants.data3[5] = "large";
+  app.goConstants.data3[6] = "spell";
+  app.goConstants.data3[8] = "serverOnly";
   app.goConstants.data3[18] = "ritualPersistent";
   app.goConstants.data3[24] = "returnAura";
   app.goConstants.data3[25] = "maxRestock";
@@ -514,148 +512,147 @@
   app.goConstants.data3[30] = "conditionID1";
   app.goConstants.data3[33] = "intactEvent";
 
-  app.goConstants.data4     = [];
-  app.goConstants.data4[0]  = "openTextID";
-  app.goConstants.data4[1]  = "noDamageImmune";
-  app.goConstants.data4[2]  = "customAnim";
-  app.goConstants.data4[3]  = "minRestock";
-  app.goConstants.data4[5]  = "floatOnWater";
-  app.goConstants.data4[6]  = "type";
-  app.goConstants.data4[8]  = "questID";
+  app.goConstants.data4 = [];
+  app.goConstants.data4[0] = "openTextID";
+  app.goConstants.data4[1] = "noDamageImmune";
+  app.goConstants.data4[2] = "customAnim";
+  app.goConstants.data4[3] = "minRestock";
+  app.goConstants.data4[5] = "floatOnWater";
+  app.goConstants.data4[6] = "type";
+  app.goConstants.data4[8] = "questID";
   app.goConstants.data4[10] = "customAnim";
   app.goConstants.data4[18] = "casterTargetSpell";
   app.goConstants.data4[24] = "returnSpell";
   app.goConstants.data4[29] = "winEventID1";
   app.goConstants.data4[33] = "damagedDisplayId";
 
-  app.goConstants.data5     = [];
-  app.goConstants.data5[0]  = "closeTextID";
-  app.goConstants.data5[1]  = "large";
-  app.goConstants.data5[2]  = "noDamageImmune";
-  app.goConstants.data5[3]  = "maxRestock";
-  app.goConstants.data5[5]  = "questID";
-  app.goConstants.data5[6]  = "cooldown";
-  app.goConstants.data5[8]  = "large";
+  app.goConstants.data5 = [];
+  app.goConstants.data5[0] = "closeTextID";
+  app.goConstants.data5[1] = "large";
+  app.goConstants.data5[2] = "noDamageImmune";
+  app.goConstants.data5[3] = "maxRestock";
+  app.goConstants.data5[5] = "questID";
+  app.goConstants.data5[6] = "cooldown";
+  app.goConstants.data5[8] = "large";
   app.goConstants.data5[10] = "consumable";
   app.goConstants.data5[18] = "casterTargetSpellTargets";
   app.goConstants.data5[24] = "noDamageImmune";
   app.goConstants.data5[29] = "winEventID2";
   app.goConstants.data5[33] = "damagedNumHits";
 
-  app.goConstants.data6     = [];
-  app.goConstants.data6[1]  = "openTextID";
-  app.goConstants.data6[2]  = "openTextID";
-  app.goConstants.data6[3]  = "lootedEvent";
-  app.goConstants.data6[8]  = "floatingTooltip";
+  app.goConstants.data6 = [];
+  app.goConstants.data6[1] = "openTextID";
+  app.goConstants.data6[2] = "openTextID";
+  app.goConstants.data6[3] = "lootedEvent";
+  app.goConstants.data6[8] = "floatingTooltip";
   app.goConstants.data6[10] = "cooldown";
   app.goConstants.data6[18] = "castersGrouped";
   app.goConstants.data6[29] = "contestedEventID1";
   app.goConstants.data6[33] = "empty3";
 
-  app.goConstants.data7     = [];
-  app.goConstants.data7[1]  = "closeTextID";
-  app.goConstants.data7[2]  = "losOK";
-  app.goConstants.data7[3]  = "linkedTrap";
-  app.goConstants.data7[6]  = "startDelay";
+  app.goConstants.data7 = [];
+  app.goConstants.data7[1] = "closeTextID";
+  app.goConstants.data7[2] = "losOK";
+  app.goConstants.data7[3] = "linkedTrap";
+  app.goConstants.data7[6] = "startDelay";
   app.goConstants.data7[10] = "pageID";
   app.goConstants.data7[24] = "losOK";
   app.goConstants.data7[29] = "contestedEventID2";
   app.goConstants.data7[33] = "empty4";
 
-  app.goConstants.data8     = [];
-  app.goConstants.data8[1]  = "losOK";
-  app.goConstants.data8[2]  = "allowMounted";
-  app.goConstants.data8[3]  = "questID";
-  app.goConstants.data8[6]  = "serverOnly";
+  app.goConstants.data8 = [];
+  app.goConstants.data8[1] = "losOK";
+  app.goConstants.data8[2] = "allowMounted";
+  app.goConstants.data8[3] = "questID";
+  app.goConstants.data8[6] = "serverOnly";
   app.goConstants.data8[10] = "language";
   app.goConstants.data8[29] = "progressEventID1";
   app.goConstants.data8[33] = "empty5";
 
-  app.goConstants.data9     = [];
-  app.goConstants.data9[2]  = "large";
-  app.goConstants.data9[3]  = "level";
-  app.goConstants.data9[6]  = "stealthed";
+  app.goConstants.data9 = [];
+  app.goConstants.data9[2] = "large";
+  app.goConstants.data9[3] = "level";
+  app.goConstants.data9[6] = "stealthed";
   app.goConstants.data9[10] = "pageMaterial";
   app.goConstants.data9[29] = "progressEventID2";
   app.goConstants.data9[33] = "damagedEvent";
 
-  app.goConstants.data10     = [];
-  app.goConstants.data10[3]  = "losOK";
-  app.goConstants.data10[6]  = "large";
+  app.goConstants.data10 = [];
+  app.goConstants.data10[3] = "losOK";
+  app.goConstants.data10[6] = "large";
   app.goConstants.data10[10] = "spell";
   app.goConstants.data10[29] = "neutralEventID1";
   app.goConstants.data10[33] = "destroyedDisplayId";
 
-  app.goConstants.data11     = [];
-  app.goConstants.data11[3]  = "leaveLoot";
-  app.goConstants.data11[6]  = "stealthAffected";
+  app.goConstants.data11 = [];
+  app.goConstants.data11[3] = "leaveLoot";
+  app.goConstants.data11[6] = "stealthAffected";
   app.goConstants.data11[10] = "noDamageImmune";
   app.goConstants.data11[29] = "neutralEventID2";
   app.goConstants.data11[33] = "empty7";
 
-  app.goConstants.data12     = [];
-  app.goConstants.data12[3]  = "notInCombat";
-  app.goConstants.data12[6]  = "openTextID";
+  app.goConstants.data12 = [];
+  app.goConstants.data12[3] = "notInCombat";
+  app.goConstants.data12[6] = "openTextID";
   app.goConstants.data12[10] = "linkedTrap";
   app.goConstants.data12[29] = "neutralPercent";
   app.goConstants.data12[33] = "empty8";
 
-  app.goConstants.data13     = [];
-  app.goConstants.data13[3]  = "log loot";
+  app.goConstants.data13 = [];
+  app.goConstants.data13[3] = "log loot";
   app.goConstants.data13[10] = "large";
   app.goConstants.data13[29] = "worldstate3";
   app.goConstants.data13[33] = "empty9";
 
-  app.goConstants.data14     = [];
-  app.goConstants.data14[3]  = "openTextID";
+  app.goConstants.data14 = [];
+  app.goConstants.data14[3] = "openTextID";
   app.goConstants.data14[10] = "openTextID";
   app.goConstants.data14[29] = "minSuperiority";
   app.goConstants.data14[33] = "destroyedEvent";
 
-  app.goConstants.data15     = [];
-  app.goConstants.data15[3]  = "use group loot rules";
+  app.goConstants.data15 = [];
+  app.goConstants.data15[3] = "use group loot rules";
   app.goConstants.data15[10] = "closeTextID";
   app.goConstants.data15[29] = "maxSuperiority";
   app.goConstants.data15[33] = "empty10";
 
-  app.goConstants.data16     = [];
+  app.goConstants.data16 = [];
   app.goConstants.data16[10] = "losOK";
   app.goConstants.data16[29] = "minTime";
   app.goConstants.data16[33] = "debuildingTimeSecs";
 
-  app.goConstants.data17     = [];
+  app.goConstants.data17 = [];
   app.goConstants.data17[29] = "maxTime";
   app.goConstants.data17[33] = "empty11";
 
-  app.goConstants.data18     = [];
+  app.goConstants.data18 = [];
   app.goConstants.data18[29] = "large";
   app.goConstants.data18[33] = "destructibleData";
 
-  app.goConstants.data19   = [];
+  app.goConstants.data19 = [];
   app.goConstants.data19[10] = "gossipID";
   app.goConstants.data19[33] = "rebuildingEvent";
 
-  app.goConstants.data20   = [];
+  app.goConstants.data20 = [];
   app.goConstants.data20[33] = "empty12";
 
-  app.goConstants.data21   = [];
+  app.goConstants.data21 = [];
   app.goConstants.data21[33] = "empty13";
 
-  app.goConstants.data22   = [];
+  app.goConstants.data22 = [];
   app.goConstants.data22[33] = "damageEvent";
-
 
   /* creature family constants */
   app.modalConstants.family = [];
-  app.modalConstants.family[1]  = "Wolf";
-  app.modalConstants.family[2]  = "Cat";
-  app.modalConstants.family[3]  = "Spider";
-  app.modalConstants.family[4]  = "Bear";
-  app.modalConstants.family[5]  = "Boar";
-  app.modalConstants.family[6]  = "Crocolisk";
-  app.modalConstants.family[7]  = "Carrion Bird";
-  app.modalConstants.family[8]  = "Crab";
-  app.modalConstants.family[9]  = "Gorilla";
+  app.modalConstants.family[1] = "Wolf";
+  app.modalConstants.family[2] = "Cat";
+  app.modalConstants.family[3] = "Spider";
+  app.modalConstants.family[4] = "Bear";
+  app.modalConstants.family[5] = "Boar";
+  app.modalConstants.family[6] = "Crocolisk";
+  app.modalConstants.family[7] = "Carrion Bird";
+  app.modalConstants.family[8] = "Crab";
+  app.modalConstants.family[9] = "Gorilla";
   app.modalConstants.family[11] = "Raptor";
   app.modalConstants.family[12] = "Tallstrider";
   app.modalConstants.family[15] = "Felhunter";
@@ -690,225 +687,225 @@
 
   /* faction constants */
   app.modalConstants.faction = [];
-  app.modalConstants.faction[1]    = "PLAYER, Human";
-  app.modalConstants.faction[2]    = "PLAYER, Orc";
-  app.modalConstants.faction[3]    = "PLAYER, Dwarf";
-  app.modalConstants.faction[4]    = "PLAYER, Night Elf";
-  app.modalConstants.faction[5]    = "PLAYER, Undead";
-  app.modalConstants.faction[6]    = "PLAYER, Tauren ";
-  app.modalConstants.faction[7]    = "Creature";
-  app.modalConstants.faction[10]   = "Escortee";
-  app.modalConstants.faction[11]   = "Stormwind ";
-  app.modalConstants.faction[12]   = "Stormwind";
-  app.modalConstants.faction[14]   = "Monster";
-  app.modalConstants.faction[15]   = "Creature";
-  app.modalConstants.faction[16]   = "Monster";
-  app.modalConstants.faction[17]   = "Defias Brotherhood";
-  app.modalConstants.faction[18]   = "Murloc";
-  app.modalConstants.faction[19]   = "Gnoll - Redridge";
-  app.modalConstants.faction[20]   = "Gnoll - Riverpaw";
-  app.modalConstants.faction[21]   = "Undead, Scourge";
-  app.modalConstants.faction[22]   = "Beast - Spider";
-  app.modalConstants.faction[23]   = "Gnomeregan Exiles";
-  app.modalConstants.faction[24]   = "Worgen";
-  app.modalConstants.faction[25]   = "Kobold";
-  app.modalConstants.faction[26]   = "Kobold";
-  app.modalConstants.faction[27]   = "Defias Brotherhood";
-  app.modalConstants.faction[28]   = "Troll, Bloodscalp";
-  app.modalConstants.faction[29]   = "Orgrimmar";
-  app.modalConstants.faction[30]   = "Troll, Skullsplitter";
-  app.modalConstants.faction[31]   = "Prey";
-  app.modalConstants.faction[32]   = "Beast - Wolf";
-  app.modalConstants.faction[33]   = "Escortee";
-  app.modalConstants.faction[34]   = "Defias Brotherhood";
-  app.modalConstants.faction[35]   = "Friendly";
-  app.modalConstants.faction[36]   = "Trogg";
-  app.modalConstants.faction[37]   = "Troll, Frostmane";
-  app.modalConstants.faction[38]   = "Beast - Wolf";
-  app.modalConstants.faction[39]   = "Gnoll-Shadowhide";
-  app.modalConstants.faction[40]   = "Orc,Blackrock";
-  app.modalConstants.faction[41]   = "Villian";
-  app.modalConstants.faction[42]   = "Victim";
-  app.modalConstants.faction[43]   = "Villian";
-  app.modalConstants.faction[44]   = "Beast-Bear";
-  app.modalConstants.faction[45]   = "Ogre";
-  app.modalConstants.faction[46]   = "Kurzen's Mercenaries";
-  app.modalConstants.faction[47]   = "Venture Company";
-  app.modalConstants.faction[48]   = "Beast-Raptor";
-  app.modalConstants.faction[49]   = "Basilisk";
-  app.modalConstants.faction[50]   = "Dragonflight,Green";
-  app.modalConstants.faction[51]   = "Lost Ones";
-  app.modalConstants.faction[52]   = "Gizlock's Dummy";
-  app.modalConstants.faction[53]   = "Human,Night Watch";
-  app.modalConstants.faction[54]   = "Dark Iron Dwarves";
-  app.modalConstants.faction[55]   = "Ironforge";
-  app.modalConstants.faction[56]   = "Human,Night Watch";
-  app.modalConstants.faction[57]   = "Ironforge";
-  app.modalConstants.faction[58]   = "Creature";
-  app.modalConstants.faction[59]   = "Trogg";
-  app.modalConstants.faction[60]   = "Dragonflight,Red";
-  app.modalConstants.faction[61]   = "Gnoll-Mosshide";
-  app.modalConstants.faction[62]   = "Orc,Dragonmaw";
-  app.modalConstants.faction[63]   = "Gnome-Leper";
-  app.modalConstants.faction[64]   = "Gnomeregan Exiles";
-  app.modalConstants.faction[65]   = "Orgrimmar";
-  app.modalConstants.faction[66]   = "Leopard";
-  app.modalConstants.faction[67]   = "Scarlet Crusade";
-  app.modalConstants.faction[68]   = "Undercity";
-  app.modalConstants.faction[69]   = "Ratchet";
-  app.modalConstants.faction[70]   = "Gnoll-Rothide";
-  app.modalConstants.faction[71]   = "Undercity";
-  app.modalConstants.faction[72]   = "Beast-Gorilla";
-  app.modalConstants.faction[73]   = "Beast-Carrion Bird";
-  app.modalConstants.faction[74]   = "Naga";
-  app.modalConstants.faction[76]   = "Dalaran";
-  app.modalConstants.faction[77]   = "Forlorn Spirit";
-  app.modalConstants.faction[78]   = "Darkhowl";
-  app.modalConstants.faction[79]   = "Darnassus";
-  app.modalConstants.faction[80]   = "Darnassus";
-  app.modalConstants.faction[81]   = "Grell";
-  app.modalConstants.faction[82]   = "Furbolg";
-  app.modalConstants.faction[83]   = "Horde Generic";
-  app.modalConstants.faction[84]   = "Alliance Generic";
-  app.modalConstants.faction[85]   = "Orgrimmar";
-  app.modalConstants.faction[86]   = "Gizlock's Charm";
-  app.modalConstants.faction[87]   = "Syndicate";
-  app.modalConstants.faction[88]   = "Hillsbrad Militia";
-  app.modalConstants.faction[89]   = "Scarlet Crusade";
-  app.modalConstants.faction[90]   = "Demon";
-  app.modalConstants.faction[91]   = "Elemental";
-  app.modalConstants.faction[92]   = "Spirit";
-  app.modalConstants.faction[93]   = "Monster";
-  app.modalConstants.faction[94]   = "Treasure";
-  app.modalConstants.faction[95]   = "Gnoll-Mudsnout";
-  app.modalConstants.faction[96]   = "HIllsbrad,Southshore Mayor";
-  app.modalConstants.faction[97]   = "Syndicate";
-  app.modalConstants.faction[98]   = "Undercity";
-  app.modalConstants.faction[99]   = "Victim";
-  app.modalConstants.faction[100]  = "Treasure";
-  app.modalConstants.faction[101]  = "Treasure";
-  app.modalConstants.faction[102]  = "Treasure";
-  app.modalConstants.faction[103]  = "Dragonflight,Black";
-  app.modalConstants.faction[104]  = "Thunder Bluff";
-  app.modalConstants.faction[105]  = "Thunder Bluff";
-  app.modalConstants.faction[106]  = "Horde Generic";
-  app.modalConstants.faction[107]  = "Troll,Frostmane";
-  app.modalConstants.faction[108]  = "Syndicate";
-  app.modalConstants.faction[109]  = "Quilboar,Razormane 2";
-  app.modalConstants.faction[110]  = "Quilboar,Razormane 2";
-  app.modalConstants.faction[111]  = "Quilboar,Bristleback";
-  app.modalConstants.faction[112]  = "Quilboar,Bristleback";
-  app.modalConstants.faction[113]  = "Escortee";
-  app.modalConstants.faction[114]  = "Treasure";
-  app.modalConstants.faction[115]  = "PLAYER,Gnome";
-  app.modalConstants.faction[116]  = "PLAYER,Troll";
-  app.modalConstants.faction[118]  = "Undercity";
-  app.modalConstants.faction[119]  = "Bloodsail Buccaneers";
-  app.modalConstants.faction[120]  = "Booty Bay";
-  app.modalConstants.faction[121]  = "Booty Bay";
-  app.modalConstants.faction[122]  = "Ironforge";
-  app.modalConstants.faction[123]  = "Stormwind";
-  app.modalConstants.faction[124]  = "Darnassus";
-  app.modalConstants.faction[125]  = "Orgrimmar";
-  app.modalConstants.faction[126]  = "Darkspear Trolls";
-  app.modalConstants.faction[127]  = "Villian";
-  app.modalConstants.faction[128]  = "Blackfathom";
-  app.modalConstants.faction[129]  = "Makrura";
-  app.modalConstants.faction[130]  = "Centaur,Kolkar";
-  app.modalConstants.faction[131]  = "Centaur,Galak";
-  app.modalConstants.faction[132]  = "Gelkis Clan Centaur";
-  app.modalConstants.faction[133]  = "Magram Clan Centaur";
-  app.modalConstants.faction[134]  = "Maraudine";
-  app.modalConstants.faction[148]  = "Monster";
-  app.modalConstants.faction[149]  = "Theramore";
-  app.modalConstants.faction[150]  = "Theramore";
-  app.modalConstants.faction[151]  = "Theramore";
-  app.modalConstants.faction[152]  = "Quilboar,Razorfen";
-  app.modalConstants.faction[153]  = "Quilboar,Razorfen";
-  app.modalConstants.faction[154]  = "Quilboar,Deathshead";
-  app.modalConstants.faction[168]  = "Enemy";
-  app.modalConstants.faction[188]  = "Ambient";
-  app.modalConstants.faction[189]  = "Creature";
-  app.modalConstants.faction[190]  = "Ambient";
-  app.modalConstants.faction[208]  = "Nethergarde Caravan";
-  app.modalConstants.faction[209]  = "Nethergarde Caravan";
-  app.modalConstants.faction[210]  = "Alliance Generic";
-  app.modalConstants.faction[230]  = "Southsea Freebooters";
-  app.modalConstants.faction[231]  = "Escortee";
-  app.modalConstants.faction[232]  = "Escortee";
-  app.modalConstants.faction[233]  = "Undead,Scourge";
-  app.modalConstants.faction[250]  = "Escortee";
-  app.modalConstants.faction[270]  = "Wailing Caverns";
-  app.modalConstants.faction[290]  = "Escortee";
-  app.modalConstants.faction[310]  = "Silithid";
-  app.modalConstants.faction[311]  = "Silithid";
-  app.modalConstants.faction[312]  = "Beast-Spider";
-  app.modalConstants.faction[330]  = "Wailing Caverns";
-  app.modalConstants.faction[350]  = "Blackfathom";
-  app.modalConstants.faction[370]  = "Armies of C'Thun";
-  app.modalConstants.faction[371]  = "Silvermoon Remnant";
-  app.modalConstants.faction[390]  = "Booty Bay";
-  app.modalConstants.faction[410]  = "Basilisk";
-  app.modalConstants.faction[411]  = "Beast-Bat";
-  app.modalConstants.faction[412]  = "The Defilers";
-  app.modalConstants.faction[413]  = "Scorpid";
-  app.modalConstants.faction[414]  = "Timbermaw Hold";
-  app.modalConstants.faction[415]  = "Titan";
-  app.modalConstants.faction[416]  = "Titan";
-  app.modalConstants.faction[430]  = "Taskmaster Fizzule";
-  app.modalConstants.faction[450]  = "Wailing Caverns";
-  app.modalConstants.faction[470]  = "Titan";
-  app.modalConstants.faction[471]  = "Ravenholdt";
-  app.modalConstants.faction[472]  = "Syndicate";
-  app.modalConstants.faction[473]  = "Ravenholdt";
-  app.modalConstants.faction[474]  = "Gadgetzan";
-  app.modalConstants.faction[475]  = "Gadgetzan";
-  app.modalConstants.faction[494]  = "Gnomeregan Bug";
-  app.modalConstants.faction[495]  = "Escortee";
-  app.modalConstants.faction[514]  = "Harpy";
-  app.modalConstants.faction[534]  = "Alliance Generic";
-  app.modalConstants.faction[554]  = "Burning Blade";
-  app.modalConstants.faction[574]  = "Shadowsilk Poacher";
-  app.modalConstants.faction[575]  = "Searing Spider";
-  app.modalConstants.faction[594]  = "Trogg";
-  app.modalConstants.faction[614]  = "Victim";
-  app.modalConstants.faction[634]  = "Monster";
-  app.modalConstants.faction[635]  = "Cenarion Circle";
-  app.modalConstants.faction[636]  = "Timbermaw Hold";
-  app.modalConstants.faction[637]  = "Ratchet";
-  app.modalConstants.faction[654]  = "Troll,Witherbark";
-  app.modalConstants.faction[655]  = "Centaur,Kolkar";
-  app.modalConstants.faction[674]  = "Dark Iron Dwarves";
-  app.modalConstants.faction[694]  = "Alliance Generic";
-  app.modalConstants.faction[695]  = "Hydraxian Waterlords";
-  app.modalConstants.faction[714]  = "Horde Generic";
-  app.modalConstants.faction[734]  = "Dark Iron Dwarves";
-  app.modalConstants.faction[735]  = "Goblin,Dark Iron Bar Patron";
-  app.modalConstants.faction[736]  = "Goblin,Dark Iron Bar Patron";
-  app.modalConstants.faction[754]  = "Dark Iron Dwarves";
-  app.modalConstants.faction[774]  = "Escortee";
-  app.modalConstants.faction[775]  = "Escortee";
-  app.modalConstants.faction[776]  = "Brood of Nozdormu";
-  app.modalConstants.faction[777]  = "Might of Kalimdor";
-  app.modalConstants.faction[778]  = "Giant";
-  app.modalConstants.faction[794]  = "Argent Dawn";
-  app.modalConstants.faction[795]  = "Troll,Vilebranch";
-  app.modalConstants.faction[814]  = "Argent Dawn";
-  app.modalConstants.faction[834]  = "Elemental";
-  app.modalConstants.faction[854]  = "Everlook";
-  app.modalConstants.faction[855]  = "Everlook";
-  app.modalConstants.faction[874]  = "Wintersaber Trainers";
-  app.modalConstants.faction[875]  = "Gnomeregan Exiles";
-  app.modalConstants.faction[876]  = "Darkspear Trolls";
-  app.modalConstants.faction[877]  = "Darkspear Trolls";
-  app.modalConstants.faction[894]  = "Theramore";
-  app.modalConstants.faction[914]  = "Training Dummy";
-  app.modalConstants.faction[934]  = "Furbolg,Uncorrupted";
-  app.modalConstants.faction[954]  = "Demon";
-  app.modalConstants.faction[974]  = "Undead,Scourge";
-  app.modalConstants.faction[994]  = "Cenarion Circle";
-  app.modalConstants.faction[995]  = "Thunder Bluff";
-  app.modalConstants.faction[996]  = "Cenarion Circle";
+  app.modalConstants.faction[1] = "PLAYER, Human";
+  app.modalConstants.faction[2] = "PLAYER, Orc";
+  app.modalConstants.faction[3] = "PLAYER, Dwarf";
+  app.modalConstants.faction[4] = "PLAYER, Night Elf";
+  app.modalConstants.faction[5] = "PLAYER, Undead";
+  app.modalConstants.faction[6] = "PLAYER, Tauren ";
+  app.modalConstants.faction[7] = "Creature";
+  app.modalConstants.faction[10] = "Escortee";
+  app.modalConstants.faction[11] = "Stormwind ";
+  app.modalConstants.faction[12] = "Stormwind";
+  app.modalConstants.faction[14] = "Monster";
+  app.modalConstants.faction[15] = "Creature";
+  app.modalConstants.faction[16] = "Monster";
+  app.modalConstants.faction[17] = "Defias Brotherhood";
+  app.modalConstants.faction[18] = "Murloc";
+  app.modalConstants.faction[19] = "Gnoll - Redridge";
+  app.modalConstants.faction[20] = "Gnoll - Riverpaw";
+  app.modalConstants.faction[21] = "Undead, Scourge";
+  app.modalConstants.faction[22] = "Beast - Spider";
+  app.modalConstants.faction[23] = "Gnomeregan Exiles";
+  app.modalConstants.faction[24] = "Worgen";
+  app.modalConstants.faction[25] = "Kobold";
+  app.modalConstants.faction[26] = "Kobold";
+  app.modalConstants.faction[27] = "Defias Brotherhood";
+  app.modalConstants.faction[28] = "Troll, Bloodscalp";
+  app.modalConstants.faction[29] = "Orgrimmar";
+  app.modalConstants.faction[30] = "Troll, Skullsplitter";
+  app.modalConstants.faction[31] = "Prey";
+  app.modalConstants.faction[32] = "Beast - Wolf";
+  app.modalConstants.faction[33] = "Escortee";
+  app.modalConstants.faction[34] = "Defias Brotherhood";
+  app.modalConstants.faction[35] = "Friendly";
+  app.modalConstants.faction[36] = "Trogg";
+  app.modalConstants.faction[37] = "Troll, Frostmane";
+  app.modalConstants.faction[38] = "Beast - Wolf";
+  app.modalConstants.faction[39] = "Gnoll-Shadowhide";
+  app.modalConstants.faction[40] = "Orc,Blackrock";
+  app.modalConstants.faction[41] = "Villian";
+  app.modalConstants.faction[42] = "Victim";
+  app.modalConstants.faction[43] = "Villian";
+  app.modalConstants.faction[44] = "Beast-Bear";
+  app.modalConstants.faction[45] = "Ogre";
+  app.modalConstants.faction[46] = "Kurzen's Mercenaries";
+  app.modalConstants.faction[47] = "Venture Company";
+  app.modalConstants.faction[48] = "Beast-Raptor";
+  app.modalConstants.faction[49] = "Basilisk";
+  app.modalConstants.faction[50] = "Dragonflight,Green";
+  app.modalConstants.faction[51] = "Lost Ones";
+  app.modalConstants.faction[52] = "Gizlock's Dummy";
+  app.modalConstants.faction[53] = "Human,Night Watch";
+  app.modalConstants.faction[54] = "Dark Iron Dwarves";
+  app.modalConstants.faction[55] = "Ironforge";
+  app.modalConstants.faction[56] = "Human,Night Watch";
+  app.modalConstants.faction[57] = "Ironforge";
+  app.modalConstants.faction[58] = "Creature";
+  app.modalConstants.faction[59] = "Trogg";
+  app.modalConstants.faction[60] = "Dragonflight,Red";
+  app.modalConstants.faction[61] = "Gnoll-Mosshide";
+  app.modalConstants.faction[62] = "Orc,Dragonmaw";
+  app.modalConstants.faction[63] = "Gnome-Leper";
+  app.modalConstants.faction[64] = "Gnomeregan Exiles";
+  app.modalConstants.faction[65] = "Orgrimmar";
+  app.modalConstants.faction[66] = "Leopard";
+  app.modalConstants.faction[67] = "Scarlet Crusade";
+  app.modalConstants.faction[68] = "Undercity";
+  app.modalConstants.faction[69] = "Ratchet";
+  app.modalConstants.faction[70] = "Gnoll-Rothide";
+  app.modalConstants.faction[71] = "Undercity";
+  app.modalConstants.faction[72] = "Beast-Gorilla";
+  app.modalConstants.faction[73] = "Beast-Carrion Bird";
+  app.modalConstants.faction[74] = "Naga";
+  app.modalConstants.faction[76] = "Dalaran";
+  app.modalConstants.faction[77] = "Forlorn Spirit";
+  app.modalConstants.faction[78] = "Darkhowl";
+  app.modalConstants.faction[79] = "Darnassus";
+  app.modalConstants.faction[80] = "Darnassus";
+  app.modalConstants.faction[81] = "Grell";
+  app.modalConstants.faction[82] = "Furbolg";
+  app.modalConstants.faction[83] = "Horde Generic";
+  app.modalConstants.faction[84] = "Alliance Generic";
+  app.modalConstants.faction[85] = "Orgrimmar";
+  app.modalConstants.faction[86] = "Gizlock's Charm";
+  app.modalConstants.faction[87] = "Syndicate";
+  app.modalConstants.faction[88] = "Hillsbrad Militia";
+  app.modalConstants.faction[89] = "Scarlet Crusade";
+  app.modalConstants.faction[90] = "Demon";
+  app.modalConstants.faction[91] = "Elemental";
+  app.modalConstants.faction[92] = "Spirit";
+  app.modalConstants.faction[93] = "Monster";
+  app.modalConstants.faction[94] = "Treasure";
+  app.modalConstants.faction[95] = "Gnoll-Mudsnout";
+  app.modalConstants.faction[96] = "HIllsbrad,Southshore Mayor";
+  app.modalConstants.faction[97] = "Syndicate";
+  app.modalConstants.faction[98] = "Undercity";
+  app.modalConstants.faction[99] = "Victim";
+  app.modalConstants.faction[100] = "Treasure";
+  app.modalConstants.faction[101] = "Treasure";
+  app.modalConstants.faction[102] = "Treasure";
+  app.modalConstants.faction[103] = "Dragonflight,Black";
+  app.modalConstants.faction[104] = "Thunder Bluff";
+  app.modalConstants.faction[105] = "Thunder Bluff";
+  app.modalConstants.faction[106] = "Horde Generic";
+  app.modalConstants.faction[107] = "Troll,Frostmane";
+  app.modalConstants.faction[108] = "Syndicate";
+  app.modalConstants.faction[109] = "Quilboar,Razormane 2";
+  app.modalConstants.faction[110] = "Quilboar,Razormane 2";
+  app.modalConstants.faction[111] = "Quilboar,Bristleback";
+  app.modalConstants.faction[112] = "Quilboar,Bristleback";
+  app.modalConstants.faction[113] = "Escortee";
+  app.modalConstants.faction[114] = "Treasure";
+  app.modalConstants.faction[115] = "PLAYER,Gnome";
+  app.modalConstants.faction[116] = "PLAYER,Troll";
+  app.modalConstants.faction[118] = "Undercity";
+  app.modalConstants.faction[119] = "Bloodsail Buccaneers";
+  app.modalConstants.faction[120] = "Booty Bay";
+  app.modalConstants.faction[121] = "Booty Bay";
+  app.modalConstants.faction[122] = "Ironforge";
+  app.modalConstants.faction[123] = "Stormwind";
+  app.modalConstants.faction[124] = "Darnassus";
+  app.modalConstants.faction[125] = "Orgrimmar";
+  app.modalConstants.faction[126] = "Darkspear Trolls";
+  app.modalConstants.faction[127] = "Villian";
+  app.modalConstants.faction[128] = "Blackfathom";
+  app.modalConstants.faction[129] = "Makrura";
+  app.modalConstants.faction[130] = "Centaur,Kolkar";
+  app.modalConstants.faction[131] = "Centaur,Galak";
+  app.modalConstants.faction[132] = "Gelkis Clan Centaur";
+  app.modalConstants.faction[133] = "Magram Clan Centaur";
+  app.modalConstants.faction[134] = "Maraudine";
+  app.modalConstants.faction[148] = "Monster";
+  app.modalConstants.faction[149] = "Theramore";
+  app.modalConstants.faction[150] = "Theramore";
+  app.modalConstants.faction[151] = "Theramore";
+  app.modalConstants.faction[152] = "Quilboar,Razorfen";
+  app.modalConstants.faction[153] = "Quilboar,Razorfen";
+  app.modalConstants.faction[154] = "Quilboar,Deathshead";
+  app.modalConstants.faction[168] = "Enemy";
+  app.modalConstants.faction[188] = "Ambient";
+  app.modalConstants.faction[189] = "Creature";
+  app.modalConstants.faction[190] = "Ambient";
+  app.modalConstants.faction[208] = "Nethergarde Caravan";
+  app.modalConstants.faction[209] = "Nethergarde Caravan";
+  app.modalConstants.faction[210] = "Alliance Generic";
+  app.modalConstants.faction[230] = "Southsea Freebooters";
+  app.modalConstants.faction[231] = "Escortee";
+  app.modalConstants.faction[232] = "Escortee";
+  app.modalConstants.faction[233] = "Undead,Scourge";
+  app.modalConstants.faction[250] = "Escortee";
+  app.modalConstants.faction[270] = "Wailing Caverns";
+  app.modalConstants.faction[290] = "Escortee";
+  app.modalConstants.faction[310] = "Silithid";
+  app.modalConstants.faction[311] = "Silithid";
+  app.modalConstants.faction[312] = "Beast-Spider";
+  app.modalConstants.faction[330] = "Wailing Caverns";
+  app.modalConstants.faction[350] = "Blackfathom";
+  app.modalConstants.faction[370] = "Armies of C'Thun";
+  app.modalConstants.faction[371] = "Silvermoon Remnant";
+  app.modalConstants.faction[390] = "Booty Bay";
+  app.modalConstants.faction[410] = "Basilisk";
+  app.modalConstants.faction[411] = "Beast-Bat";
+  app.modalConstants.faction[412] = "The Defilers";
+  app.modalConstants.faction[413] = "Scorpid";
+  app.modalConstants.faction[414] = "Timbermaw Hold";
+  app.modalConstants.faction[415] = "Titan";
+  app.modalConstants.faction[416] = "Titan";
+  app.modalConstants.faction[430] = "Taskmaster Fizzule";
+  app.modalConstants.faction[450] = "Wailing Caverns";
+  app.modalConstants.faction[470] = "Titan";
+  app.modalConstants.faction[471] = "Ravenholdt";
+  app.modalConstants.faction[472] = "Syndicate";
+  app.modalConstants.faction[473] = "Ravenholdt";
+  app.modalConstants.faction[474] = "Gadgetzan";
+  app.modalConstants.faction[475] = "Gadgetzan";
+  app.modalConstants.faction[494] = "Gnomeregan Bug";
+  app.modalConstants.faction[495] = "Escortee";
+  app.modalConstants.faction[514] = "Harpy";
+  app.modalConstants.faction[534] = "Alliance Generic";
+  app.modalConstants.faction[554] = "Burning Blade";
+  app.modalConstants.faction[574] = "Shadowsilk Poacher";
+  app.modalConstants.faction[575] = "Searing Spider";
+  app.modalConstants.faction[594] = "Trogg";
+  app.modalConstants.faction[614] = "Victim";
+  app.modalConstants.faction[634] = "Monster";
+  app.modalConstants.faction[635] = "Cenarion Circle";
+  app.modalConstants.faction[636] = "Timbermaw Hold";
+  app.modalConstants.faction[637] = "Ratchet";
+  app.modalConstants.faction[654] = "Troll,Witherbark";
+  app.modalConstants.faction[655] = "Centaur,Kolkar";
+  app.modalConstants.faction[674] = "Dark Iron Dwarves";
+  app.modalConstants.faction[694] = "Alliance Generic";
+  app.modalConstants.faction[695] = "Hydraxian Waterlords";
+  app.modalConstants.faction[714] = "Horde Generic";
+  app.modalConstants.faction[734] = "Dark Iron Dwarves";
+  app.modalConstants.faction[735] = "Goblin,Dark Iron Bar Patron";
+  app.modalConstants.faction[736] = "Goblin,Dark Iron Bar Patron";
+  app.modalConstants.faction[754] = "Dark Iron Dwarves";
+  app.modalConstants.faction[774] = "Escortee";
+  app.modalConstants.faction[775] = "Escortee";
+  app.modalConstants.faction[776] = "Brood of Nozdormu";
+  app.modalConstants.faction[777] = "Might of Kalimdor";
+  app.modalConstants.faction[778] = "Giant";
+  app.modalConstants.faction[794] = "Argent Dawn";
+  app.modalConstants.faction[795] = "Troll,Vilebranch";
+  app.modalConstants.faction[814] = "Argent Dawn";
+  app.modalConstants.faction[834] = "Elemental";
+  app.modalConstants.faction[854] = "Everlook";
+  app.modalConstants.faction[855] = "Everlook";
+  app.modalConstants.faction[874] = "Wintersaber Trainers";
+  app.modalConstants.faction[875] = "Gnomeregan Exiles";
+  app.modalConstants.faction[876] = "Darkspear Trolls";
+  app.modalConstants.faction[877] = "Darkspear Trolls";
+  app.modalConstants.faction[894] = "Theramore";
+  app.modalConstants.faction[914] = "Training Dummy";
+  app.modalConstants.faction[934] = "Furbolg,Uncorrupted";
+  app.modalConstants.faction[954] = "Demon";
+  app.modalConstants.faction[974] = "Undead,Scourge";
+  app.modalConstants.faction[994] = "Cenarion Circle";
+  app.modalConstants.faction[995] = "Thunder Bluff";
+  app.modalConstants.faction[996] = "Cenarion Circle";
   app.modalConstants.faction[1014] = "Shatterspear Trolls";
   app.modalConstants.faction[1015] = "Shatterspear Trolls";
   app.modalConstants.faction[1034] = "Horde Generic";
@@ -1534,15 +1531,15 @@
 
   /* creature type constants */
   app.modalConstants.type = [];
-  app.modalConstants.type[1]  = "Beast";
-  app.modalConstants.type[2]  = "Dragonkin";
-  app.modalConstants.type[3]  = "Demon";
-  app.modalConstants.type[4]  = "Elemental";
-  app.modalConstants.type[5]  = "Giant";
-  app.modalConstants.type[6]  = "Undead";
-  app.modalConstants.type[7]  = "Humanoid";
-  app.modalConstants.type[8]  = "Critter";
-  app.modalConstants.type[9]  = "Mechanical";
+  app.modalConstants.type[1] = "Beast";
+  app.modalConstants.type[2] = "Dragonkin";
+  app.modalConstants.type[3] = "Demon";
+  app.modalConstants.type[4] = "Elemental";
+  app.modalConstants.type[5] = "Giant";
+  app.modalConstants.type[6] = "Undead";
+  app.modalConstants.type[7] = "Humanoid";
+  app.modalConstants.type[8] = "Critter";
+  app.modalConstants.type[9] = "Mechanical";
   app.modalConstants.type[10] = "Not specified";
   app.modalConstants.type[11] = "Totem";
   app.modalConstants.type[12] = "Non-combat Pet";
@@ -1550,26 +1547,26 @@
 
   /* text_type constants */
   app.modalConstants.text_type = [];
-  app.modalConstants.text_type[11]  = "MONSTER_SAY";
-  app.modalConstants.text_type[12]  = "MONSTER_PARTY";
-  app.modalConstants.text_type[13]  = "MONSTER_YELL";
-  app.modalConstants.text_type[14]  = "MONSTER_WHISPER";
-  app.modalConstants.text_type[15]  = "MONSTER_EMOTE";
-  app.modalConstants.text_type[40]  = "BOSS EMOTE";
-  app.modalConstants.text_type[41]  = "BOSS_WHISPER";
+  app.modalConstants.text_type[11] = "MONSTER_SAY";
+  app.modalConstants.text_type[12] = "MONSTER_PARTY";
+  app.modalConstants.text_type[13] = "MONSTER_YELL";
+  app.modalConstants.text_type[14] = "MONSTER_WHISPER";
+  app.modalConstants.text_type[15] = "MONSTER_EMOTE";
+  app.modalConstants.text_type[40] = "BOSS EMOTE";
+  app.modalConstants.text_type[41] = "BOSS_WHISPER";
 
   /* race constants */
   app.modalConstants.race = [];
-  app.modalConstants.race[0]  = "HUMAN";
-  app.modalConstants.race[1]  = "ORC";
-  app.modalConstants.race[2]  = "DWARF";
-  app.modalConstants.race[3]  = "NIGHTELF";
-  app.modalConstants.race[4]  = "UNDEAD_PLAYER";
-  app.modalConstants.race[5]  = "TAUREN";
-  app.modalConstants.race[6]  = "GNOME";
-  app.modalConstants.race[7]  = "TROLL";
-  app.modalConstants.race[8]  = "GOBLIN (NOT USED)";
-  app.modalConstants.race[9]  = "BLOODELF";
+  app.modalConstants.race[0] = "HUMAN";
+  app.modalConstants.race[1] = "ORC";
+  app.modalConstants.race[2] = "DWARF";
+  app.modalConstants.race[3] = "NIGHTELF";
+  app.modalConstants.race[4] = "UNDEAD_PLAYER";
+  app.modalConstants.race[5] = "TAUREN";
+  app.modalConstants.race[6] = "GNOME";
+  app.modalConstants.race[7] = "TROLL";
+  app.modalConstants.race[8] = "GOBLIN (NOT USED)";
+  app.modalConstants.race[9] = "BLOODELF";
   app.modalConstants.race[10] = "DRAENEI";
   app.modalConstants.race[11] = "FEL_ORC (NOT USED)";
   app.modalConstants.race[12] = "NAGA (NOT USED)";
@@ -1584,30 +1581,30 @@
 
   /* creature classes constants */
   app.modalConstants.classes = [];
-  app.modalConstants.classes[0]  = "WARRIOR";
-  app.modalConstants.classes[1]  = "PALADIN";
-  app.modalConstants.classes[2]  = "HUNTER";
-  app.modalConstants.classes[3]  = "ROGUE";
-  app.modalConstants.classes[4]  = "PRIEST";
-  app.modalConstants.classes[5]  = "DEATH_KNIGHT ";
-  app.modalConstants.classes[6]  = "SHAMAN";
-  app.modalConstants.classes[7]  = "MAGE";
-  app.modalConstants.classes[8]  = "WARLOCK";
-  app.modalConstants.classes[9]  = "UNK";
+  app.modalConstants.classes[0] = "WARRIOR";
+  app.modalConstants.classes[1] = "PALADIN";
+  app.modalConstants.classes[2] = "HUNTER";
+  app.modalConstants.classes[3] = "ROGUE";
+  app.modalConstants.classes[4] = "PRIEST";
+  app.modalConstants.classes[5] = "DEATH_KNIGHT ";
+  app.modalConstants.classes[6] = "SHAMAN";
+  app.modalConstants.classes[7] = "MAGE";
+  app.modalConstants.classes[8] = "WARLOCK";
+  app.modalConstants.classes[9] = "UNK";
   app.modalConstants.classes[10] = "DRUID";
 
   /* item classes constants */
   app.modalConstants.item_class = [];
-  app.modalConstants.item_class[0]  = "Consumable";
-  app.modalConstants.item_class[1]  = "Container";
-  app.modalConstants.item_class[2]  = "Weapon";
-  app.modalConstants.item_class[3]  = "Gem";
-  app.modalConstants.item_class[4]  = "Armor";
-  app.modalConstants.item_class[5]  = "Reagent";
-  app.modalConstants.item_class[6]  = "Projectile";
-  app.modalConstants.item_class[7]  = "Trade Goods";
-  app.modalConstants.item_class[8]  = "Generic (OBSOLETE)";
-  app.modalConstants.item_class[9]  = "Recipe";
+  app.modalConstants.item_class[0] = "Consumable";
+  app.modalConstants.item_class[1] = "Container";
+  app.modalConstants.item_class[2] = "Weapon";
+  app.modalConstants.item_class[3] = "Gem";
+  app.modalConstants.item_class[4] = "Armor";
+  app.modalConstants.item_class[5] = "Reagent";
+  app.modalConstants.item_class[6] = "Projectile";
+  app.modalConstants.item_class[7] = "Trade Goods";
+  app.modalConstants.item_class[8] = "Generic (OBSOLETE)";
+  app.modalConstants.item_class[9] = "Recipe";
   app.modalConstants.item_class[10] = "Money (OBSOLETE)";
   app.modalConstants.item_class[11] = "Quiver";
   app.modalConstants.item_class[12] = "Quest";
@@ -1623,138 +1620,139 @@
     app.modalConstants.item_subclass[i] = [];
   }
 
-  app.modalConstants.item_subclass[0][0]    = "Consumable (Usability in combat is decided by the spell assigned)";
-  app.modalConstants.item_subclass[0][1]    = "Potion";
-  app.modalConstants.item_subclass[0][2]    = "Elixir";
-  app.modalConstants.item_subclass[0][3]    = "Flask";
-  app.modalConstants.item_subclass[0][4]    = "Scroll";
-  app.modalConstants.item_subclass[0][5]    = "Food & Drink";
-  app.modalConstants.item_subclass[0][6]    = "Item Enhancement";
-  app.modalConstants.item_subclass[0][7]    = "Bandage";
-  app.modalConstants.item_subclass[0][8]    = "Other";
-  app.modalConstants.item_subclass[1][0]    = "Bag";
-  app.modalConstants.item_subclass[1][1]    = "Soul Bag";
-  app.modalConstants.item_subclass[1][2]    = "Herb Bag";
-  app.modalConstants.item_subclass[1][3]    = "Enchanting Bag";
-  app.modalConstants.item_subclass[1][4]    = "Engineering Bag";
-  app.modalConstants.item_subclass[1][5]    = "Gem Bag";
-  app.modalConstants.item_subclass[1][6]    = "Mining Bag";
-  app.modalConstants.item_subclass[1][7]    = "Leatherworking Bag";
-  app.modalConstants.item_subclass[1][8]    = "Inscription Bag";
-  app.modalConstants.item_subclass[2][0]    = "Axe,One handed";
-  app.modalConstants.item_subclass[2][1]    = "Axe,Two handed";
-  app.modalConstants.item_subclass[2][2]    = "Bow";
-  app.modalConstants.item_subclass[2][3]    = "Gun";
-  app.modalConstants.item_subclass[2][4]    = "Mace,One handed";
-  app.modalConstants.item_subclass[2][5]    = "Mace,Two handed";
-  app.modalConstants.item_subclass[2][6]    = "Polearm";
-  app.modalConstants.item_subclass[2][7]    = "Sword,One handed";
-  app.modalConstants.item_subclass[2][8]    = "Sword,Two handed";
-  app.modalConstants.item_subclass[2][9]    = "Obsolete";
-  app.modalConstants.item_subclass[2][10]   = "Staff";
-  app.modalConstants.item_subclass[2][11]   = "Exotic";
-  app.modalConstants.item_subclass[2][12]   = "Exotic";
-  app.modalConstants.item_subclass[2][13]   = "Fist Weapon";
-  app.modalConstants.item_subclass[2][14]   = "Miscellaneous (Blacksmith Hammer, Mining Pick, etc.)";
-  app.modalConstants.item_subclass[2][15]   = "Dagger";
-  app.modalConstants.item_subclass[2][16]   = "Thrown";
-  app.modalConstants.item_subclass[2][17]   = "Spear";
-  app.modalConstants.item_subclass[2][18]   = "Crossbow";
-  app.modalConstants.item_subclass[2][19]   = "Wand";
-  app.modalConstants.item_subclass[2][20]   = "Fishing Pole";
-  app.modalConstants.item_subclass[3][0]    = "Red";
-  app.modalConstants.item_subclass[3][1]    = "Blue";
-  app.modalConstants.item_subclass[3][2]    = "Yellow";
-  app.modalConstants.item_subclass[3][3]    = "Purple";
-  app.modalConstants.item_subclass[3][4]    = "Green";
-  app.modalConstants.item_subclass[3][5]    = "Orange";
-  app.modalConstants.item_subclass[3][6]    = "Meta";
-  app.modalConstants.item_subclass[3][7]    = "Simple";
-  app.modalConstants.item_subclass[3][8]    = "Prismatic";
-  app.modalConstants.item_subclass[4][0]    = "Miscellaneous";
-  app.modalConstants.item_subclass[4][1]    = "Cloth";
-  app.modalConstants.item_subclass[4][2]    = "Leather";
-  app.modalConstants.item_subclass[4][3]    = "Mail";
-  app.modalConstants.item_subclass[4][4]    = "Plate";
-  app.modalConstants.item_subclass[4][5]    = "Buckler(OBSOLETE)";
-  app.modalConstants.item_subclass[4][6]    = "Shield";
-  app.modalConstants.item_subclass[4][7]    = "Libram";
-  app.modalConstants.item_subclass[4][8]    = "Idol";
-  app.modalConstants.item_subclass[4][9]    = "Totem";
-  app.modalConstants.item_subclass[4][10]   = "Sigil";
-  app.modalConstants.item_subclass[5][0]    = "Reagent";
-  app.modalConstants.item_subclass[6][0]    = "Wand(OBSOLETE)";
-  app.modalConstants.item_subclass[6][1]    = "Bolt(OBSOLETE)";
-  app.modalConstants.item_subclass[6][2]    = "Arrow";
-  app.modalConstants.item_subclass[6][3]    = "Bullet";
-  app.modalConstants.item_subclass[6][4]    = "Thrown(OBSOLETE)";
-  app.modalConstants.item_subclass[7][0]    = "Trade Goods";
-  app.modalConstants.item_subclass[7][1]    = "Parts";
-  app.modalConstants.item_subclass[7][2]    = "Explosives";
-  app.modalConstants.item_subclass[7][3]    = "Devices";
-  app.modalConstants.item_subclass[7][4]    = "Jewelcrafting";
-  app.modalConstants.item_subclass[7][5]    = "Cloth";
-  app.modalConstants.item_subclass[7][6]    = "Leather";
-  app.modalConstants.item_subclass[7][7]    = "Metal & Stone";
-  app.modalConstants.item_subclass[7][8]    = "Meat";
-  app.modalConstants.item_subclass[7][9]    = "Herb";
-  app.modalConstants.item_subclass[7][10]   = "Elemental";
-  app.modalConstants.item_subclass[7][11]   = "Other";
-  app.modalConstants.item_subclass[7][12]   = "Enchanting";
-  app.modalConstants.item_subclass[7][13]   = "Materials";
-  app.modalConstants.item_subclass[7][14]   = "Armor Enchantment";
-  app.modalConstants.item_subclass[7][15]   = "Weapon Enchantment";
-  app.modalConstants.item_subclass[8][0]    = "Generic(OBSOLETE)";
-  app.modalConstants.item_subclass[9][0]    = "Book";
-  app.modalConstants.item_subclass[9][1]    = "Leatherworking";
-  app.modalConstants.item_subclass[9][2]    = "Tailoring";
-  app.modalConstants.item_subclass[9][3]    = "Engineering";
-  app.modalConstants.item_subclass[9][4]    = "Blacksmithing";
-  app.modalConstants.item_subclass[9][5]    = "Cooking";
-  app.modalConstants.item_subclass[9][6]    = "Alchemy";
-  app.modalConstants.item_subclass[9][7]    = "First Aid";
-  app.modalConstants.item_subclass[9][8]    = "Enchanting";
-  app.modalConstants.item_subclass[9][9]    = "Fishing";
-  app.modalConstants.item_subclass[9][10]   = "Jewelcrafting";
-  app.modalConstants.item_subclass[10][0]   = "Money(OBSOLETE)";
-  app.modalConstants.item_subclass[11][0]   = "Quiver(OBSOLETE)";
-  app.modalConstants.item_subclass[11][1]   = "Quiver(OBSOLETE)";
-  app.modalConstants.item_subclass[11][2]   = "Quiver,Can hold arrows";
-  app.modalConstants.item_subclass[11][3]   = "Ammo Pouch,Can hold bullets";
-  app.modalConstants.item_subclass[12][0]   = "Quest";
-  app.modalConstants.item_subclass[13][0]   = "Key";
-  app.modalConstants.item_subclass[13][1]   = "Lockpick";
-  app.modalConstants.item_subclass[14][0]   = "Permanent";
-  app.modalConstants.item_subclass[15][0]   = "Junk";
-  app.modalConstants.item_subclass[15][1]   = "Reagent";
-  app.modalConstants.item_subclass[15][2]   = "Pet";
-  app.modalConstants.item_subclass[15][3]   = "Holiday";
-  app.modalConstants.item_subclass[15][4]   = "Other";
-  app.modalConstants.item_subclass[15][5]   = "Mount";
-  app.modalConstants.item_subclass[16][1]   = "Warrior";
-  app.modalConstants.item_subclass[16][2]   = "Paladin";
-  app.modalConstants.item_subclass[16][3]   = "Hunter";
-  app.modalConstants.item_subclass[16][4]   = "Rogue";
-  app.modalConstants.item_subclass[16][5]   = "Priest";
-  app.modalConstants.item_subclass[16][6]   = "Death Knight";
-  app.modalConstants.item_subclass[16][7]   = "Shaman";
-  app.modalConstants.item_subclass[16][8]   = "Mage";
-  app.modalConstants.item_subclass[16][9]   = "Warlock";
-  app.modalConstants.item_subclass[16][11]  = "Druid";
-
+  app.modalConstants.item_subclass[0][0] =
+    "Consumable (Usability in combat is decided by the spell assigned)";
+  app.modalConstants.item_subclass[0][1] = "Potion";
+  app.modalConstants.item_subclass[0][2] = "Elixir";
+  app.modalConstants.item_subclass[0][3] = "Flask";
+  app.modalConstants.item_subclass[0][4] = "Scroll";
+  app.modalConstants.item_subclass[0][5] = "Food & Drink";
+  app.modalConstants.item_subclass[0][6] = "Item Enhancement";
+  app.modalConstants.item_subclass[0][7] = "Bandage";
+  app.modalConstants.item_subclass[0][8] = "Other";
+  app.modalConstants.item_subclass[1][0] = "Bag";
+  app.modalConstants.item_subclass[1][1] = "Soul Bag";
+  app.modalConstants.item_subclass[1][2] = "Herb Bag";
+  app.modalConstants.item_subclass[1][3] = "Enchanting Bag";
+  app.modalConstants.item_subclass[1][4] = "Engineering Bag";
+  app.modalConstants.item_subclass[1][5] = "Gem Bag";
+  app.modalConstants.item_subclass[1][6] = "Mining Bag";
+  app.modalConstants.item_subclass[1][7] = "Leatherworking Bag";
+  app.modalConstants.item_subclass[1][8] = "Inscription Bag";
+  app.modalConstants.item_subclass[2][0] = "Axe,One handed";
+  app.modalConstants.item_subclass[2][1] = "Axe,Two handed";
+  app.modalConstants.item_subclass[2][2] = "Bow";
+  app.modalConstants.item_subclass[2][3] = "Gun";
+  app.modalConstants.item_subclass[2][4] = "Mace,One handed";
+  app.modalConstants.item_subclass[2][5] = "Mace,Two handed";
+  app.modalConstants.item_subclass[2][6] = "Polearm";
+  app.modalConstants.item_subclass[2][7] = "Sword,One handed";
+  app.modalConstants.item_subclass[2][8] = "Sword,Two handed";
+  app.modalConstants.item_subclass[2][9] = "Obsolete";
+  app.modalConstants.item_subclass[2][10] = "Staff";
+  app.modalConstants.item_subclass[2][11] = "Exotic";
+  app.modalConstants.item_subclass[2][12] = "Exotic";
+  app.modalConstants.item_subclass[2][13] = "Fist Weapon";
+  app.modalConstants.item_subclass[2][14] =
+    "Miscellaneous (Blacksmith Hammer, Mining Pick, etc.)";
+  app.modalConstants.item_subclass[2][15] = "Dagger";
+  app.modalConstants.item_subclass[2][16] = "Thrown";
+  app.modalConstants.item_subclass[2][17] = "Spear";
+  app.modalConstants.item_subclass[2][18] = "Crossbow";
+  app.modalConstants.item_subclass[2][19] = "Wand";
+  app.modalConstants.item_subclass[2][20] = "Fishing Pole";
+  app.modalConstants.item_subclass[3][0] = "Red";
+  app.modalConstants.item_subclass[3][1] = "Blue";
+  app.modalConstants.item_subclass[3][2] = "Yellow";
+  app.modalConstants.item_subclass[3][3] = "Purple";
+  app.modalConstants.item_subclass[3][4] = "Green";
+  app.modalConstants.item_subclass[3][5] = "Orange";
+  app.modalConstants.item_subclass[3][6] = "Meta";
+  app.modalConstants.item_subclass[3][7] = "Simple";
+  app.modalConstants.item_subclass[3][8] = "Prismatic";
+  app.modalConstants.item_subclass[4][0] = "Miscellaneous";
+  app.modalConstants.item_subclass[4][1] = "Cloth";
+  app.modalConstants.item_subclass[4][2] = "Leather";
+  app.modalConstants.item_subclass[4][3] = "Mail";
+  app.modalConstants.item_subclass[4][4] = "Plate";
+  app.modalConstants.item_subclass[4][5] = "Buckler(OBSOLETE)";
+  app.modalConstants.item_subclass[4][6] = "Shield";
+  app.modalConstants.item_subclass[4][7] = "Libram";
+  app.modalConstants.item_subclass[4][8] = "Idol";
+  app.modalConstants.item_subclass[4][9] = "Totem";
+  app.modalConstants.item_subclass[4][10] = "Sigil";
+  app.modalConstants.item_subclass[5][0] = "Reagent";
+  app.modalConstants.item_subclass[6][0] = "Wand(OBSOLETE)";
+  app.modalConstants.item_subclass[6][1] = "Bolt(OBSOLETE)";
+  app.modalConstants.item_subclass[6][2] = "Arrow";
+  app.modalConstants.item_subclass[6][3] = "Bullet";
+  app.modalConstants.item_subclass[6][4] = "Thrown(OBSOLETE)";
+  app.modalConstants.item_subclass[7][0] = "Trade Goods";
+  app.modalConstants.item_subclass[7][1] = "Parts";
+  app.modalConstants.item_subclass[7][2] = "Explosives";
+  app.modalConstants.item_subclass[7][3] = "Devices";
+  app.modalConstants.item_subclass[7][4] = "Jewelcrafting";
+  app.modalConstants.item_subclass[7][5] = "Cloth";
+  app.modalConstants.item_subclass[7][6] = "Leather";
+  app.modalConstants.item_subclass[7][7] = "Metal & Stone";
+  app.modalConstants.item_subclass[7][8] = "Meat";
+  app.modalConstants.item_subclass[7][9] = "Herb";
+  app.modalConstants.item_subclass[7][10] = "Elemental";
+  app.modalConstants.item_subclass[7][11] = "Other";
+  app.modalConstants.item_subclass[7][12] = "Enchanting";
+  app.modalConstants.item_subclass[7][13] = "Materials";
+  app.modalConstants.item_subclass[7][14] = "Armor Enchantment";
+  app.modalConstants.item_subclass[7][15] = "Weapon Enchantment";
+  app.modalConstants.item_subclass[8][0] = "Generic(OBSOLETE)";
+  app.modalConstants.item_subclass[9][0] = "Book";
+  app.modalConstants.item_subclass[9][1] = "Leatherworking";
+  app.modalConstants.item_subclass[9][2] = "Tailoring";
+  app.modalConstants.item_subclass[9][3] = "Engineering";
+  app.modalConstants.item_subclass[9][4] = "Blacksmithing";
+  app.modalConstants.item_subclass[9][5] = "Cooking";
+  app.modalConstants.item_subclass[9][6] = "Alchemy";
+  app.modalConstants.item_subclass[9][7] = "First Aid";
+  app.modalConstants.item_subclass[9][8] = "Enchanting";
+  app.modalConstants.item_subclass[9][9] = "Fishing";
+  app.modalConstants.item_subclass[9][10] = "Jewelcrafting";
+  app.modalConstants.item_subclass[10][0] = "Money(OBSOLETE)";
+  app.modalConstants.item_subclass[11][0] = "Quiver(OBSOLETE)";
+  app.modalConstants.item_subclass[11][1] = "Quiver(OBSOLETE)";
+  app.modalConstants.item_subclass[11][2] = "Quiver,Can hold arrows";
+  app.modalConstants.item_subclass[11][3] = "Ammo Pouch,Can hold bullets";
+  app.modalConstants.item_subclass[12][0] = "Quest";
+  app.modalConstants.item_subclass[13][0] = "Key";
+  app.modalConstants.item_subclass[13][1] = "Lockpick";
+  app.modalConstants.item_subclass[14][0] = "Permanent";
+  app.modalConstants.item_subclass[15][0] = "Junk";
+  app.modalConstants.item_subclass[15][1] = "Reagent";
+  app.modalConstants.item_subclass[15][2] = "Pet";
+  app.modalConstants.item_subclass[15][3] = "Holiday";
+  app.modalConstants.item_subclass[15][4] = "Other";
+  app.modalConstants.item_subclass[15][5] = "Mount";
+  app.modalConstants.item_subclass[16][1] = "Warrior";
+  app.modalConstants.item_subclass[16][2] = "Paladin";
+  app.modalConstants.item_subclass[16][3] = "Hunter";
+  app.modalConstants.item_subclass[16][4] = "Rogue";
+  app.modalConstants.item_subclass[16][5] = "Priest";
+  app.modalConstants.item_subclass[16][6] = "Death Knight";
+  app.modalConstants.item_subclass[16][7] = "Shaman";
+  app.modalConstants.item_subclass[16][8] = "Mage";
+  app.modalConstants.item_subclass[16][9] = "Warlock";
+  app.modalConstants.item_subclass[16][11] = "Druid";
 
   /* InventoryType constants */
   app.modalConstants.InventoryType = [];
-  app.modalConstants.InventoryType[0]  = "Non equipable";
-  app.modalConstants.InventoryType[1]  = "Head";
-  app.modalConstants.InventoryType[2]  = "Neck";
-  app.modalConstants.InventoryType[3]  = "Shoulder";
-  app.modalConstants.InventoryType[4]  = "Body (Shirt)";
-  app.modalConstants.InventoryType[5]  = "Chest";
-  app.modalConstants.InventoryType[6]  = "Waist (Belt)";
-  app.modalConstants.InventoryType[7]  = "Legs (Pants)";
-  app.modalConstants.InventoryType[8]  = "Feet (Boots)";
-  app.modalConstants.InventoryType[9]  = "Wrists (Bracers)";
+  app.modalConstants.InventoryType[0] = "Non equipable";
+  app.modalConstants.InventoryType[1] = "Head";
+  app.modalConstants.InventoryType[2] = "Neck";
+  app.modalConstants.InventoryType[3] = "Shoulder";
+  app.modalConstants.InventoryType[4] = "Body (Shirt)";
+  app.modalConstants.InventoryType[5] = "Chest";
+  app.modalConstants.InventoryType[6] = "Waist (Belt)";
+  app.modalConstants.InventoryType[7] = "Legs (Pants)";
+  app.modalConstants.InventoryType[8] = "Feet (Boots)";
+  app.modalConstants.InventoryType[9] = "Wrists (Bracers)";
   app.modalConstants.InventoryType[10] = "Hands (Gloves)";
   app.modalConstants.InventoryType[11] = "Finger (Ring)";
   app.modalConstants.InventoryType[12] = "Trinket";
@@ -1777,62 +1775,62 @@
 
   /* Emote constants */
   app.modalConstants.emote = [];
-  app.modalConstants.emote[0]   = "ONESHOT_NONE";
-  app.modalConstants.emote[1]   = "ONESHOT_TALK(DNR)";
-  app.modalConstants.emote[2]   = "ONESHOT_BOW";
-  app.modalConstants.emote[3]   = "ONESHOT_WAVE(DNR)";
-  app.modalConstants.emote[4]   = "ONESHOT_CHEER(DNR)";
-  app.modalConstants.emote[5]   = "ONESHOT_EXCLAMATION(DNR)";
-  app.modalConstants.emote[6]   = "ONESHOT_QUESTION";
-  app.modalConstants.emote[7]   = "ONESHOT_EAT";
-  app.modalConstants.emote[10]  = "STATE_DANCE";
-  app.modalConstants.emote[11]  = "ONESHOT_LAUGH";
-  app.modalConstants.emote[12]  = "STATE_SLEEP";
-  app.modalConstants.emote[13]  = "STATE_SIT";
-  app.modalConstants.emote[14]  = "ONESHOT_RUDE(DNR)";
-  app.modalConstants.emote[15]  = "ONESHOT_ROAR(DNR)";
-  app.modalConstants.emote[16]  = "ONESHOT_KNEEL";
-  app.modalConstants.emote[17]  = "ONESHOT_KISS";
-  app.modalConstants.emote[18]  = "ONESHOT_CRY";
-  app.modalConstants.emote[19]  = "ONESHOT_CHICKEN";
-  app.modalConstants.emote[20]  = "ONESHOT_BEG";
-  app.modalConstants.emote[21]  = "ONESHOT_APPLAUD";
-  app.modalConstants.emote[22]  = "ONESHOT_SHOUT(DNR)";
-  app.modalConstants.emote[23]  = "ONESHOT_FLEX";
-  app.modalConstants.emote[24]  = "ONESHOT_SHY(DNR)";
-  app.modalConstants.emote[25]  = "ONESHOT_POINT(DNR)";
-  app.modalConstants.emote[26]  = "STATE_STAND";
-  app.modalConstants.emote[27]  = "STATE_READYUNARMED";
-  app.modalConstants.emote[28]  = "STATE_WORK_SHEATHED";
-  app.modalConstants.emote[29]  = "STATE_POINT(DNR)";
-  app.modalConstants.emote[30]  = "STATE_NONE";
-  app.modalConstants.emote[33]  = "ONESHOT_WOUND";
-  app.modalConstants.emote[34]  = "ONESHOT_WOUNDCRITICAL";
-  app.modalConstants.emote[35]  = "ONESHOT_ATTACKUNARMED";
-  app.modalConstants.emote[36]  = "ONESHOT_ATTACK1H";
-  app.modalConstants.emote[37]  = "ONESHOT_ATTACK2HTIGHT";
-  app.modalConstants.emote[38]  = "ONESHOT_ATTACK2HLOOSE";
-  app.modalConstants.emote[39]  = "ONESHOT_PARRYUNARMED";
-  app.modalConstants.emote[43]  = "ONESHOT_PARRYSHIELD";
-  app.modalConstants.emote[44]  = "ONESHOT_READYUNARMED";
-  app.modalConstants.emote[45]  = "ONESHOT_READY1H";
-  app.modalConstants.emote[48]  = "ONESHOT_READYBOW";
-  app.modalConstants.emote[50]  = "ONESHOT_SPELLPRECAST";
-  app.modalConstants.emote[51]  = "ONESHOT_SPELLCAST";
-  app.modalConstants.emote[53]  = "ONESHOT_BATTLEROAR";
-  app.modalConstants.emote[54]  = "ONESHOT_SPECIALATTACK1H";
-  app.modalConstants.emote[60]  = "ONESHOT_KICK";
-  app.modalConstants.emote[61]  = "ONESHOT_ATTACKTHROWN";
-  app.modalConstants.emote[64]  = "STATE_STUN";
-  app.modalConstants.emote[65]  = "STATE_DEAD";
-  app.modalConstants.emote[66]  = "ONESHOT_SALUTE";
-  app.modalConstants.emote[68]  = "STATE_KNEEL";
-  app.modalConstants.emote[69]  = "STATE_USESTANDING";
-  app.modalConstants.emote[70]  = "ONESHOT_WAVE_NOSHEATHE";
-  app.modalConstants.emote[71]  = "ONESHOT_CHEER_NOSHEATHE";
-  app.modalConstants.emote[92]  = "ONESHOT_EAT_NOSHEATHE";
-  app.modalConstants.emote[93]  = "STATE_STUN_NOSHEATHE";
-  app.modalConstants.emote[94]  = "ONESHOT_DANCE";
+  app.modalConstants.emote[0] = "ONESHOT_NONE";
+  app.modalConstants.emote[1] = "ONESHOT_TALK(DNR)";
+  app.modalConstants.emote[2] = "ONESHOT_BOW";
+  app.modalConstants.emote[3] = "ONESHOT_WAVE(DNR)";
+  app.modalConstants.emote[4] = "ONESHOT_CHEER(DNR)";
+  app.modalConstants.emote[5] = "ONESHOT_EXCLAMATION(DNR)";
+  app.modalConstants.emote[6] = "ONESHOT_QUESTION";
+  app.modalConstants.emote[7] = "ONESHOT_EAT";
+  app.modalConstants.emote[10] = "STATE_DANCE";
+  app.modalConstants.emote[11] = "ONESHOT_LAUGH";
+  app.modalConstants.emote[12] = "STATE_SLEEP";
+  app.modalConstants.emote[13] = "STATE_SIT";
+  app.modalConstants.emote[14] = "ONESHOT_RUDE(DNR)";
+  app.modalConstants.emote[15] = "ONESHOT_ROAR(DNR)";
+  app.modalConstants.emote[16] = "ONESHOT_KNEEL";
+  app.modalConstants.emote[17] = "ONESHOT_KISS";
+  app.modalConstants.emote[18] = "ONESHOT_CRY";
+  app.modalConstants.emote[19] = "ONESHOT_CHICKEN";
+  app.modalConstants.emote[20] = "ONESHOT_BEG";
+  app.modalConstants.emote[21] = "ONESHOT_APPLAUD";
+  app.modalConstants.emote[22] = "ONESHOT_SHOUT(DNR)";
+  app.modalConstants.emote[23] = "ONESHOT_FLEX";
+  app.modalConstants.emote[24] = "ONESHOT_SHY(DNR)";
+  app.modalConstants.emote[25] = "ONESHOT_POINT(DNR)";
+  app.modalConstants.emote[26] = "STATE_STAND";
+  app.modalConstants.emote[27] = "STATE_READYUNARMED";
+  app.modalConstants.emote[28] = "STATE_WORK_SHEATHED";
+  app.modalConstants.emote[29] = "STATE_POINT(DNR)";
+  app.modalConstants.emote[30] = "STATE_NONE";
+  app.modalConstants.emote[33] = "ONESHOT_WOUND";
+  app.modalConstants.emote[34] = "ONESHOT_WOUNDCRITICAL";
+  app.modalConstants.emote[35] = "ONESHOT_ATTACKUNARMED";
+  app.modalConstants.emote[36] = "ONESHOT_ATTACK1H";
+  app.modalConstants.emote[37] = "ONESHOT_ATTACK2HTIGHT";
+  app.modalConstants.emote[38] = "ONESHOT_ATTACK2HLOOSE";
+  app.modalConstants.emote[39] = "ONESHOT_PARRYUNARMED";
+  app.modalConstants.emote[43] = "ONESHOT_PARRYSHIELD";
+  app.modalConstants.emote[44] = "ONESHOT_READYUNARMED";
+  app.modalConstants.emote[45] = "ONESHOT_READY1H";
+  app.modalConstants.emote[48] = "ONESHOT_READYBOW";
+  app.modalConstants.emote[50] = "ONESHOT_SPELLPRECAST";
+  app.modalConstants.emote[51] = "ONESHOT_SPELLCAST";
+  app.modalConstants.emote[53] = "ONESHOT_BATTLEROAR";
+  app.modalConstants.emote[54] = "ONESHOT_SPECIALATTACK1H";
+  app.modalConstants.emote[60] = "ONESHOT_KICK";
+  app.modalConstants.emote[61] = "ONESHOT_ATTACKTHROWN";
+  app.modalConstants.emote[64] = "STATE_STUN";
+  app.modalConstants.emote[65] = "STATE_DEAD";
+  app.modalConstants.emote[66] = "ONESHOT_SALUTE";
+  app.modalConstants.emote[68] = "STATE_KNEEL";
+  app.modalConstants.emote[69] = "STATE_USESTANDING";
+  app.modalConstants.emote[70] = "ONESHOT_WAVE_NOSHEATHE";
+  app.modalConstants.emote[71] = "ONESHOT_CHEER_NOSHEATHE";
+  app.modalConstants.emote[92] = "ONESHOT_EAT_NOSHEATHE";
+  app.modalConstants.emote[93] = "STATE_STUN_NOSHEATHE";
+  app.modalConstants.emote[94] = "ONESHOT_DANCE";
   app.modalConstants.emote[113] = "ONESHOT_SALUTE_NOSHEATH";
   app.modalConstants.emote[133] = "STATE_USESTANDING_NOSHEATHE";
   app.modalConstants.emote[153] = "ONESHOT_LAUGH_NOSHEATHE";
@@ -2466,205 +2464,345 @@
   app.modalConstants.itemset[901] = "Lightsworn Plate";
 
   /* item extendend cost */
-  app.modalConstants.ExtendedCost       = [];
-  app.modalConstants.ExtendedCost[1]    = "13 honor pts, 9 arena pts, Tough Jerky (id=117), 2 Minor Healing Potion (id=118)";
-  app.modalConstants.ExtendedCost[2]    = "0";
-  app.modalConstants.ExtendedCost[5]    = "40 Halaa Battle Token (id=26045), 2 Halaa Research Token (id=26044)";
-  app.modalConstants.ExtendedCost[6]    = "20 Halaa Battle Token (id=26045), Halaa Research Token (id=26044)";
-  app.modalConstants.ExtendedCost[7]    = "8 Halaa Research Token (id=26044)";
-  app.modalConstants.ExtendedCost[18]   = "100 Halaa Battle Token (id=26045)";
-  app.modalConstants.ExtendedCost[21]   = "978 arena pts";
-  app.modalConstants.ExtendedCost[22]   = "1630 arena pts";
-  app.modalConstants.ExtendedCost[24]   = "1304 arena pts";
-  app.modalConstants.ExtendedCost[26]   = "3261 arena pts";
-  app.modalConstants.ExtendedCost[53]   = "5 Mark of Honor Hold (id=24579)";
-  app.modalConstants.ExtendedCost[54]   = "5 Mark of Thrallmar (id=24581)";
-  app.modalConstants.ExtendedCost[55]   = "10 Mark of Thrallmar (id=24581)";
-  app.modalConstants.ExtendedCost[56]   = "10 Mark of Honor Hold (id=24579)";
-  app.modalConstants.ExtendedCost[65]   = "15 Mark of Thrallmar (id=24581)";
-  app.modalConstants.ExtendedCost[66]   = "1 honor pts, 1 arena pts";
-  app.modalConstants.ExtendedCost[69]   = "15 Mark of Honor Hold (id=24579)";
-  app.modalConstants.ExtendedCost[76]   = "30 Mark of Thrallmar (id=24581)";
-  app.modalConstants.ExtendedCost[77]   = "30 Mark of Honor Hold (id=24579)";
-  app.modalConstants.ExtendedCost[94]   = "19125 honor pts";
-  app.modalConstants.ExtendedCost[95]   = "6885 honor pts";
-  app.modalConstants.ExtendedCost[98]   = "22950 honor pts";
-  app.modalConstants.ExtendedCost[99]   = "8500 honor pts";
-  app.modalConstants.ExtendedCost[100]  = "Glowcap (id=24245)";
-  app.modalConstants.ExtendedCost[102]  = "2 Glowcap (id=24245)";
-  app.modalConstants.ExtendedCost[103]  = "25 Glowcap (id=24245)";
-  app.modalConstants.ExtendedCost[104]  = "15 Glowcap (id=24245)";
-  app.modalConstants.ExtendedCost[115]  = "16983 honor pts";
-  app.modalConstants.ExtendedCost[125]  = "22950 honor pts, 10 Eye of the Storm Mark of Honor (id=29024)";
-  app.modalConstants.ExtendedCost[127]  = "15300 honor pts, 10 Eye of the Storm Mark of Honor (id=29024)";
-  app.modalConstants.ExtendedCost[129]  = "11934 honor pts, 10 Alterac Valley Mark of Honor (id=20560)";
-  app.modalConstants.ExtendedCost[131]  = "30600 honor pts, 40 Alterac Valley Mark of Honor (id=20560)";
-  app.modalConstants.ExtendedCost[133]  = "2283 arena pts";
-  app.modalConstants.ExtendedCost[146]  = "870 arena pts";
-  app.modalConstants.ExtendedCost[148]  = "2739 arena pts";
-  app.modalConstants.ExtendedCost[165]  = "9435 honor pts, 20 Arathi Basin Mark of Honor (id=20559)";
-  app.modalConstants.ExtendedCost[169]  = "9435 honor pts, 20 Warsong Gulch Mark of Honor (id=20558)";
-  app.modalConstants.ExtendedCost[170]  = "9435 honor pts";
-  app.modalConstants.ExtendedCost[171]  = "14280 honor pts, 40 Eye of the Storm Mark of Honor (id=29024)";
-  app.modalConstants.ExtendedCost[172]  = "14280 honor pts, 40 Arathi Basin Mark of Honor (id=20559)";
-  app.modalConstants.ExtendedCost[173]  = "12750 honor pts";
-  app.modalConstants.ExtendedCost[194]  = "18 Spirit Shard (id=28558)";
-  app.modalConstants.ExtendedCost[201]  = "16524 honor pts, 30 Arathi Basin Mark of Honor (id=20559)";
-  app.modalConstants.ExtendedCost[202]  = "10098 honor pts, 20 Alterac Valley Mark of Honor (id=20560)";
-  app.modalConstants.ExtendedCost[203]  = "16065 honor pts, 30 Alterac Valley Mark of Honor (id=20560)";
-  app.modalConstants.ExtendedCost[204]  = "16065 honor pts, 30 Warsong Gulch Mark of Honor (id=20558)";
-  app.modalConstants.ExtendedCost[205]  = "10098 honor pts, 20 Arathi Basin Mark of Honor (id=20559)";
-  app.modalConstants.ExtendedCost[293]  = "50 Spirit Shard (id=28558)";
-  app.modalConstants.ExtendedCost[298]  = "8 Spirit Shard (id=28558)";
-  app.modalConstants.ExtendedCost[348]  = "15300 honor pts, 20 Eye of the Storm Mark of Honor (id=29024)";
-  app.modalConstants.ExtendedCost[359]  = "20400 honor pts";
-  app.modalConstants.ExtendedCost[360]  = "20400 honor pts, 40 Alterac Valley Mark of Honor (id=20560)";
-  app.modalConstants.ExtendedCost[386]  = "15300 honor pts";
-  app.modalConstants.ExtendedCost[388]  = "30 Glowcap (id=24245)";
-  app.modalConstants.ExtendedCost[423]  = "30 Alterac Valley Mark of Honor (id=20560), 30 Arathi Basin Mark of Honor (id=20559), 30 Warsong Gulch Mark of Honor (id=20558)";
-  app.modalConstants.ExtendedCost[427]  = "2805 honor pts, 20 Arathi Basin Mark of Honor (id=20559)";
-  app.modalConstants.ExtendedCost[428]  = "2805 honor pts, 20 Alterac Valley Mark of Honor (id=20560)";
-  app.modalConstants.ExtendedCost[444]  = "4335 honor pts, 30 Alterac Valley Mark of Honor (id=20560)";
-  app.modalConstants.ExtendedCost[460]  = "1 honor pts";
-  app.modalConstants.ExtendedCost[463]  = "13770 honor pts, 30 Arathi Basin Mark of Honor (id=20559)";
-  app.modalConstants.ExtendedCost[464]  = "13005 honor pts, 30 Alterac Valley Mark of Honor (id=20560)";
-  app.modalConstants.ExtendedCost[465]  = "8415 honor pts, 20 Arathi Basin Mark of Honor (id=20559)";
-  app.modalConstants.ExtendedCost[488]  = "4590 honor pts, 20 Warsong Gulch Mark of Honor (id=20558)";
-  app.modalConstants.ExtendedCost[489]  = "4590 honor pts, 25 Alterac Valley Mark of Honor (id=20560)";
-  app.modalConstants.ExtendedCost[490]  = "10200 honor pts, 40 Warsong Gulch Mark of Honor (id=20558)";
-  app.modalConstants.ExtendedCost[491]  = "1530 honor pts, 20 Warsong Gulch Mark of Honor (id=20558)";
-  app.modalConstants.ExtendedCost[492]  = "1530 honor pts, 10 Warsong Gulch Mark of Honor (id=20558)";
-  app.modalConstants.ExtendedCost[495]  = "4590 honor pts, 20 Arathi Basin Mark of Honor (id=20559)";
-  app.modalConstants.ExtendedCost[496]  = "2380 honor pts, 10 Alterac Valley Mark of Honor (id=20560)";
-  app.modalConstants.ExtendedCost[497]  = "2720 honor pts, 15 Alterac Valley Mark of Honor (id=20560)";
-  app.modalConstants.ExtendedCost[501]  = "8415 honor pts, 40 Arathi Basin Mark of Honor (id=20559)";
-  app.modalConstants.ExtendedCost[520]  = "2805 honor pts, 30 Arathi Basin Mark of Honor (id=20559)";
-  app.modalConstants.ExtendedCost[532]  = "1530 honor pts, 10 Alterac Valley Mark of Honor (id=20560)";
-  app.modalConstants.ExtendedCost[533]  = "1530 honor pts, 20 Alterac Valley Mark of Honor (id=20560)";
-  app.modalConstants.ExtendedCost[541]  = "8415 honor pts, 20 Alterac Valley Mark of Honor (id=20560)";
-  app.modalConstants.ExtendedCost[542]  = "13005 honor pts, 30 Warsong Gulch Mark of Honor (id=20558)";
-  app.modalConstants.ExtendedCost[565]  = "15300 honor pts, 20 Arathi Basin Mark of Honor (id=20559)";
-  app.modalConstants.ExtendedCost[567]  = "15300 honor pts, 40 Arathi Basin Mark of Honor (id=20559)";
-  app.modalConstants.ExtendedCost[634]  = "2805 honor pts";
-  app.modalConstants.ExtendedCost[652]  = "4590 honor pts, 30 Arathi Basin Mark of Honor (id=20559)";
-  app.modalConstants.ExtendedCost[653]  = "4335 honor pts, 30 Warsong Gulch Mark of Honor (id=20558)";
-  app.modalConstants.ExtendedCost[701]  = "10200 honor pts, 30 Warsong Gulch Mark of Honor (id=20558)";
-  app.modalConstants.ExtendedCost[702]  = "4760 honor pts, 25 Alterac Valley Mark of Honor (id=20560)";
-  app.modalConstants.ExtendedCost[746]  = "8160 honor pts, 40 Arathi Basin Mark of Honor (id=20559)";
-  app.modalConstants.ExtendedCost[747]  = "5100 honor pts, 30 Warsong Gulch Mark of Honor (id=20558)";
-  app.modalConstants.ExtendedCost[748]  = "8925 honor pts, 40 Warsong Gulch Mark of Honor (id=20558)";
-  app.modalConstants.ExtendedCost[774]  = "1530 honor pts, 10 Arathi Basin Mark of Honor (id=20559)";
-  app.modalConstants.ExtendedCost[821]  = "428 honor pts, 40 Warsong Gulch Mark of Honor (id=20558)";
-  app.modalConstants.ExtendedCost[822]  = "65 honor pts, 20 Warsong Gulch Mark of Honor (id=20558)";
-  app.modalConstants.ExtendedCost[823]  = "65 honor pts, 10 Warsong Gulch Mark of Honor (id=20558)";
-  app.modalConstants.ExtendedCost[826]  = "214 honor pts, 30 Warsong Gulch Mark of Honor (id=20558)";
-  app.modalConstants.ExtendedCost[837]  = "632 honor pts, 40 Warsong Gulch Mark of Honor (id=20558)";
-  app.modalConstants.ExtendedCost[838]  = "95 honor pts, 20 Warsong Gulch Mark of Honor (id=20558)";
-  app.modalConstants.ExtendedCost[839]  = "95 honor pts, 10 Warsong Gulch Mark of Honor (id=20558)";
-  app.modalConstants.ExtendedCost[841]  = "175 honor pts, 20 Arathi Basin Mark of Honor (id=20559)";
-  app.modalConstants.ExtendedCost[855]  = "175 honor pts, 30 Arathi Basin Mark of Honor (id=20559)";
-  app.modalConstants.ExtendedCost[871]  = "316 honor pts, 30 Warsong Gulch Mark of Honor (id=20558)";
-  app.modalConstants.ExtendedCost[883]  = "938 honor pts, 40 Warsong Gulch Mark of Honor (id=20558)";
-  app.modalConstants.ExtendedCost[884]  = "141 honor pts, 20 Warsong Gulch Mark of Honor (id=20558)";
-  app.modalConstants.ExtendedCost[885]  = "141 honor pts, 10 Warsong Gulch Mark of Honor (id=20558)";
-  app.modalConstants.ExtendedCost[887]  = "258 honor pts, 20 Arathi Basin Mark of Honor (id=20559)";
-  app.modalConstants.ExtendedCost[901]  = "258 honor pts, 30 Arathi Basin Mark of Honor (id=20559)";
-  app.modalConstants.ExtendedCost[917]  = "469 honor pts, 30 Warsong Gulch Mark of Honor (id=20558)";
-  app.modalConstants.ExtendedCost[929]  = "1387 honor pts, 40 Warsong Gulch Mark of Honor (id=20558)";
-  app.modalConstants.ExtendedCost[930]  = "208 honor pts, 20 Warsong Gulch Mark of Honor (id=20558)";
-  app.modalConstants.ExtendedCost[931]  = "208 honor pts, 10 Warsong Gulch Mark of Honor (id=20558)";
-  app.modalConstants.ExtendedCost[933]  = "382 honor pts, 20 Arathi Basin Mark of Honor (id=20559)";
-  app.modalConstants.ExtendedCost[947]  = "382 honor pts, 30 Arathi Basin Mark of Honor (id=20559)";
-  app.modalConstants.ExtendedCost[968]  = "694 honor pts, 30 Warsong Gulch Mark of Honor (id=20558)";
-  app.modalConstants.ExtendedCost[986]  = "208 honor pts, 10 Arathi Basin Mark of Honor (id=20559)";
-  app.modalConstants.ExtendedCost[989]  = "422 honor pts, 20 Warsong Gulch Mark of Honor (id=20558)";
-  app.modalConstants.ExtendedCost[990]  = "624 honor pts, 20 Warsong Gulch Mark of Honor (id=20558)";
-  app.modalConstants.ExtendedCost[1000] = "60 Arathi Basin Mark of Honor (id=20559)";
-  app.modalConstants.ExtendedCost[1002] = "30 Alterac Valley Mark of Honor (id=20560)";
-  app.modalConstants.ExtendedCost[1003] = "60 Alterac Valley Mark of Honor (id=20560)";
-  app.modalConstants.ExtendedCost[1005] = "50 Alterac Valley Mark of Honor (id=20560)";
-  app.modalConstants.ExtendedCost[1006] = "20 Alterac Valley Mark of Honor (id=20560), 20 Arathi Basin Mark of Honor (id=20559), 20 Warsong Gulch Mark of Honor (id=20558)";
-  app.modalConstants.ExtendedCost[1007] = "3 Arathi Basin Mark of Honor (id=20559), 3 Warsong Gulch Mark of Honor (id=20558)";
-  app.modalConstants.ExtendedCost[1009] = "60 Warsong Gulch Mark of Honor (id=20558)";
+  app.modalConstants.ExtendedCost = [];
+  app.modalConstants.ExtendedCost[1] =
+    "13 honor pts, 9 arena pts, Tough Jerky (id=117), 2 Minor Healing Potion (id=118)";
+  app.modalConstants.ExtendedCost[2] = "0";
+  app.modalConstants.ExtendedCost[5] =
+    "40 Halaa Battle Token (id=26045), 2 Halaa Research Token (id=26044)";
+  app.modalConstants.ExtendedCost[6] =
+    "20 Halaa Battle Token (id=26045), Halaa Research Token (id=26044)";
+  app.modalConstants.ExtendedCost[7] = "8 Halaa Research Token (id=26044)";
+  app.modalConstants.ExtendedCost[18] = "100 Halaa Battle Token (id=26045)";
+  app.modalConstants.ExtendedCost[21] = "978 arena pts";
+  app.modalConstants.ExtendedCost[22] = "1630 arena pts";
+  app.modalConstants.ExtendedCost[24] = "1304 arena pts";
+  app.modalConstants.ExtendedCost[26] = "3261 arena pts";
+  app.modalConstants.ExtendedCost[53] = "5 Mark of Honor Hold (id=24579)";
+  app.modalConstants.ExtendedCost[54] = "5 Mark of Thrallmar (id=24581)";
+  app.modalConstants.ExtendedCost[55] = "10 Mark of Thrallmar (id=24581)";
+  app.modalConstants.ExtendedCost[56] = "10 Mark of Honor Hold (id=24579)";
+  app.modalConstants.ExtendedCost[65] = "15 Mark of Thrallmar (id=24581)";
+  app.modalConstants.ExtendedCost[66] = "1 honor pts, 1 arena pts";
+  app.modalConstants.ExtendedCost[69] = "15 Mark of Honor Hold (id=24579)";
+  app.modalConstants.ExtendedCost[76] = "30 Mark of Thrallmar (id=24581)";
+  app.modalConstants.ExtendedCost[77] = "30 Mark of Honor Hold (id=24579)";
+  app.modalConstants.ExtendedCost[94] = "19125 honor pts";
+  app.modalConstants.ExtendedCost[95] = "6885 honor pts";
+  app.modalConstants.ExtendedCost[98] = "22950 honor pts";
+  app.modalConstants.ExtendedCost[99] = "8500 honor pts";
+  app.modalConstants.ExtendedCost[100] = "Glowcap (id=24245)";
+  app.modalConstants.ExtendedCost[102] = "2 Glowcap (id=24245)";
+  app.modalConstants.ExtendedCost[103] = "25 Glowcap (id=24245)";
+  app.modalConstants.ExtendedCost[104] = "15 Glowcap (id=24245)";
+  app.modalConstants.ExtendedCost[115] = "16983 honor pts";
+  app.modalConstants.ExtendedCost[125] =
+    "22950 honor pts, 10 Eye of the Storm Mark of Honor (id=29024)";
+  app.modalConstants.ExtendedCost[127] =
+    "15300 honor pts, 10 Eye of the Storm Mark of Honor (id=29024)";
+  app.modalConstants.ExtendedCost[129] =
+    "11934 honor pts, 10 Alterac Valley Mark of Honor (id=20560)";
+  app.modalConstants.ExtendedCost[131] =
+    "30600 honor pts, 40 Alterac Valley Mark of Honor (id=20560)";
+  app.modalConstants.ExtendedCost[133] = "2283 arena pts";
+  app.modalConstants.ExtendedCost[146] = "870 arena pts";
+  app.modalConstants.ExtendedCost[148] = "2739 arena pts";
+  app.modalConstants.ExtendedCost[165] =
+    "9435 honor pts, 20 Arathi Basin Mark of Honor (id=20559)";
+  app.modalConstants.ExtendedCost[169] =
+    "9435 honor pts, 20 Warsong Gulch Mark of Honor (id=20558)";
+  app.modalConstants.ExtendedCost[170] = "9435 honor pts";
+  app.modalConstants.ExtendedCost[171] =
+    "14280 honor pts, 40 Eye of the Storm Mark of Honor (id=29024)";
+  app.modalConstants.ExtendedCost[172] =
+    "14280 honor pts, 40 Arathi Basin Mark of Honor (id=20559)";
+  app.modalConstants.ExtendedCost[173] = "12750 honor pts";
+  app.modalConstants.ExtendedCost[194] = "18 Spirit Shard (id=28558)";
+  app.modalConstants.ExtendedCost[201] =
+    "16524 honor pts, 30 Arathi Basin Mark of Honor (id=20559)";
+  app.modalConstants.ExtendedCost[202] =
+    "10098 honor pts, 20 Alterac Valley Mark of Honor (id=20560)";
+  app.modalConstants.ExtendedCost[203] =
+    "16065 honor pts, 30 Alterac Valley Mark of Honor (id=20560)";
+  app.modalConstants.ExtendedCost[204] =
+    "16065 honor pts, 30 Warsong Gulch Mark of Honor (id=20558)";
+  app.modalConstants.ExtendedCost[205] =
+    "10098 honor pts, 20 Arathi Basin Mark of Honor (id=20559)";
+  app.modalConstants.ExtendedCost[293] = "50 Spirit Shard (id=28558)";
+  app.modalConstants.ExtendedCost[298] = "8 Spirit Shard (id=28558)";
+  app.modalConstants.ExtendedCost[348] =
+    "15300 honor pts, 20 Eye of the Storm Mark of Honor (id=29024)";
+  app.modalConstants.ExtendedCost[359] = "20400 honor pts";
+  app.modalConstants.ExtendedCost[360] =
+    "20400 honor pts, 40 Alterac Valley Mark of Honor (id=20560)";
+  app.modalConstants.ExtendedCost[386] = "15300 honor pts";
+  app.modalConstants.ExtendedCost[388] = "30 Glowcap (id=24245)";
+  app.modalConstants.ExtendedCost[423] =
+    "30 Alterac Valley Mark of Honor (id=20560), 30 Arathi Basin Mark of Honor (id=20559), 30 Warsong Gulch Mark of Honor (id=20558)";
+  app.modalConstants.ExtendedCost[427] =
+    "2805 honor pts, 20 Arathi Basin Mark of Honor (id=20559)";
+  app.modalConstants.ExtendedCost[428] =
+    "2805 honor pts, 20 Alterac Valley Mark of Honor (id=20560)";
+  app.modalConstants.ExtendedCost[444] =
+    "4335 honor pts, 30 Alterac Valley Mark of Honor (id=20560)";
+  app.modalConstants.ExtendedCost[460] = "1 honor pts";
+  app.modalConstants.ExtendedCost[463] =
+    "13770 honor pts, 30 Arathi Basin Mark of Honor (id=20559)";
+  app.modalConstants.ExtendedCost[464] =
+    "13005 honor pts, 30 Alterac Valley Mark of Honor (id=20560)";
+  app.modalConstants.ExtendedCost[465] =
+    "8415 honor pts, 20 Arathi Basin Mark of Honor (id=20559)";
+  app.modalConstants.ExtendedCost[488] =
+    "4590 honor pts, 20 Warsong Gulch Mark of Honor (id=20558)";
+  app.modalConstants.ExtendedCost[489] =
+    "4590 honor pts, 25 Alterac Valley Mark of Honor (id=20560)";
+  app.modalConstants.ExtendedCost[490] =
+    "10200 honor pts, 40 Warsong Gulch Mark of Honor (id=20558)";
+  app.modalConstants.ExtendedCost[491] =
+    "1530 honor pts, 20 Warsong Gulch Mark of Honor (id=20558)";
+  app.modalConstants.ExtendedCost[492] =
+    "1530 honor pts, 10 Warsong Gulch Mark of Honor (id=20558)";
+  app.modalConstants.ExtendedCost[495] =
+    "4590 honor pts, 20 Arathi Basin Mark of Honor (id=20559)";
+  app.modalConstants.ExtendedCost[496] =
+    "2380 honor pts, 10 Alterac Valley Mark of Honor (id=20560)";
+  app.modalConstants.ExtendedCost[497] =
+    "2720 honor pts, 15 Alterac Valley Mark of Honor (id=20560)";
+  app.modalConstants.ExtendedCost[501] =
+    "8415 honor pts, 40 Arathi Basin Mark of Honor (id=20559)";
+  app.modalConstants.ExtendedCost[520] =
+    "2805 honor pts, 30 Arathi Basin Mark of Honor (id=20559)";
+  app.modalConstants.ExtendedCost[532] =
+    "1530 honor pts, 10 Alterac Valley Mark of Honor (id=20560)";
+  app.modalConstants.ExtendedCost[533] =
+    "1530 honor pts, 20 Alterac Valley Mark of Honor (id=20560)";
+  app.modalConstants.ExtendedCost[541] =
+    "8415 honor pts, 20 Alterac Valley Mark of Honor (id=20560)";
+  app.modalConstants.ExtendedCost[542] =
+    "13005 honor pts, 30 Warsong Gulch Mark of Honor (id=20558)";
+  app.modalConstants.ExtendedCost[565] =
+    "15300 honor pts, 20 Arathi Basin Mark of Honor (id=20559)";
+  app.modalConstants.ExtendedCost[567] =
+    "15300 honor pts, 40 Arathi Basin Mark of Honor (id=20559)";
+  app.modalConstants.ExtendedCost[634] = "2805 honor pts";
+  app.modalConstants.ExtendedCost[652] =
+    "4590 honor pts, 30 Arathi Basin Mark of Honor (id=20559)";
+  app.modalConstants.ExtendedCost[653] =
+    "4335 honor pts, 30 Warsong Gulch Mark of Honor (id=20558)";
+  app.modalConstants.ExtendedCost[701] =
+    "10200 honor pts, 30 Warsong Gulch Mark of Honor (id=20558)";
+  app.modalConstants.ExtendedCost[702] =
+    "4760 honor pts, 25 Alterac Valley Mark of Honor (id=20560)";
+  app.modalConstants.ExtendedCost[746] =
+    "8160 honor pts, 40 Arathi Basin Mark of Honor (id=20559)";
+  app.modalConstants.ExtendedCost[747] =
+    "5100 honor pts, 30 Warsong Gulch Mark of Honor (id=20558)";
+  app.modalConstants.ExtendedCost[748] =
+    "8925 honor pts, 40 Warsong Gulch Mark of Honor (id=20558)";
+  app.modalConstants.ExtendedCost[774] =
+    "1530 honor pts, 10 Arathi Basin Mark of Honor (id=20559)";
+  app.modalConstants.ExtendedCost[821] =
+    "428 honor pts, 40 Warsong Gulch Mark of Honor (id=20558)";
+  app.modalConstants.ExtendedCost[822] =
+    "65 honor pts, 20 Warsong Gulch Mark of Honor (id=20558)";
+  app.modalConstants.ExtendedCost[823] =
+    "65 honor pts, 10 Warsong Gulch Mark of Honor (id=20558)";
+  app.modalConstants.ExtendedCost[826] =
+    "214 honor pts, 30 Warsong Gulch Mark of Honor (id=20558)";
+  app.modalConstants.ExtendedCost[837] =
+    "632 honor pts, 40 Warsong Gulch Mark of Honor (id=20558)";
+  app.modalConstants.ExtendedCost[838] =
+    "95 honor pts, 20 Warsong Gulch Mark of Honor (id=20558)";
+  app.modalConstants.ExtendedCost[839] =
+    "95 honor pts, 10 Warsong Gulch Mark of Honor (id=20558)";
+  app.modalConstants.ExtendedCost[841] =
+    "175 honor pts, 20 Arathi Basin Mark of Honor (id=20559)";
+  app.modalConstants.ExtendedCost[855] =
+    "175 honor pts, 30 Arathi Basin Mark of Honor (id=20559)";
+  app.modalConstants.ExtendedCost[871] =
+    "316 honor pts, 30 Warsong Gulch Mark of Honor (id=20558)";
+  app.modalConstants.ExtendedCost[883] =
+    "938 honor pts, 40 Warsong Gulch Mark of Honor (id=20558)";
+  app.modalConstants.ExtendedCost[884] =
+    "141 honor pts, 20 Warsong Gulch Mark of Honor (id=20558)";
+  app.modalConstants.ExtendedCost[885] =
+    "141 honor pts, 10 Warsong Gulch Mark of Honor (id=20558)";
+  app.modalConstants.ExtendedCost[887] =
+    "258 honor pts, 20 Arathi Basin Mark of Honor (id=20559)";
+  app.modalConstants.ExtendedCost[901] =
+    "258 honor pts, 30 Arathi Basin Mark of Honor (id=20559)";
+  app.modalConstants.ExtendedCost[917] =
+    "469 honor pts, 30 Warsong Gulch Mark of Honor (id=20558)";
+  app.modalConstants.ExtendedCost[929] =
+    "1387 honor pts, 40 Warsong Gulch Mark of Honor (id=20558)";
+  app.modalConstants.ExtendedCost[930] =
+    "208 honor pts, 20 Warsong Gulch Mark of Honor (id=20558)";
+  app.modalConstants.ExtendedCost[931] =
+    "208 honor pts, 10 Warsong Gulch Mark of Honor (id=20558)";
+  app.modalConstants.ExtendedCost[933] =
+    "382 honor pts, 20 Arathi Basin Mark of Honor (id=20559)";
+  app.modalConstants.ExtendedCost[947] =
+    "382 honor pts, 30 Arathi Basin Mark of Honor (id=20559)";
+  app.modalConstants.ExtendedCost[968] =
+    "694 honor pts, 30 Warsong Gulch Mark of Honor (id=20558)";
+  app.modalConstants.ExtendedCost[986] =
+    "208 honor pts, 10 Arathi Basin Mark of Honor (id=20559)";
+  app.modalConstants.ExtendedCost[989] =
+    "422 honor pts, 20 Warsong Gulch Mark of Honor (id=20558)";
+  app.modalConstants.ExtendedCost[990] =
+    "624 honor pts, 20 Warsong Gulch Mark of Honor (id=20558)";
+  app.modalConstants.ExtendedCost[1000] =
+    "60 Arathi Basin Mark of Honor (id=20559)";
+  app.modalConstants.ExtendedCost[1002] =
+    "30 Alterac Valley Mark of Honor (id=20560)";
+  app.modalConstants.ExtendedCost[1003] =
+    "60 Alterac Valley Mark of Honor (id=20560)";
+  app.modalConstants.ExtendedCost[1005] =
+    "50 Alterac Valley Mark of Honor (id=20560)";
+  app.modalConstants.ExtendedCost[1006] =
+    "20 Alterac Valley Mark of Honor (id=20560), 20 Arathi Basin Mark of Honor (id=20559), 20 Warsong Gulch Mark of Honor (id=20558)";
+  app.modalConstants.ExtendedCost[1007] =
+    "3 Arathi Basin Mark of Honor (id=20559), 3 Warsong Gulch Mark of Honor (id=20558)";
+  app.modalConstants.ExtendedCost[1009] =
+    "60 Warsong Gulch Mark of Honor (id=20558)";
   app.modalConstants.ExtendedCost[1015] = "25 Badge of Justice (id=29434)";
   app.modalConstants.ExtendedCost[1027] = "41 Badge of Justice (id=29434)";
   app.modalConstants.ExtendedCost[1037] = "33 Badge of Justice (id=29434)";
   app.modalConstants.ExtendedCost[1040] = "50 Badge of Justice (id=29434)";
-  app.modalConstants.ExtendedCost[1050] = "95 honor pts, 10 Arathi Basin Mark of Honor (id=20559)";
-  app.modalConstants.ExtendedCost[1054] = "258 honor pts, 30 Warsong Gulch Mark of Honor (id=20558)";
-  app.modalConstants.ExtendedCost[1055] = "118 honor pts, 30 Warsong Gulch Mark of Honor (id=20558)";
-  app.modalConstants.ExtendedCost[1061] = "20 Arathi Basin Mark of Honor (id=20559)";
-  app.modalConstants.ExtendedCost[1062] = "20 Alterac Valley Mark of Honor (id=20560)";
+  app.modalConstants.ExtendedCost[1050] =
+    "95 honor pts, 10 Arathi Basin Mark of Honor (id=20559)";
+  app.modalConstants.ExtendedCost[1054] =
+    "258 honor pts, 30 Warsong Gulch Mark of Honor (id=20558)";
+  app.modalConstants.ExtendedCost[1055] =
+    "118 honor pts, 30 Warsong Gulch Mark of Honor (id=20558)";
+  app.modalConstants.ExtendedCost[1061] =
+    "20 Arathi Basin Mark of Honor (id=20559)";
+  app.modalConstants.ExtendedCost[1062] =
+    "20 Alterac Valley Mark of Honor (id=20560)";
   app.modalConstants.ExtendedCost[1076] = "20 Glowcap (id=24245)";
   app.modalConstants.ExtendedCost[1077] = "45 Glowcap (id=24245)";
-  app.modalConstants.ExtendedCost[1110] = "30 Arathi Basin Mark of Honor (id=20559)";
-  app.modalConstants.ExtendedCost[1111] = "30 Warsong Gulch Mark of Honor (id=20558)";
+  app.modalConstants.ExtendedCost[1110] =
+    "30 Arathi Basin Mark of Honor (id=20559)";
+  app.modalConstants.ExtendedCost[1111] =
+    "30 Warsong Gulch Mark of Honor (id=20558)";
   app.modalConstants.ExtendedCost[1184] = "2 Holy Dust (id=29735)";
   app.modalConstants.ExtendedCost[1188] = "8 Holy Dust (id=29735)";
   app.modalConstants.ExtendedCost[1192] = "2 Arcane Rune (id=29736)";
   app.modalConstants.ExtendedCost[1196] = "8 Arcane Rune (id=29736)";
-  app.modalConstants.ExtendedCost[1200] = "Chestguard of the Fallen Champion (id=29754)";
-  app.modalConstants.ExtendedCost[1203] = "Gloves of the Fallen Champion (id=29757)";
-  app.modalConstants.ExtendedCost[1206] = "Helm of the Fallen Champion (id=29760)";
-  app.modalConstants.ExtendedCost[1209] = "Leggings of the Fallen Champion (id=29766)";
-  app.modalConstants.ExtendedCost[1212] = "Pauldrons of the Fallen Champion (id=29763)";
-  app.modalConstants.ExtendedCost[1215] = "Chestguard of the Fallen Hero (id=29755)";
-  app.modalConstants.ExtendedCost[1216] = "Gloves of the Fallen Hero (id=29756)";
+  app.modalConstants.ExtendedCost[1200] =
+    "Chestguard of the Fallen Champion (id=29754)";
+  app.modalConstants.ExtendedCost[1203] =
+    "Gloves of the Fallen Champion (id=29757)";
+  app.modalConstants.ExtendedCost[1206] =
+    "Helm of the Fallen Champion (id=29760)";
+  app.modalConstants.ExtendedCost[1209] =
+    "Leggings of the Fallen Champion (id=29766)";
+  app.modalConstants.ExtendedCost[1212] =
+    "Pauldrons of the Fallen Champion (id=29763)";
+  app.modalConstants.ExtendedCost[1215] =
+    "Chestguard of the Fallen Hero (id=29755)";
+  app.modalConstants.ExtendedCost[1216] =
+    "Gloves of the Fallen Hero (id=29756)";
   app.modalConstants.ExtendedCost[1217] = "Helm of the Fallen Hero (id=29759)";
-  app.modalConstants.ExtendedCost[1218] = "Leggings of the Fallen Hero (id=29765)";
-  app.modalConstants.ExtendedCost[1219] = "Pauldrons of the Fallen Hero (id=29762)";
-  app.modalConstants.ExtendedCost[1235] = "Chestguard of the Fallen Defender (id=29753)";
-  app.modalConstants.ExtendedCost[1237] = "Gloves of the Fallen Defender (id=29758)";
-  app.modalConstants.ExtendedCost[1239] = "Helm of the Fallen Defender (id=29761)";
-  app.modalConstants.ExtendedCost[1241] = "Leggings of the Fallen Defender (id=29767)";
-  app.modalConstants.ExtendedCost[1243] = "Pauldrons of the Fallen Defender (id=29764)";
-  app.modalConstants.ExtendedCost[1332] = "Chestguard of the Vanquished Defender (id=30237)";
-  app.modalConstants.ExtendedCost[1333] = "Gloves of the Vanquished Defender (id=30240)";
-  app.modalConstants.ExtendedCost[1334] = "Helm of the Vanquished Defender (id=30243)";
-  app.modalConstants.ExtendedCost[1335] = "Leggings of the Vanquished Defender (id=30246)";
-  app.modalConstants.ExtendedCost[1336] = "Pauldrons of the Vanquished Defender (id=30249)";
-  app.modalConstants.ExtendedCost[1342] = "Chestguard of the Vanquished Champion (id=30236)";
-  app.modalConstants.ExtendedCost[1343] = "Gloves of the Vanquished Champion (id=30239)";
-  app.modalConstants.ExtendedCost[1344] = "Helm of the Vanquished Champion (id=30242)";
-  app.modalConstants.ExtendedCost[1345] = "Leggings of the Vanquished Champion (id=30245)";
-  app.modalConstants.ExtendedCost[1346] = "Pauldrons of the Vanquished Champion (id=30248)";
-  app.modalConstants.ExtendedCost[1357] = "Chestguard of the Vanquished Hero (id=30238)";
-  app.modalConstants.ExtendedCost[1358] = "Gloves of the Vanquished Hero (id=30241)";
-  app.modalConstants.ExtendedCost[1359] = "Helm of the Vanquished Hero (id=30244)";
-  app.modalConstants.ExtendedCost[1360] = "Leggings of the Vanquished Hero (id=30247)";
-  app.modalConstants.ExtendedCost[1361] = "Pauldrons of the Vanquished Hero (id=30250)";
+  app.modalConstants.ExtendedCost[1218] =
+    "Leggings of the Fallen Hero (id=29765)";
+  app.modalConstants.ExtendedCost[1219] =
+    "Pauldrons of the Fallen Hero (id=29762)";
+  app.modalConstants.ExtendedCost[1235] =
+    "Chestguard of the Fallen Defender (id=29753)";
+  app.modalConstants.ExtendedCost[1237] =
+    "Gloves of the Fallen Defender (id=29758)";
+  app.modalConstants.ExtendedCost[1239] =
+    "Helm of the Fallen Defender (id=29761)";
+  app.modalConstants.ExtendedCost[1241] =
+    "Leggings of the Fallen Defender (id=29767)";
+  app.modalConstants.ExtendedCost[1243] =
+    "Pauldrons of the Fallen Defender (id=29764)";
+  app.modalConstants.ExtendedCost[1332] =
+    "Chestguard of the Vanquished Defender (id=30237)";
+  app.modalConstants.ExtendedCost[1333] =
+    "Gloves of the Vanquished Defender (id=30240)";
+  app.modalConstants.ExtendedCost[1334] =
+    "Helm of the Vanquished Defender (id=30243)";
+  app.modalConstants.ExtendedCost[1335] =
+    "Leggings of the Vanquished Defender (id=30246)";
+  app.modalConstants.ExtendedCost[1336] =
+    "Pauldrons of the Vanquished Defender (id=30249)";
+  app.modalConstants.ExtendedCost[1342] =
+    "Chestguard of the Vanquished Champion (id=30236)";
+  app.modalConstants.ExtendedCost[1343] =
+    "Gloves of the Vanquished Champion (id=30239)";
+  app.modalConstants.ExtendedCost[1344] =
+    "Helm of the Vanquished Champion (id=30242)";
+  app.modalConstants.ExtendedCost[1345] =
+    "Leggings of the Vanquished Champion (id=30245)";
+  app.modalConstants.ExtendedCost[1346] =
+    "Pauldrons of the Vanquished Champion (id=30248)";
+  app.modalConstants.ExtendedCost[1357] =
+    "Chestguard of the Vanquished Hero (id=30238)";
+  app.modalConstants.ExtendedCost[1358] =
+    "Gloves of the Vanquished Hero (id=30241)";
+  app.modalConstants.ExtendedCost[1359] =
+    "Helm of the Vanquished Hero (id=30244)";
+  app.modalConstants.ExtendedCost[1360] =
+    "Leggings of the Vanquished Hero (id=30247)";
+  app.modalConstants.ExtendedCost[1361] =
+    "Pauldrons of the Vanquished Hero (id=30250)";
   app.modalConstants.ExtendedCost[1431] = "1875 arena pts, 1850 arenarank";
   app.modalConstants.ExtendedCost[1432] = "1125 arena pts, 1850 arenarank";
   app.modalConstants.ExtendedCost[1435] = "1500 arena pts, 2000 arenarank";
-  app.modalConstants.ExtendedCost[1442] = "7905 honor pts, 60 Warsong Gulch Mark of Honor (id=20558)";
+  app.modalConstants.ExtendedCost[1442] =
+    "7905 honor pts, 60 Warsong Gulch Mark of Honor (id=20558)";
   app.modalConstants.ExtendedCost[1452] = "20 Badge of Justice (id=29434)";
   app.modalConstants.ExtendedCost[1454] = "30 Badge of Justice (id=29434)";
-  app.modalConstants.ExtendedCost[1468] = "8160 honor pts, 60 Alterac Valley Mark of Honor (id=20560)";
-  app.modalConstants.ExtendedCost[1474] = "Gloves of the Forgotten Protector (id=31094)";
-  app.modalConstants.ExtendedCost[1476] = "Helm of the Forgotten Protector (id=31095)";
-  app.modalConstants.ExtendedCost[1478] = "Chestguard of the Forgotten Protector (id=31091)";
-  app.modalConstants.ExtendedCost[1480] = "Leggings of the Forgotten Protector (id=31100)";
-  app.modalConstants.ExtendedCost[1482] = "Pauldrons of the Forgotten Protector (id=31103)";
-  app.modalConstants.ExtendedCost[1485] = "Gloves of the Forgotten Conqueror (id=31092)";
-  app.modalConstants.ExtendedCost[1488] = "Helm of the Forgotten Conqueror (id=31097)";
-  app.modalConstants.ExtendedCost[1491] = "Chestguard of the Forgotten Conqueror (id=31089)";
-  app.modalConstants.ExtendedCost[1494] = "Leggings of the Forgotten Conqueror (id=31098)";
-  app.modalConstants.ExtendedCost[1497] = "Pauldrons of the Forgotten Conqueror (id=31101)";
-  app.modalConstants.ExtendedCost[1520] = "Gloves of the Forgotten Vanquisher (id=31093)";
-  app.modalConstants.ExtendedCost[1521] = "Helm of the Forgotten Vanquisher (id=31096)";
-  app.modalConstants.ExtendedCost[1522] = "Chestguard of the Forgotten Vanquisher (id=31090)";
-  app.modalConstants.ExtendedCost[1523] = "Leggings of the Forgotten Vanquisher (id=31099)";
-  app.modalConstants.ExtendedCost[1524] = "Pauldrons of the Forgotten Vanquisher (id=31102)";
+  app.modalConstants.ExtendedCost[1468] =
+    "8160 honor pts, 60 Alterac Valley Mark of Honor (id=20560)";
+  app.modalConstants.ExtendedCost[1474] =
+    "Gloves of the Forgotten Protector (id=31094)";
+  app.modalConstants.ExtendedCost[1476] =
+    "Helm of the Forgotten Protector (id=31095)";
+  app.modalConstants.ExtendedCost[1478] =
+    "Chestguard of the Forgotten Protector (id=31091)";
+  app.modalConstants.ExtendedCost[1480] =
+    "Leggings of the Forgotten Protector (id=31100)";
+  app.modalConstants.ExtendedCost[1482] =
+    "Pauldrons of the Forgotten Protector (id=31103)";
+  app.modalConstants.ExtendedCost[1485] =
+    "Gloves of the Forgotten Conqueror (id=31092)";
+  app.modalConstants.ExtendedCost[1488] =
+    "Helm of the Forgotten Conqueror (id=31097)";
+  app.modalConstants.ExtendedCost[1491] =
+    "Chestguard of the Forgotten Conqueror (id=31089)";
+  app.modalConstants.ExtendedCost[1494] =
+    "Leggings of the Forgotten Conqueror (id=31098)";
+  app.modalConstants.ExtendedCost[1497] =
+    "Pauldrons of the Forgotten Conqueror (id=31101)";
+  app.modalConstants.ExtendedCost[1520] =
+    "Gloves of the Forgotten Vanquisher (id=31093)";
+  app.modalConstants.ExtendedCost[1521] =
+    "Helm of the Forgotten Vanquisher (id=31096)";
+  app.modalConstants.ExtendedCost[1522] =
+    "Chestguard of the Forgotten Vanquisher (id=31090)";
+  app.modalConstants.ExtendedCost[1523] =
+    "Leggings of the Forgotten Vanquisher (id=31099)";
+  app.modalConstants.ExtendedCost[1524] =
+    "Pauldrons of the Forgotten Vanquisher (id=31102)";
   app.modalConstants.ExtendedCost[1564] = "8 honor pts";
   app.modalConstants.ExtendedCost[1565] = "5 honor pts";
   app.modalConstants.ExtendedCost[1642] = "15 Badge of Justice (id=29434)";
   app.modalConstants.ExtendedCost[1645] = "Silken Thread (id=4291)";
-  app.modalConstants.ExtendedCost[1646] = "100 Halaa Battle Token (id=26045), 20 Halaa Research Token (id=26044)";
-  app.modalConstants.ExtendedCost[1647] = "70 Halaa Battle Token (id=26045), 15 Halaa Research Token (id=26044)";
-  app.modalConstants.ExtendedCost[1648] = "2 Arathi Basin Mark of Honor (id=20559)";
-  app.modalConstants.ExtendedCost[1649] = "2 Alterac Valley Mark of Honor (id=20560)";
-  app.modalConstants.ExtendedCost[1652] = "2 Eye of the Storm Mark of Honor (id=29024)";
-  app.modalConstants.ExtendedCost[1653] = "2 Warsong Gulch Mark of Honor (id=20558)";
+  app.modalConstants.ExtendedCost[1646] =
+    "100 Halaa Battle Token (id=26045), 20 Halaa Research Token (id=26044)";
+  app.modalConstants.ExtendedCost[1647] =
+    "70 Halaa Battle Token (id=26045), 15 Halaa Research Token (id=26044)";
+  app.modalConstants.ExtendedCost[1648] =
+    "2 Arathi Basin Mark of Honor (id=20559)";
+  app.modalConstants.ExtendedCost[1649] =
+    "2 Alterac Valley Mark of Honor (id=20560)";
+  app.modalConstants.ExtendedCost[1652] =
+    "2 Eye of the Storm Mark of Honor (id=29024)";
+  app.modalConstants.ExtendedCost[1653] =
+    "2 Warsong Gulch Mark of Honor (id=20558)";
   app.modalConstants.ExtendedCost[1664] = "3750 arena pts";
   app.modalConstants.ExtendedCost[1670] = "2625 arena pts, 1850 arenarank";
   app.modalConstants.ExtendedCost[1757] = "3150 arena pts, 1850 arenarank";
@@ -2672,13 +2810,18 @@
   app.modalConstants.ExtendedCost[1765] = "2 Halaa Research Token (id=26044)";
   app.modalConstants.ExtendedCost[1909] = "10 Badge of Justice (id=29434)";
   app.modalConstants.ExtendedCost[1910] = "35 Apexis Shard (id=32569)";
-  app.modalConstants.ExtendedCost[1911] = "17850 honor pts, 40 Eye of the Storm Mark of Honor (id=29024)";
-  app.modalConstants.ExtendedCost[1923] = "17850 honor pts, 40 Arathi Basin Mark of Honor (id=20559)";
-  app.modalConstants.ExtendedCost[1935] = "11794 honor pts, 20 Warsong Gulch Mark of Honor (id=20558)";
+  app.modalConstants.ExtendedCost[1911] =
+    "17850 honor pts, 40 Eye of the Storm Mark of Honor (id=29024)";
+  app.modalConstants.ExtendedCost[1923] =
+    "17850 honor pts, 40 Arathi Basin Mark of Honor (id=20559)";
+  app.modalConstants.ExtendedCost[1935] =
+    "11794 honor pts, 20 Warsong Gulch Mark of Honor (id=20558)";
   app.modalConstants.ExtendedCost[1948] = "3 Apexis Shard (id=32569)";
   app.modalConstants.ExtendedCost[1949] = "2 Apexis Shard (id=32569)";
-  app.modalConstants.ExtendedCost[1950] = "4 Apexis Crystal (id=32572), 100 Apexis Shard (id=32569)";
-  app.modalConstants.ExtendedCost[1952] = "Apexis Crystal (id=32572), 50 Apexis Shard (id=32569)";
+  app.modalConstants.ExtendedCost[1950] =
+    "4 Apexis Crystal (id=32572), 100 Apexis Shard (id=32569)";
+  app.modalConstants.ExtendedCost[1952] =
+    "Apexis Crystal (id=32572), 50 Apexis Shard (id=32569)";
   app.modalConstants.ExtendedCost[1958] = "10 Apexis Shard (id=32569)";
   app.modalConstants.ExtendedCost[1959] = "Mark of the Illidari (id=32897)";
   app.modalConstants.ExtendedCost[1963] = "Coilfang Armaments (id=24368)";
@@ -2688,51 +2831,90 @@
   app.modalConstants.ExtendedCost[1985] = "3 Apexis Crystal (id=32572)";
   app.modalConstants.ExtendedCost[1992] = "2 Spirit Shard (id=28558)";
   app.modalConstants.ExtendedCost[1994] = "10 Glowcap (id=24245)";
-  app.modalConstants.ExtendedCost[2028] = "15300 honor pts, 10 Alterac Valley Mark of Honor (id=20560)";
+  app.modalConstants.ExtendedCost[2028] =
+    "15300 honor pts, 10 Alterac Valley Mark of Honor (id=20560)";
   app.modalConstants.ExtendedCost[2049] = "75 Badge of Justice (id=29434)";
   app.modalConstants.ExtendedCost[2059] = "60 Badge of Justice (id=29434)";
   app.modalConstants.ExtendedCost[2060] = "35 Badge of Justice (id=29434)";
   app.modalConstants.ExtendedCost[2236] = "4 Halaa Research Token (id=26044)";
-  app.modalConstants.ExtendedCost[2237] = "27000 honor pts, 40 Alterac Valley Mark of Honor (id=20560)";
-  app.modalConstants.ExtendedCost[2238] = "25200 honor pts, 20 Eye of the Storm Mark of Honor (id=29024)";
-  app.modalConstants.ExtendedCost[2239] = "18000 honor pts, 20 Eye of the Storm Mark of Honor (id=29024)";
-  app.modalConstants.ExtendedCost[2240] = "9000 honor pts, 20 Eye of the Storm Mark of Honor (id=29024)";
-  app.modalConstants.ExtendedCost[2241] = "8000 honor pts, 10 Eye of the Storm Mark of Honor (id=29024)";
-  app.modalConstants.ExtendedCost[2242] = "15000 honor pts, 20 Eye of the Storm Mark of Honor (id=29024)";
-  app.modalConstants.ExtendedCost[2248] = "11934 honor pts, 10 Eye of the Storm Mark of Honor (id=29024)";
-  app.modalConstants.ExtendedCost[2249] = "11424 honor pts, 40 Arathi Basin Mark of Honor (id=20559)";
-  app.modalConstants.ExtendedCost[2250] = "11424 honor pts, 40 Eye of the Storm Mark of Honor (id=29024)";
-  app.modalConstants.ExtendedCost[2251] = "7548 honor pts, 20 Warsong Gulch Mark of Honor (id=20558)";
-  app.modalConstants.ExtendedCost[2252] = "9547 honor pts, 10 Eye of the Storm Mark of Honor (id=29024)";
-  app.modalConstants.ExtendedCost[2253] = "9547 honor pts, 10 Alterac Valley Mark of Honor (id=20560)";
-  app.modalConstants.ExtendedCost[2254] = "19125 honor pts, 20 Eye of the Storm Mark of Honor (id=29024)";
-  app.modalConstants.ExtendedCost[2255] = "12240 honor pts, 20 Eye of the Storm Mark of Honor (id=29024)";
-  app.modalConstants.ExtendedCost[2256] = "38250 honor pts, 40 Alterac Valley Mark of Honor (id=20560)";
-  app.modalConstants.ExtendedCost[2257] = "24480 honor pts, 40 Alterac Valley Mark of Honor (id=20560)";
-  app.modalConstants.ExtendedCost[2258] = "20655 honor pts, 30 Arathi Basin Mark of Honor (id=20559)";
-  app.modalConstants.ExtendedCost[2259] = "13219 honor pts, 30 Arathi Basin Mark of Honor (id=20559)";
-  app.modalConstants.ExtendedCost[2260] = "12622 honor pts, 20 Alterac Valley Mark of Honor (id=20560)";
-  app.modalConstants.ExtendedCost[2261] = "8078 honor pts, 20 Alterac Valley Mark of Honor (id=20560)";
-  app.modalConstants.ExtendedCost[2262] = "20081 honor pts, 30 Alterac Valley Mark of Honor (id=20560)";
-  app.modalConstants.ExtendedCost[2263] = "12852 honor pts, 30 Alterac Valley Mark of Honor (id=20560)";
-  app.modalConstants.ExtendedCost[2264] = "20081 honor pts, 30 Warsong Gulch Mark of Honor (id=20558)";
-  app.modalConstants.ExtendedCost[2265] = "12852 honor pts, 30 Warsong Gulch Mark of Honor (id=20558)";
-  app.modalConstants.ExtendedCost[2266] = "12622 honor pts, 20 Arathi Basin Mark of Honor (id=20559)";
-  app.modalConstants.ExtendedCost[2267] = "8078 honor pts, 20 Arathi Basin Mark of Honor (id=20559)";
-  app.modalConstants.ExtendedCost[2268] = "11794 honor pts, 20 Arathi Basin Mark of Honor (id=20559)";
-  app.modalConstants.ExtendedCost[2269] = "7548 honor pts, 20 Arathi Basin Mark of Honor (id=20559)";
-  app.modalConstants.ExtendedCost[2270] = "25500 honor pts, 40 Alterac Valley Mark of Honor (id=20560)";
-  app.modalConstants.ExtendedCost[2271] = "16320 honor pts, 40 Alterac Valley Mark of Honor (id=20560)";
+  app.modalConstants.ExtendedCost[2237] =
+    "27000 honor pts, 40 Alterac Valley Mark of Honor (id=20560)";
+  app.modalConstants.ExtendedCost[2238] =
+    "25200 honor pts, 20 Eye of the Storm Mark of Honor (id=29024)";
+  app.modalConstants.ExtendedCost[2239] =
+    "18000 honor pts, 20 Eye of the Storm Mark of Honor (id=29024)";
+  app.modalConstants.ExtendedCost[2240] =
+    "9000 honor pts, 20 Eye of the Storm Mark of Honor (id=29024)";
+  app.modalConstants.ExtendedCost[2241] =
+    "8000 honor pts, 10 Eye of the Storm Mark of Honor (id=29024)";
+  app.modalConstants.ExtendedCost[2242] =
+    "15000 honor pts, 20 Eye of the Storm Mark of Honor (id=29024)";
+  app.modalConstants.ExtendedCost[2248] =
+    "11934 honor pts, 10 Eye of the Storm Mark of Honor (id=29024)";
+  app.modalConstants.ExtendedCost[2249] =
+    "11424 honor pts, 40 Arathi Basin Mark of Honor (id=20559)";
+  app.modalConstants.ExtendedCost[2250] =
+    "11424 honor pts, 40 Eye of the Storm Mark of Honor (id=29024)";
+  app.modalConstants.ExtendedCost[2251] =
+    "7548 honor pts, 20 Warsong Gulch Mark of Honor (id=20558)";
+  app.modalConstants.ExtendedCost[2252] =
+    "9547 honor pts, 10 Eye of the Storm Mark of Honor (id=29024)";
+  app.modalConstants.ExtendedCost[2253] =
+    "9547 honor pts, 10 Alterac Valley Mark of Honor (id=20560)";
+  app.modalConstants.ExtendedCost[2254] =
+    "19125 honor pts, 20 Eye of the Storm Mark of Honor (id=29024)";
+  app.modalConstants.ExtendedCost[2255] =
+    "12240 honor pts, 20 Eye of the Storm Mark of Honor (id=29024)";
+  app.modalConstants.ExtendedCost[2256] =
+    "38250 honor pts, 40 Alterac Valley Mark of Honor (id=20560)";
+  app.modalConstants.ExtendedCost[2257] =
+    "24480 honor pts, 40 Alterac Valley Mark of Honor (id=20560)";
+  app.modalConstants.ExtendedCost[2258] =
+    "20655 honor pts, 30 Arathi Basin Mark of Honor (id=20559)";
+  app.modalConstants.ExtendedCost[2259] =
+    "13219 honor pts, 30 Arathi Basin Mark of Honor (id=20559)";
+  app.modalConstants.ExtendedCost[2260] =
+    "12622 honor pts, 20 Alterac Valley Mark of Honor (id=20560)";
+  app.modalConstants.ExtendedCost[2261] =
+    "8078 honor pts, 20 Alterac Valley Mark of Honor (id=20560)";
+  app.modalConstants.ExtendedCost[2262] =
+    "20081 honor pts, 30 Alterac Valley Mark of Honor (id=20560)";
+  app.modalConstants.ExtendedCost[2263] =
+    "12852 honor pts, 30 Alterac Valley Mark of Honor (id=20560)";
+  app.modalConstants.ExtendedCost[2264] =
+    "20081 honor pts, 30 Warsong Gulch Mark of Honor (id=20558)";
+  app.modalConstants.ExtendedCost[2265] =
+    "12852 honor pts, 30 Warsong Gulch Mark of Honor (id=20558)";
+  app.modalConstants.ExtendedCost[2266] =
+    "12622 honor pts, 20 Arathi Basin Mark of Honor (id=20559)";
+  app.modalConstants.ExtendedCost[2267] =
+    "8078 honor pts, 20 Arathi Basin Mark of Honor (id=20559)";
+  app.modalConstants.ExtendedCost[2268] =
+    "11794 honor pts, 20 Arathi Basin Mark of Honor (id=20559)";
+  app.modalConstants.ExtendedCost[2269] =
+    "7548 honor pts, 20 Arathi Basin Mark of Honor (id=20559)";
+  app.modalConstants.ExtendedCost[2270] =
+    "25500 honor pts, 40 Alterac Valley Mark of Honor (id=20560)";
+  app.modalConstants.ExtendedCost[2271] =
+    "16320 honor pts, 40 Alterac Valley Mark of Honor (id=20560)";
   app.modalConstants.ExtendedCost[2272] = "50 Apexis Shard (id=32569)";
-  app.modalConstants.ExtendedCost[2273] = "600 Brewfest Prize Ticket (id=37829)";
+  app.modalConstants.ExtendedCost[2273] =
+    "600 Brewfest Prize Ticket (id=37829)";
   app.modalConstants.ExtendedCost[2274] = "50 Brewfest Prize Ticket (id=37829)";
-  app.modalConstants.ExtendedCost[2275] = "100 Brewfest Prize Ticket (id=37829)";
-  app.modalConstants.ExtendedCost[2276] = "200 Brewfest Prize Ticket (id=37829)";
-  app.modalConstants.ExtendedCost[2277] = "10500 honor pts, 20 Alterac Valley Mark of Honor (id=20560)";
-  app.modalConstants.ExtendedCost[2278] = "11250 honor pts, 20 Arathi Basin Mark of Honor (id=20559)";
-  app.modalConstants.ExtendedCost[2279] = "14500 honor pts, 30 Arathi Basin Mark of Honor (id=20559)";
-  app.modalConstants.ExtendedCost[2280] = "14500 honor pts, 30 Alterac Valley Mark of Honor (id=20560)";
-  app.modalConstants.ExtendedCost[2281] = "14500 honor pts, 30 Warsong Gulch Mark of Honor (id=20558)";
+  app.modalConstants.ExtendedCost[2275] =
+    "100 Brewfest Prize Ticket (id=37829)";
+  app.modalConstants.ExtendedCost[2276] =
+    "200 Brewfest Prize Ticket (id=37829)";
+  app.modalConstants.ExtendedCost[2277] =
+    "10500 honor pts, 20 Alterac Valley Mark of Honor (id=20560)";
+  app.modalConstants.ExtendedCost[2278] =
+    "11250 honor pts, 20 Arathi Basin Mark of Honor (id=20559)";
+  app.modalConstants.ExtendedCost[2279] =
+    "14500 honor pts, 30 Arathi Basin Mark of Honor (id=20559)";
+  app.modalConstants.ExtendedCost[2280] =
+    "14500 honor pts, 30 Alterac Valley Mark of Honor (id=20560)";
+  app.modalConstants.ExtendedCost[2281] =
+    "14500 honor pts, 30 Warsong Gulch Mark of Honor (id=20558)";
   app.modalConstants.ExtendedCost[2282] = "3750 arena pts, 1850 arenarank";
   app.modalConstants.ExtendedCost[2283] = "1125 arena pts";
   app.modalConstants.ExtendedCost[2284] = "3150 arena pts";
@@ -2740,46 +2922,86 @@
   app.modalConstants.ExtendedCost[2286] = "1125 arena pts";
   app.modalConstants.ExtendedCost[2287] = "2625 arena pts";
   app.modalConstants.ExtendedCost[2288] = "1500 arena pts";
-  app.modalConstants.ExtendedCost[2289] = "30000 honor pts, 40 Alterac Valley Mark of Honor (id=20560)";
-  app.modalConstants.ExtendedCost[2290] = "19125 honor pts, 20 Arathi Basin Mark of Honor (id=20559)";
-  app.modalConstants.ExtendedCost[2291] = "12240 honor pts, 20 Arathi Basin Mark of Honor (id=20559)";
-  app.modalConstants.ExtendedCost[2292] = "Felfury Legplates (id=34180), Sunmote (id=34664)";
-  app.modalConstants.ExtendedCost[2293] = "Legplates of the Holy Juggernaut (id=34167), Sunmote (id=34664)";
-  app.modalConstants.ExtendedCost[2294] = "Chain Links of the Tumultuous Storm (id=34186), Sunmote (id=34664)";
-  app.modalConstants.ExtendedCost[2295] = "Breeches of Natural Aggression (id=34169), Sunmote (id=34664)";
-  app.modalConstants.ExtendedCost[2296] = "Leggings of the Immortal Night (id=34188), Sunmote (id=34664)";
-  app.modalConstants.ExtendedCost[2297] = "Pantaloons of Calming Strife (id=34170), Sunmote (id=34664)";
-  app.modalConstants.ExtendedCost[2298] = "Pauldrons of Perseverance (id=34192), Sunmote (id=34664)";
-  app.modalConstants.ExtendedCost[2299] = "Spaulders of the Thalassian Savior (id=34193), Sunmote (id=34664)";
-  app.modalConstants.ExtendedCost[2300] = "Equilibrium Epaulets (id=34208), Sunmote (id=34664)";
-  app.modalConstants.ExtendedCost[2301] = "Spaulders of Reclamation (id=34209), Sunmote (id=34664)";
-  app.modalConstants.ExtendedCost[2302] = "Shoulderpads of Vehemence (id=34195), Sunmote (id=34664)";
-  app.modalConstants.ExtendedCost[2303] = "Shawl of Wonderment (id=34202), Sunmote (id=34664)";
-  app.modalConstants.ExtendedCost[2304] = "Warharness of Reckless Fury (id=34215), Sunmote (id=34664)";
-  app.modalConstants.ExtendedCost[2305] = "Heroic Judicator's Chestguard (id=34216), Sunmote (id=34664)";
-  app.modalConstants.ExtendedCost[2306] = "Garments of Serene Shores (id=34229), Sunmote (id=34664)";
-  app.modalConstants.ExtendedCost[2307] = "Harness of Carnal Instinct (id=34211), Sunmote (id=34664)";
-  app.modalConstants.ExtendedCost[2308] = "Sunglow Vest (id=34212), Sunmote (id=34664)";
-  app.modalConstants.ExtendedCost[2309] = "Robes of Faltered Light (id=34233), Sunmote (id=34664)";
-  app.modalConstants.ExtendedCost[2310] = "Crown of Anasterian (id=34345), Sunmote (id=34664)";
-  app.modalConstants.ExtendedCost[2311] = "Helm of Burning Righteousness (id=34243), Sunmote (id=34664)";
-  app.modalConstants.ExtendedCost[2312] = "Cowl of Gul'dan (id=34332), Sunmote (id=34664)";
-  app.modalConstants.ExtendedCost[2313] = "Cover of Ursol the Wise (id=34245), Sunmote (id=34664)";
-  app.modalConstants.ExtendedCost[2314] = "Duplicitous Guise (id=34244), Sunmote (id=34664)";
-  app.modalConstants.ExtendedCost[2315] = "Cowl of Light's Purity (id=34339), Sunmote (id=34664)";
-  app.modalConstants.ExtendedCost[2316] = "Handguards of the Dawn (id=34342), Sunmote (id=34664)";
-  app.modalConstants.ExtendedCost[2317] = "Tranquil Majesty Wraps (id=34351), Sunmote (id=34664)";
-  app.modalConstants.ExtendedCost[2318] = "Shadowed Gauntlets of Paroxysm (id=34234), Sunmote (id=34664)";
-  app.modalConstants.ExtendedCost[2319] = "Gauntlets of the Ancient Shadowmoon (id=34350), Sunmote (id=34664)";
-  app.modalConstants.ExtendedCost[2320] = "Bracers of the Forgotten Conqueror (id=34848)";
-  app.modalConstants.ExtendedCost[2321] = "Bracers of the Forgotten Vanquisher (id=34852)";
-  app.modalConstants.ExtendedCost[2322] = "Belt of the Forgotten Protector (id=34854)";
-  app.modalConstants.ExtendedCost[2323] = "Bracers of the Forgotten Protector (id=34851)";
-  app.modalConstants.ExtendedCost[2324] = "Belt of the Forgotten Conqueror (id=34853)";
-  app.modalConstants.ExtendedCost[2325] = "Belt of the Forgotten Vanquisher (id=34855)";
-  app.modalConstants.ExtendedCost[2326] = "Boots of the Forgotten Conqueror (id=34856)";
-  app.modalConstants.ExtendedCost[2327] = "Boots of the Forgotten Vanquisher (id=34858)";
-  app.modalConstants.ExtendedCost[2328] = "Boots of the Forgotten Protector (id=34857)";
+  app.modalConstants.ExtendedCost[2289] =
+    "30000 honor pts, 40 Alterac Valley Mark of Honor (id=20560)";
+  app.modalConstants.ExtendedCost[2290] =
+    "19125 honor pts, 20 Arathi Basin Mark of Honor (id=20559)";
+  app.modalConstants.ExtendedCost[2291] =
+    "12240 honor pts, 20 Arathi Basin Mark of Honor (id=20559)";
+  app.modalConstants.ExtendedCost[2292] =
+    "Felfury Legplates (id=34180), Sunmote (id=34664)";
+  app.modalConstants.ExtendedCost[2293] =
+    "Legplates of the Holy Juggernaut (id=34167), Sunmote (id=34664)";
+  app.modalConstants.ExtendedCost[2294] =
+    "Chain Links of the Tumultuous Storm (id=34186), Sunmote (id=34664)";
+  app.modalConstants.ExtendedCost[2295] =
+    "Breeches of Natural Aggression (id=34169), Sunmote (id=34664)";
+  app.modalConstants.ExtendedCost[2296] =
+    "Leggings of the Immortal Night (id=34188), Sunmote (id=34664)";
+  app.modalConstants.ExtendedCost[2297] =
+    "Pantaloons of Calming Strife (id=34170), Sunmote (id=34664)";
+  app.modalConstants.ExtendedCost[2298] =
+    "Pauldrons of Perseverance (id=34192), Sunmote (id=34664)";
+  app.modalConstants.ExtendedCost[2299] =
+    "Spaulders of the Thalassian Savior (id=34193), Sunmote (id=34664)";
+  app.modalConstants.ExtendedCost[2300] =
+    "Equilibrium Epaulets (id=34208), Sunmote (id=34664)";
+  app.modalConstants.ExtendedCost[2301] =
+    "Spaulders of Reclamation (id=34209), Sunmote (id=34664)";
+  app.modalConstants.ExtendedCost[2302] =
+    "Shoulderpads of Vehemence (id=34195), Sunmote (id=34664)";
+  app.modalConstants.ExtendedCost[2303] =
+    "Shawl of Wonderment (id=34202), Sunmote (id=34664)";
+  app.modalConstants.ExtendedCost[2304] =
+    "Warharness of Reckless Fury (id=34215), Sunmote (id=34664)";
+  app.modalConstants.ExtendedCost[2305] =
+    "Heroic Judicator's Chestguard (id=34216), Sunmote (id=34664)";
+  app.modalConstants.ExtendedCost[2306] =
+    "Garments of Serene Shores (id=34229), Sunmote (id=34664)";
+  app.modalConstants.ExtendedCost[2307] =
+    "Harness of Carnal Instinct (id=34211), Sunmote (id=34664)";
+  app.modalConstants.ExtendedCost[2308] =
+    "Sunglow Vest (id=34212), Sunmote (id=34664)";
+  app.modalConstants.ExtendedCost[2309] =
+    "Robes of Faltered Light (id=34233), Sunmote (id=34664)";
+  app.modalConstants.ExtendedCost[2310] =
+    "Crown of Anasterian (id=34345), Sunmote (id=34664)";
+  app.modalConstants.ExtendedCost[2311] =
+    "Helm of Burning Righteousness (id=34243), Sunmote (id=34664)";
+  app.modalConstants.ExtendedCost[2312] =
+    "Cowl of Gul'dan (id=34332), Sunmote (id=34664)";
+  app.modalConstants.ExtendedCost[2313] =
+    "Cover of Ursol the Wise (id=34245), Sunmote (id=34664)";
+  app.modalConstants.ExtendedCost[2314] =
+    "Duplicitous Guise (id=34244), Sunmote (id=34664)";
+  app.modalConstants.ExtendedCost[2315] =
+    "Cowl of Light's Purity (id=34339), Sunmote (id=34664)";
+  app.modalConstants.ExtendedCost[2316] =
+    "Handguards of the Dawn (id=34342), Sunmote (id=34664)";
+  app.modalConstants.ExtendedCost[2317] =
+    "Tranquil Majesty Wraps (id=34351), Sunmote (id=34664)";
+  app.modalConstants.ExtendedCost[2318] =
+    "Shadowed Gauntlets of Paroxysm (id=34234), Sunmote (id=34664)";
+  app.modalConstants.ExtendedCost[2319] =
+    "Gauntlets of the Ancient Shadowmoon (id=34350), Sunmote (id=34664)";
+  app.modalConstants.ExtendedCost[2320] =
+    "Bracers of the Forgotten Conqueror (id=34848)";
+  app.modalConstants.ExtendedCost[2321] =
+    "Bracers of the Forgotten Vanquisher (id=34852)";
+  app.modalConstants.ExtendedCost[2322] =
+    "Belt of the Forgotten Protector (id=34854)";
+  app.modalConstants.ExtendedCost[2323] =
+    "Bracers of the Forgotten Protector (id=34851)";
+  app.modalConstants.ExtendedCost[2324] =
+    "Belt of the Forgotten Conqueror (id=34853)";
+  app.modalConstants.ExtendedCost[2325] =
+    "Belt of the Forgotten Vanquisher (id=34855)";
+  app.modalConstants.ExtendedCost[2326] =
+    "Boots of the Forgotten Conqueror (id=34856)";
+  app.modalConstants.ExtendedCost[2327] =
+    "Boots of the Forgotten Vanquisher (id=34858)";
+  app.modalConstants.ExtendedCost[2328] =
+    "Boots of the Forgotten Protector (id=34857)";
   app.modalConstants.ExtendedCost[2329] = "150 Badge of Justice (id=29434)";
   app.modalConstants.ExtendedCost[2330] = "125 Badge of Justice (id=29434)";
   app.modalConstants.ExtendedCost[2331] = "105 Badge of Justice (id=29434)";
@@ -2851,13 +3073,18 @@
   app.modalConstants.ExtendedCost[2397] = "200 Brewfest Prize Token (id=37829)";
   app.modalConstants.ExtendedCost[2398] = "2 Brewfest Prize Token (id=37829)";
   app.modalConstants.ExtendedCost[2399] = "20 Brewfest Prize Token (id=37829)";
-  app.modalConstants.ExtendedCost[2400] = "17850 honor pts, 40 Eye of the Storm Mark of Honor (id=29024), 1700 arenarank";
-  app.modalConstants.ExtendedCost[2401] = "11794 honor pts, 20 Warsong Gulch Mark of Honor (id=20558), 1575 arenarank";
-  app.modalConstants.ExtendedCost[2402] = "15300 honor pts, 10 Alterac Valley Mark of Honor (id=20560), 1650 arenarank";
+  app.modalConstants.ExtendedCost[2400] =
+    "17850 honor pts, 40 Eye of the Storm Mark of Honor (id=29024), 1700 arenarank";
+  app.modalConstants.ExtendedCost[2401] =
+    "11794 honor pts, 20 Warsong Gulch Mark of Honor (id=20558), 1575 arenarank";
+  app.modalConstants.ExtendedCost[2402] =
+    "15300 honor pts, 10 Alterac Valley Mark of Honor (id=20560), 1650 arenarank";
   app.modalConstants.ExtendedCost[2403] = "40000 honor pts";
   app.modalConstants.ExtendedCost[2404] = "8000 honor pts";
-  app.modalConstants.ExtendedCost[2405] = "9199 honor pts, 20 Warsong Gulch Mark of Honor (id=20558)";
-  app.modalConstants.ExtendedCost[2406] = "13923 honor pts, 40 Eye of the Storm Mark of Honor (id=29024)";
+  app.modalConstants.ExtendedCost[2405] =
+    "9199 honor pts, 20 Warsong Gulch Mark of Honor (id=20558)";
+  app.modalConstants.ExtendedCost[2406] =
+    "13923 honor pts, 40 Eye of the Storm Mark of Honor (id=29024)";
   app.modalConstants.ExtendedCost[2407] = "500 Ethereal Credit (id=38186)";
   app.modalConstants.ExtendedCost[2408] = "100 Ethereal Credit (id=38186)";
   app.modalConstants.ExtendedCost[2409] = "250 Ethereal Credit (id=38186)";
@@ -2876,18 +3103,27 @@
   app.modalConstants.ExtendedCost[2422] = "50 Venture Coin (id=37836)";
   app.modalConstants.ExtendedCost[2423] = "800 arena pts";
   app.modalConstants.ExtendedCost[2424] = "5 Brewfest Prize Token (id=37829)";
-  app.modalConstants.ExtendedCost[2425] = "9500 honor pts, 10 Alterac Valley Mark of Honor (id=20560)";
+  app.modalConstants.ExtendedCost[2425] =
+    "9500 honor pts, 10 Alterac Valley Mark of Honor (id=20560)";
   app.modalConstants.ExtendedCost[2426] = "1250 honor pts";
-  app.modalConstants.ExtendedCost[2427] = "35000 honor pts, 40 Alterac Valley Mark of Honor (id=20560)";
-  app.modalConstants.ExtendedCost[2428] = "20000 honor pts, 20 Arathi Basin Mark of Honor (id=20559)";
-  app.modalConstants.ExtendedCost[2429] = "3 Dalaran Jewelcrafter's Token (id=41596)";
-  app.modalConstants.ExtendedCost[2430] = "5 Dalaran Jewelcrafter's Token (id=41596)";
+  app.modalConstants.ExtendedCost[2427] =
+    "35000 honor pts, 40 Alterac Valley Mark of Honor (id=20560)";
+  app.modalConstants.ExtendedCost[2428] =
+    "20000 honor pts, 20 Arathi Basin Mark of Honor (id=20559)";
+  app.modalConstants.ExtendedCost[2429] =
+    "3 Dalaran Jewelcrafter's Token (id=41596)";
+  app.modalConstants.ExtendedCost[2430] =
+    "5 Dalaran Jewelcrafter's Token (id=41596)";
   app.modalConstants.ExtendedCost[2431] = "250 arena pts";
   app.modalConstants.ExtendedCost[2432] = "400 arena pts";
-  app.modalConstants.ExtendedCost[2433] = "Dalaran Jewelcrafter's Token (id=41596)";
-  app.modalConstants.ExtendedCost[2434] = "2 Dalaran Jewelcrafter's Token (id=41596)";
-  app.modalConstants.ExtendedCost[2435] = "Alterac Valley Mark of Honor (id=20560), Arathi Basin Mark of Honor (id=20559), Eye of the Storm Mark of Honor (id=29024), Warsong Gulch Mark of Honor (id=20558), Strand of the Ancients Mark of Honor (id=42425)";
-  app.modalConstants.ExtendedCost[2436] = "4 Dalaran Jewelcrafter's Token (id=41596)";
+  app.modalConstants.ExtendedCost[2433] =
+    "Dalaran Jewelcrafter's Token (id=41596)";
+  app.modalConstants.ExtendedCost[2434] =
+    "2 Dalaran Jewelcrafter's Token (id=41596)";
+  app.modalConstants.ExtendedCost[2435] =
+    "Alterac Valley Mark of Honor (id=20560), Arathi Basin Mark of Honor (id=20559), Eye of the Storm Mark of Honor (id=29024), Warsong Gulch Mark of Honor (id=20558), Strand of the Ancients Mark of Honor (id=42425)";
+  app.modalConstants.ExtendedCost[2436] =
+    "4 Dalaran Jewelcrafter's Token (id=41596)";
   app.modalConstants.ExtendedCost[2437] = "100 Oshu'gun Relic (id=25634)";
   app.modalConstants.ExtendedCost[2438] = "24000 honor pts, 700 arena pts";
   app.modalConstants.ExtendedCost[2439] = "20000 honor pts, 575 arena pts";
@@ -2900,17 +3136,28 @@
   app.modalConstants.ExtendedCost[2446] = "24800 honor pts";
   app.modalConstants.ExtendedCost[2447] = "15800 honor pts";
   app.modalConstants.ExtendedCost[2448] = "19000 honor pts";
-  app.modalConstants.ExtendedCost[2449] = "24000 honor pts, 1400 arena pts, 1705 arenarank";
-  app.modalConstants.ExtendedCost[2450] = "20000 honor pts, 1150 arena pts, 1705 arenarank";
-  app.modalConstants.ExtendedCost[2451] = "12000 honor pts, 700 arena pts, 1675 arenarank";
-  app.modalConstants.ExtendedCost[2452] = "7200 honor pts, 400 arena pts, 1615 arenarank";
-  app.modalConstants.ExtendedCost[2453] = "12000 honor pts, 700 arena pts, 1735 arenarank";
-  app.modalConstants.ExtendedCost[2454] = "12000 honor pts, 700 arena pts, 1645 arenarank";
-  app.modalConstants.ExtendedCost[2455] = "16800 honor pts, 950 arena pts, 1705 arenarank";
-  app.modalConstants.ExtendedCost[2456] = "7200 honor pts, 400 arena pts, 1705 arenarank";
-  app.modalConstants.ExtendedCost[2457] = "6400 honor pts, 350 arena pts, 1705 arenarank";
-  app.modalConstants.ExtendedCost[2458] = "12000 honor pts, 700 arena pts, 1705 arenarank";
-  app.modalConstants.ExtendedCost[2459] = "9600 honor pts, 550 arena pts, 1775 arenarank";
+  app.modalConstants.ExtendedCost[2449] =
+    "24000 honor pts, 1400 arena pts, 1705 arenarank";
+  app.modalConstants.ExtendedCost[2450] =
+    "20000 honor pts, 1150 arena pts, 1705 arenarank";
+  app.modalConstants.ExtendedCost[2451] =
+    "12000 honor pts, 700 arena pts, 1675 arenarank";
+  app.modalConstants.ExtendedCost[2452] =
+    "7200 honor pts, 400 arena pts, 1615 arenarank";
+  app.modalConstants.ExtendedCost[2453] =
+    "12000 honor pts, 700 arena pts, 1735 arenarank";
+  app.modalConstants.ExtendedCost[2454] =
+    "12000 honor pts, 700 arena pts, 1645 arenarank";
+  app.modalConstants.ExtendedCost[2455] =
+    "16800 honor pts, 950 arena pts, 1705 arenarank";
+  app.modalConstants.ExtendedCost[2456] =
+    "7200 honor pts, 400 arena pts, 1705 arenarank";
+  app.modalConstants.ExtendedCost[2457] =
+    "6400 honor pts, 350 arena pts, 1705 arenarank";
+  app.modalConstants.ExtendedCost[2458] =
+    "12000 honor pts, 700 arena pts, 1705 arenarank";
+  app.modalConstants.ExtendedCost[2459] =
+    "9600 honor pts, 550 arena pts, 1775 arenarank";
   app.modalConstants.ExtendedCost[2460] = "4500 arena pts, 1930 arenarank";
   app.modalConstants.ExtendedCost[2461] = "3750 arena pts, 1930arenarank";
   app.modalConstants.ExtendedCost[2462] = "2250 arena pts, 1870 arenarank";
@@ -2936,39 +3183,69 @@
   app.modalConstants.ExtendedCost[2482] = "24 Stone Keeper's Shard (id=43228)";
   app.modalConstants.ExtendedCost[2483] = "12 honor pts";
   app.modalConstants.ExtendedCost[2484] = "10 Emblem of Heroism (id=40752)";
-  app.modalConstants.ExtendedCost[2485] = "Chestguard of the Lost Vanquisher (id=40612)";
-  app.modalConstants.ExtendedCost[2486] = "Gloves of the Lost Vanquisher (id=40615)";
-  app.modalConstants.ExtendedCost[2487] = "Helm of the Lost Vanquisher (id=40618)";
-  app.modalConstants.ExtendedCost[2488] = "Leggings of the Lost Vanquisher (id=40621)";
-  app.modalConstants.ExtendedCost[2489] = "Spaulders of the Lost Vanquisher (id=40624)";
-  app.modalConstants.ExtendedCost[2490] = "Helm of the Lost Conqueror (id=40616)";
-  app.modalConstants.ExtendedCost[2491] = "Chestguard of the Lost Conqueror (id=40610)";
-  app.modalConstants.ExtendedCost[2492] = "Leggings of the Lost Conqueror (id=40619)";
-  app.modalConstants.ExtendedCost[2493] = "Spaulders of the Lost Conqueror (id=40622)";
-  app.modalConstants.ExtendedCost[2494] = "Gloves of the Lost Conqueror (id=40613)";
-  app.modalConstants.ExtendedCost[2495] = "Chestguard of the Lost Protector (id=40611)";
-  app.modalConstants.ExtendedCost[2496] = "Gloves of the Lost Protector (id=40614)";
-  app.modalConstants.ExtendedCost[2497] = "Helm of the Lost Protector (id=40617)";
-  app.modalConstants.ExtendedCost[2498] = "Leggings of the Lost Protector (id=40620)";
-  app.modalConstants.ExtendedCost[2499] = "Spaulders of the Lost Protector (id=40623)";
+  app.modalConstants.ExtendedCost[2485] =
+    "Chestguard of the Lost Vanquisher (id=40612)";
+  app.modalConstants.ExtendedCost[2486] =
+    "Gloves of the Lost Vanquisher (id=40615)";
+  app.modalConstants.ExtendedCost[2487] =
+    "Helm of the Lost Vanquisher (id=40618)";
+  app.modalConstants.ExtendedCost[2488] =
+    "Leggings of the Lost Vanquisher (id=40621)";
+  app.modalConstants.ExtendedCost[2489] =
+    "Spaulders of the Lost Vanquisher (id=40624)";
+  app.modalConstants.ExtendedCost[2490] =
+    "Helm of the Lost Conqueror (id=40616)";
+  app.modalConstants.ExtendedCost[2491] =
+    "Chestguard of the Lost Conqueror (id=40610)";
+  app.modalConstants.ExtendedCost[2492] =
+    "Leggings of the Lost Conqueror (id=40619)";
+  app.modalConstants.ExtendedCost[2493] =
+    "Spaulders of the Lost Conqueror (id=40622)";
+  app.modalConstants.ExtendedCost[2494] =
+    "Gloves of the Lost Conqueror (id=40613)";
+  app.modalConstants.ExtendedCost[2495] =
+    "Chestguard of the Lost Protector (id=40611)";
+  app.modalConstants.ExtendedCost[2496] =
+    "Gloves of the Lost Protector (id=40614)";
+  app.modalConstants.ExtendedCost[2497] =
+    "Helm of the Lost Protector (id=40617)";
+  app.modalConstants.ExtendedCost[2498] =
+    "Leggings of the Lost Protector (id=40620)";
+  app.modalConstants.ExtendedCost[2499] =
+    "Spaulders of the Lost Protector (id=40623)";
   app.modalConstants.ExtendedCost[2500] = "10 Relic of Ulduar (id=42780)";
   app.modalConstants.ExtendedCost[2501] = "2 Relic of Ulduar (id=42780)";
   app.modalConstants.ExtendedCost[2502] = "250 Relic of Ulduar (id=42780)";
-  app.modalConstants.ExtendedCost[2503] = "Gauntlets of the Lost Conqueror (id=40628)";
-  app.modalConstants.ExtendedCost[2504] = "Breastplate of the Lost Conqueror (id=40625)";
-  app.modalConstants.ExtendedCost[2505] = "Crown of the Lost Conqueror (id=40631)";
-  app.modalConstants.ExtendedCost[2506] = "Legplates of the Lost Conqueror (id=40634)";
-  app.modalConstants.ExtendedCost[2507] = "Mantle of the Lost Conqueror (id=40637)";
-  app.modalConstants.ExtendedCost[2508] = "Breastplate of the Lost Protector (id=40626)";
-  app.modalConstants.ExtendedCost[2509] = "Crown of the Lost Protector (id=40632)";
-  app.modalConstants.ExtendedCost[2510] = "Gauntlets of the Lost Protector (id=40629)";
-  app.modalConstants.ExtendedCost[2511] = "Legplates of the Lost Protector (id=40635)";
-  app.modalConstants.ExtendedCost[2512] = "Mantle of the Lost Protector (id=40638)";
-  app.modalConstants.ExtendedCost[2513] = "Breastplate of the Lost Vanquisher (id=40627)";
-  app.modalConstants.ExtendedCost[2514] = "Crown of the Lost Vanquisher (id=40633)";
-  app.modalConstants.ExtendedCost[2515] = "Gauntlets of the Lost Vanquisher (id=40630)";
-  app.modalConstants.ExtendedCost[2516] = "Legplates of the Lost Vanquisher (id=40636)";
-  app.modalConstants.ExtendedCost[2517] = "Mantle of the Lost Vanquisher (id=40639)";
+  app.modalConstants.ExtendedCost[2503] =
+    "Gauntlets of the Lost Conqueror (id=40628)";
+  app.modalConstants.ExtendedCost[2504] =
+    "Breastplate of the Lost Conqueror (id=40625)";
+  app.modalConstants.ExtendedCost[2505] =
+    "Crown of the Lost Conqueror (id=40631)";
+  app.modalConstants.ExtendedCost[2506] =
+    "Legplates of the Lost Conqueror (id=40634)";
+  app.modalConstants.ExtendedCost[2507] =
+    "Mantle of the Lost Conqueror (id=40637)";
+  app.modalConstants.ExtendedCost[2508] =
+    "Breastplate of the Lost Protector (id=40626)";
+  app.modalConstants.ExtendedCost[2509] =
+    "Crown of the Lost Protector (id=40632)";
+  app.modalConstants.ExtendedCost[2510] =
+    "Gauntlets of the Lost Protector (id=40629)";
+  app.modalConstants.ExtendedCost[2511] =
+    "Legplates of the Lost Protector (id=40635)";
+  app.modalConstants.ExtendedCost[2512] =
+    "Mantle of the Lost Protector (id=40638)";
+  app.modalConstants.ExtendedCost[2513] =
+    "Breastplate of the Lost Vanquisher (id=40627)";
+  app.modalConstants.ExtendedCost[2514] =
+    "Crown of the Lost Vanquisher (id=40633)";
+  app.modalConstants.ExtendedCost[2515] =
+    "Gauntlets of the Lost Vanquisher (id=40630)";
+  app.modalConstants.ExtendedCost[2516] =
+    "Legplates of the Lost Vanquisher (id=40636)";
+  app.modalConstants.ExtendedCost[2517] =
+    "Mantle of the Lost Vanquisher (id=40639)";
   app.modalConstants.ExtendedCost[2518] = "15 Necrotic Rune (id=22484)";
   app.modalConstants.ExtendedCost[2519] = "20 Necrotic Rune (id=22484)";
   app.modalConstants.ExtendedCost[2520] = "8 Necrotic Rune (id=22484)";
@@ -3009,7 +3286,8 @@
   app.modalConstants.ExtendedCost[2555] = "3 Heavy Borean Leather (id=38425)";
   app.modalConstants.ExtendedCost[2556] = "2 Arctic Fur (id=44128)";
   app.modalConstants.ExtendedCost[2557] = "2500 honor pts";
-  app.modalConstants.ExtendedCost[2558] = "6 Dalaran Jewelcrafter's Token (id=41596)";
+  app.modalConstants.ExtendedCost[2558] =
+    "6 Dalaran Jewelcrafter's Token (id=41596)";
   app.modalConstants.ExtendedCost[2559] = "49600 honor pts";
   app.modalConstants.ExtendedCost[2560] = "31600 honor pts";
   app.modalConstants.ExtendedCost[2561] = "38000 honor pts";
@@ -3025,12 +3303,17 @@
   app.modalConstants.ExtendedCost[2571] = "10 Noblegarden Chocolate (id=44791)";
   app.modalConstants.ExtendedCost[2572] = "25 Noblegarden Chocolate (id=44791)";
   app.modalConstants.ExtendedCost[2573] = "50 Noblegarden Chocolate (id=44791)";
-  app.modalConstants.ExtendedCost[2574] = "100 Noblegarden Chocolate (id=44791)";
+  app.modalConstants.ExtendedCost[2574] =
+    "100 Noblegarden Chocolate (id=44791)";
   app.modalConstants.ExtendedCost[2575] = "5 Noblegarden Chocolate (id=44791)";
-  app.modalConstants.ExtendedCost[2576] = "9 Wintergrasp Mark of Honor (id=43589)";
-  app.modalConstants.ExtendedCost[2577] = "15 Wintergrasp Mark of Honor (id=43589)";
-  app.modalConstants.ExtendedCost[2578] = "25 Wintergrasp Mark of Honor (id=43589)";
-  app.modalConstants.ExtendedCost[2579] = "40 Wintergrasp Mark of Honor (id=43589)";
+  app.modalConstants.ExtendedCost[2576] =
+    "9 Wintergrasp Mark of Honor (id=43589)";
+  app.modalConstants.ExtendedCost[2577] =
+    "15 Wintergrasp Mark of Honor (id=43589)";
+  app.modalConstants.ExtendedCost[2578] =
+    "25 Wintergrasp Mark of Honor (id=43589)";
+  app.modalConstants.ExtendedCost[2579] =
+    "40 Wintergrasp Mark of Honor (id=43589)";
   app.modalConstants.ExtendedCost[2580] = "Coin of Ancestry (id=21100)";
   app.modalConstants.ExtendedCost[2581] = "5 Coin of Ancestry (id=21100)";
   app.modalConstants.ExtendedCost[2582] = "Ink of the Sea (id=43126)";
@@ -3041,7 +3324,8 @@
   app.modalConstants.ExtendedCost[2587] = "10 Winterfin Clam (id=34597)";
   app.modalConstants.ExtendedCost[2588] = "10000 honor pts";
   app.modalConstants.ExtendedCost[2589] = "Emblem of Valor (id=40753)";
-  app.modalConstants.ExtendedCost[2590] = "100 honor pts, 200 arena pts, 2 Emblem of Heroism (id=40752), 2 Emblem of Valor (id=40753), 2 Stone Keeper's Shard (id=43228)";
+  app.modalConstants.ExtendedCost[2590] =
+    "100 honor pts, 200 arena pts, 2 Emblem of Heroism (id=40752), 2 Emblem of Valor (id=40753), 2 Stone Keeper's Shard (id=43228)";
   app.modalConstants.ExtendedCost[2591] = "Band of the Kirin Tor (id=40586)";
   app.modalConstants.ExtendedCost[2592] = "Band of the Kirin Tor (id=40586)";
   app.modalConstants.ExtendedCost[2593] = "Loop of the Kirin Tor (id=44934)";
@@ -3059,12 +3343,18 @@
   app.modalConstants.ExtendedCost[2605] = "30400 honor pts";
   app.modalConstants.ExtendedCost[2606] = "19 Emblem of Conquest (id=45624)";
   app.modalConstants.ExtendedCost[2607] = "28 Emblem of Conquest (id=45624)";
-  app.modalConstants.ExtendedCost[2608] = "6400 honor pts, 350 arena pts, 700 arenarank";
-  app.modalConstants.ExtendedCost[2609] = "7200 honor pts, 400 arena pts, 800 arenarank";
-  app.modalConstants.ExtendedCost[2610] = "12000 honor pts, 700 arena pts, 900 arenarank";
-  app.modalConstants.ExtendedCost[2611] = "12000 honor pts, 700 arena pts, 1000 arenarank";
-  app.modalConstants.ExtendedCost[2612] = "12000 honor pts, 700 arena pts, 1100 arenarank";
-  app.modalConstants.ExtendedCost[2613] = "9600 honor pts, 550 arena pts, 1350 arenarank";
+  app.modalConstants.ExtendedCost[2608] =
+    "6400 honor pts, 350 arena pts, 700 arenarank";
+  app.modalConstants.ExtendedCost[2609] =
+    "7200 honor pts, 400 arena pts, 800 arenarank";
+  app.modalConstants.ExtendedCost[2610] =
+    "12000 honor pts, 700 arena pts, 900 arenarank";
+  app.modalConstants.ExtendedCost[2611] =
+    "12000 honor pts, 700 arena pts, 1000 arenarank";
+  app.modalConstants.ExtendedCost[2612] =
+    "12000 honor pts, 700 arena pts, 1100 arenarank";
+  app.modalConstants.ExtendedCost[2613] =
+    "9600 honor pts, 550 arena pts, 1350 arenarank";
   app.modalConstants.ExtendedCost[2614] = "39400 honor pts, 1400 arenarank";
   app.modalConstants.ExtendedCost[2615] = "62000 honor pts, 1450 arenarank";
   app.modalConstants.ExtendedCost[2616] = "62000 honor pts, 1500 arenarank";
@@ -3074,10 +3364,14 @@
   app.modalConstants.ExtendedCost[2620] = "58 Emblem of Conquest (id=45624)";
   app.modalConstants.ExtendedCost[2621] = "1300 arena pts, 1600 arenarank";
   app.modalConstants.ExtendedCost[2622] = "2150 arena pts, 1750 arenarank";
-  app.modalConstants.ExtendedCost[2623] = "50000 honor pts, 1400 arena pts, 1850 arenarank";
-  app.modalConstants.ExtendedCost[2624] = "35000 honor pts, 1200 arena pts, 1850 arenarank";
-  app.modalConstants.ExtendedCost[2625] = "35000 honor pts, 1200 arena pts, 1850 arenarank";
-  app.modalConstants.ExtendedCost[2626] = "15000 honor pts, 1100 arena pts, 1850 arenarank";
+  app.modalConstants.ExtendedCost[2623] =
+    "50000 honor pts, 1400 arena pts, 1850 arenarank";
+  app.modalConstants.ExtendedCost[2624] =
+    "35000 honor pts, 1200 arena pts, 1850 arenarank";
+  app.modalConstants.ExtendedCost[2625] =
+    "35000 honor pts, 1200 arena pts, 1850 arenarank";
+  app.modalConstants.ExtendedCost[2626] =
+    "15000 honor pts, 1100 arena pts, 1850 arenarank";
   app.modalConstants.ExtendedCost[2627] = "1066 arena pts, 1850 arenarank";
   app.modalConstants.ExtendedCost[2628] = "1950 arena pts, 1850 arenarank";
   app.modalConstants.ExtendedCost[2629] = "2150 arena pts, 1900 arenarank";
@@ -3091,37 +3385,68 @@
   app.modalConstants.ExtendedCost[2637] = "Emblem of Conquest (id=45624)";
   app.modalConstants.ExtendedCost[2638] = "15 Emblem of Valor (id=40753)";
   app.modalConstants.ExtendedCost[2639] = "Champion's Writ (id=46114)";
-  app.modalConstants.ExtendedCost[2640] = "Gloves of the Wayward Conqueror (id=45644)";
-  app.modalConstants.ExtendedCost[2641] = "Gauntlets of the Wayward Conqueror (id=45641)";
-  app.modalConstants.ExtendedCost[2642] = "Spaulders of the Wayward Conqueror (id=45659)";
-  app.modalConstants.ExtendedCost[2643] = "Mantle of the Wayward Conqueror (id=45656)";
-  app.modalConstants.ExtendedCost[2644] = "Leggings of the Wayward Conqueror (id=45650)";
-  app.modalConstants.ExtendedCost[2645] = "Legplates of the Wayward Conqueror (id=45653)";
-  app.modalConstants.ExtendedCost[2646] = "Chestguard of the Wayward Conqueror (id=45635)";
-  app.modalConstants.ExtendedCost[2647] = "Breastplate of the Wayward Conqueror (id=45632)";
-  app.modalConstants.ExtendedCost[2648] = "Helm of the Wayward Conqueror (id=45647)";
-  app.modalConstants.ExtendedCost[2649] = "Crown of the Wayward Conqueror (id=45638)";
-  app.modalConstants.ExtendedCost[2650] = "Gloves of the Wayward Protector (id=45645)";
-  app.modalConstants.ExtendedCost[2651] = "Gauntlets of the Wayward Protector (id=45642)";
-  app.modalConstants.ExtendedCost[2652] = "Spaulders of the Wayward Protector (id=45660)";
-  app.modalConstants.ExtendedCost[2653] = "Mantle of the Wayward Protector (id=45657)";
-  app.modalConstants.ExtendedCost[2654] = "Leggings of the Wayward Protector (id=45651)";
-  app.modalConstants.ExtendedCost[2655] = "Legplates of the Wayward Protector (id=45654)";
-  app.modalConstants.ExtendedCost[2656] = "Chestguard of the Wayward Protector (id=45636)";
-  app.modalConstants.ExtendedCost[2657] = "Breastplate of the Wayward Protector (id=45633)";
-  app.modalConstants.ExtendedCost[2658] = "Helm of the Wayward Protector (id=45648)";
-  app.modalConstants.ExtendedCost[2659] = "Crown of the Wayward Protector (id=45639)";
-  app.modalConstants.ExtendedCost[2660] = "Gloves of the Wayward Vanquisher (id=45646)";
-  app.modalConstants.ExtendedCost[2661] = "Gauntlets of the Wayward Vanquisher (id=45643)";
-  app.modalConstants.ExtendedCost[2662] = "Spaulders of the Wayward Vanquisher (id=45661)";
-  app.modalConstants.ExtendedCost[2663] = "Mantle of the Wayward Vanquisher (id=45658)";
-  app.modalConstants.ExtendedCost[2664] = "Leggings of the Wayward Vanquisher (id=45652)";
-  app.modalConstants.ExtendedCost[2665] = "Legplates of the Wayward Vanquisher (id=45655)";
-  app.modalConstants.ExtendedCost[2666] = "Chestguard of the Wayward Vanquisher (id=45637)";
-  app.modalConstants.ExtendedCost[2667] = "Breastplate of the Wayward Vanquisher (id=45634)";
-  app.modalConstants.ExtendedCost[2668] = "Helm of the Wayward Vanquisher (id=45649)";
-  app.modalConstants.ExtendedCost[2669] = "Crown of the Wayward Vanquisher (id=45640)";
-  app.modalConstants.ExtendedCost[2670] = "100 Dalaran Cooking Award (id=43016)";
+  app.modalConstants.ExtendedCost[2640] =
+    "Gloves of the Wayward Conqueror (id=45644)";
+  app.modalConstants.ExtendedCost[2641] =
+    "Gauntlets of the Wayward Conqueror (id=45641)";
+  app.modalConstants.ExtendedCost[2642] =
+    "Spaulders of the Wayward Conqueror (id=45659)";
+  app.modalConstants.ExtendedCost[2643] =
+    "Mantle of the Wayward Conqueror (id=45656)";
+  app.modalConstants.ExtendedCost[2644] =
+    "Leggings of the Wayward Conqueror (id=45650)";
+  app.modalConstants.ExtendedCost[2645] =
+    "Legplates of the Wayward Conqueror (id=45653)";
+  app.modalConstants.ExtendedCost[2646] =
+    "Chestguard of the Wayward Conqueror (id=45635)";
+  app.modalConstants.ExtendedCost[2647] =
+    "Breastplate of the Wayward Conqueror (id=45632)";
+  app.modalConstants.ExtendedCost[2648] =
+    "Helm of the Wayward Conqueror (id=45647)";
+  app.modalConstants.ExtendedCost[2649] =
+    "Crown of the Wayward Conqueror (id=45638)";
+  app.modalConstants.ExtendedCost[2650] =
+    "Gloves of the Wayward Protector (id=45645)";
+  app.modalConstants.ExtendedCost[2651] =
+    "Gauntlets of the Wayward Protector (id=45642)";
+  app.modalConstants.ExtendedCost[2652] =
+    "Spaulders of the Wayward Protector (id=45660)";
+  app.modalConstants.ExtendedCost[2653] =
+    "Mantle of the Wayward Protector (id=45657)";
+  app.modalConstants.ExtendedCost[2654] =
+    "Leggings of the Wayward Protector (id=45651)";
+  app.modalConstants.ExtendedCost[2655] =
+    "Legplates of the Wayward Protector (id=45654)";
+  app.modalConstants.ExtendedCost[2656] =
+    "Chestguard of the Wayward Protector (id=45636)";
+  app.modalConstants.ExtendedCost[2657] =
+    "Breastplate of the Wayward Protector (id=45633)";
+  app.modalConstants.ExtendedCost[2658] =
+    "Helm of the Wayward Protector (id=45648)";
+  app.modalConstants.ExtendedCost[2659] =
+    "Crown of the Wayward Protector (id=45639)";
+  app.modalConstants.ExtendedCost[2660] =
+    "Gloves of the Wayward Vanquisher (id=45646)";
+  app.modalConstants.ExtendedCost[2661] =
+    "Gauntlets of the Wayward Vanquisher (id=45643)";
+  app.modalConstants.ExtendedCost[2662] =
+    "Spaulders of the Wayward Vanquisher (id=45661)";
+  app.modalConstants.ExtendedCost[2663] =
+    "Mantle of the Wayward Vanquisher (id=45658)";
+  app.modalConstants.ExtendedCost[2664] =
+    "Leggings of the Wayward Vanquisher (id=45652)";
+  app.modalConstants.ExtendedCost[2665] =
+    "Legplates of the Wayward Vanquisher (id=45655)";
+  app.modalConstants.ExtendedCost[2666] =
+    "Chestguard of the Wayward Vanquisher (id=45637)";
+  app.modalConstants.ExtendedCost[2667] =
+    "Breastplate of the Wayward Vanquisher (id=45634)";
+  app.modalConstants.ExtendedCost[2668] =
+    "Helm of the Wayward Vanquisher (id=45649)";
+  app.modalConstants.ExtendedCost[2669] =
+    "Crown of the Wayward Vanquisher (id=45640)";
+  app.modalConstants.ExtendedCost[2670] =
+    "100 Dalaran Cooking Award (id=43016)";
   app.modalConstants.ExtendedCost[2671] = "5 Champion's Seal (id=44990)";
   app.modalConstants.ExtendedCost[2673] = "60 Champion's Seal (id=44990)";
   app.modalConstants.ExtendedCost[2674] = "95 Champion's Seal (id=44990)";
@@ -3129,12 +3454,17 @@
   app.modalConstants.ExtendedCost[2676] = "2000 arena pts, 1850 arenarank";
   app.modalConstants.ExtendedCost[2677] = "2000 arena pts, 1850 arenarank(1)";
   app.modalConstants.ExtendedCost[2678] = "2000 arena pts, 1850 arenarank(2)";
-  app.modalConstants.ExtendedCost[2679] = "Regalia of the Grand Conqueror  (id=47557)";
-  app.modalConstants.ExtendedCost[2680] = "Regalia of the Grand Protector (id=47558)";
-  app.modalConstants.ExtendedCost[2681] = "Regalia of the Grand Vanquisher (id=47559)";
+  app.modalConstants.ExtendedCost[2679] =
+    "Regalia of the Grand Conqueror  (id=47557)";
+  app.modalConstants.ExtendedCost[2680] =
+    "Regalia of the Grand Protector (id=47558)";
+  app.modalConstants.ExtendedCost[2681] =
+    "Regalia of the Grand Vanquisher (id=47559)";
   app.modalConstants.ExtendedCost[2682] = "25 Emblem of Triumph (id=47241)";
-  app.modalConstants.ExtendedCost[2683] = "75 Emblem of Triumph (id=47241), Trophy of the Crusade (id=47242)";
-  app.modalConstants.ExtendedCost[2684] = "45 Emblem of Triumph (id=47241), Trophy of the Crusade (id=47242)";
+  app.modalConstants.ExtendedCost[2683] =
+    "75 Emblem of Triumph (id=47241), Trophy of the Crusade (id=47242)";
+  app.modalConstants.ExtendedCost[2684] =
+    "45 Emblem of Triumph (id=47241), Trophy of the Crusade (id=47242)";
   app.modalConstants.ExtendedCost[2685] = "35 Emblem of Triumph (id=47241)";
   app.modalConstants.ExtendedCost[2686] = "50 Emblem of Triumph (id=47241)";
   app.modalConstants.ExtendedCost[2687] = "30 Emblem of Triumph (id=47241)";
@@ -3143,19 +3473,26 @@
   app.modalConstants.ExtendedCost[2690] = "2150 arena pts, 1900 arenarank";
   app.modalConstants.ExtendedCost[2691] = "2150 arena pts, 1550 arenarank";
   app.modalConstants.ExtendedCost[2692] = "1750 arena pts, 2000 arenarank(1)";
-  app.modalConstants.ExtendedCost[2693] = "50000 honor pts, 1400 arena pts, 1800 arenarank";
+  app.modalConstants.ExtendedCost[2693] =
+    "50000 honor pts, 1400 arena pts, 1800 arenarank";
   app.modalConstants.ExtendedCost[2694] = "4250 arena pts, 2200 arenarank(1)";
-  app.modalConstants.ExtendedCost[2695] = "35000 honor pts, 1200 arena pts, 1800 arenarank";
+  app.modalConstants.ExtendedCost[2695] =
+    "35000 honor pts, 1200 arena pts, 1800 arenarank";
   app.modalConstants.ExtendedCost[2696] = "3585 arena pts, 2200 arenarank(1)";
   app.modalConstants.ExtendedCost[2697] = "3000 arena pts, 2200 arenarank(1)";
-  app.modalConstants.ExtendedCost[2698] = "15000 honor pts, 1100 arena pts, 1800 arenarank";
+  app.modalConstants.ExtendedCost[2698] =
+    "15000 honor pts, 1100 arena pts, 1800 arenarank";
   app.modalConstants.ExtendedCost[2699] = "1245 arena pts, 2200 arenarank(1)";
   app.modalConstants.ExtendedCost[2700] = "1150 arena pts, 1800 arenarank";
   app.modalConstants.ExtendedCost[2701] = "300 arena pts, 1800 arenarank";
-  app.modalConstants.ExtendedCost[2702] = "Inscribed Band of the Kirin Tor (id=45688)";
-  app.modalConstants.ExtendedCost[2703] = "Inscribed Loop of the Kirin Tor (id=45689)";
-  app.modalConstants.ExtendedCost[2704] = "Inscribed Ring of the Kirin Tor (id=45690)";
-  app.modalConstants.ExtendedCost[2705] = "Inscribed Signet of the Kirin Tor (id=45691)";
+  app.modalConstants.ExtendedCost[2702] =
+    "Inscribed Band of the Kirin Tor (id=45688)";
+  app.modalConstants.ExtendedCost[2703] =
+    "Inscribed Loop of the Kirin Tor (id=45689)";
+  app.modalConstants.ExtendedCost[2704] =
+    "Inscribed Ring of the Kirin Tor (id=45690)";
+  app.modalConstants.ExtendedCost[2705] =
+    "Inscribed Signet of the Kirin Tor (id=45691)";
   app.modalConstants.ExtendedCost[2706] = "20 Emblem of Heroism (id=40752)";
   app.modalConstants.ExtendedCost[2707] = "Emblem of Triumph (id=47241)";
   app.modalConstants.ExtendedCost[2708] = "75 Emblem of Triumph (id=47241)";
@@ -3185,218 +3522,418 @@
   app.modalConstants.ExtendedCost[2732] = "30 Love Token (id=49927)";
   app.modalConstants.ExtendedCost[2733] = "20 Love Token (id=49927)";
   app.modalConstants.ExtendedCost[2734] = "Emblem of Triumph (id=47241)";
-  app.modalConstants.ExtendedCost[2735] = "Etched Signet of the Kirin Tor (id=48957)";
-  app.modalConstants.ExtendedCost[2736] = "Etched Ring of the Kirin Tor (id=48956)";
-  app.modalConstants.ExtendedCost[2737] = "Etched Loop of the Kirin Tor (id=48955)";
-  app.modalConstants.ExtendedCost[2738] = "Etched Band of the Kirin Tor (id=48954)";
+  app.modalConstants.ExtendedCost[2735] =
+    "Etched Signet of the Kirin Tor (id=48957)";
+  app.modalConstants.ExtendedCost[2736] =
+    "Etched Ring of the Kirin Tor (id=48956)";
+  app.modalConstants.ExtendedCost[2737] =
+    "Etched Loop of the Kirin Tor (id=48955)";
+  app.modalConstants.ExtendedCost[2738] =
+    "Etched Band of the Kirin Tor (id=48954)";
   app.modalConstants.ExtendedCost[2739] = "30 Emblem of Frost (id=49426)";
   app.modalConstants.ExtendedCost[2740] = "60 Emblem of Frost (id=49426)";
   app.modalConstants.ExtendedCost[2741] = "50 Emblem of Frost (id=49426)";
   app.modalConstants.ExtendedCost[2742] = "95 Emblem of Frost (id=49426)";
   app.modalConstants.ExtendedCost[2743] = "Emblem of Frost (id=49426)";
   app.modalConstants.ExtendedCost[2744] = "23 Emblem of Frost (id=49426)";
-  app.modalConstants.ExtendedCost[2745] = "Vanquisher's Mark of Sanctification (id=52025), Bloodmage Shoulderpads (id=50279)";
-  app.modalConstants.ExtendedCost[2746] = "Vanquisher's Mark of Sanctification (id=52025), Bloodmage Robe (id=50278)";
-  app.modalConstants.ExtendedCost[2747] = "Vanquisher's Mark of Sanctification (id=52025), Bloodmage Leggings (id=50277)";
-  app.modalConstants.ExtendedCost[2748] = "Vanquisher's Mark of Sanctification (id=52025), Bloodmage Hood (id=50276)";
-  app.modalConstants.ExtendedCost[2749] = "Vanquisher's Mark of Sanctification (id=52025), Bloodmage Gloves (id=50275)";
-  app.modalConstants.ExtendedCost[2750] = "Vanquisher's Mark of Sanctification (id=52028), Sanctified Bloodmage Gloves (id=51159)";
-  app.modalConstants.ExtendedCost[2751] = "Vanquisher's Mark of Sanctification (id=52028), Sanctified Bloodmage Hood (id=51158)";
-  app.modalConstants.ExtendedCost[2752] = "Vanquisher's Mark of Sanctification (id=52028), Sanctified Bloodmage Leggings (id=51157)";
-  app.modalConstants.ExtendedCost[2753] = "Vanquisher's Mark of Sanctification (id=52028), Sanctified Bloodmage Robe (id=51156)";
-  app.modalConstants.ExtendedCost[2754] = "Vanquisher's Mark of Sanctification (id=52028), Sanctified Bloodmage Shoulderpads (id=51155)";
-  app.modalConstants.ExtendedCost[2755] = "Vanquisher's Mark of Sanctification (id=52025), Shadowblade Pauldrons (id=50105)";
-  app.modalConstants.ExtendedCost[2756] = "Vanquisher's Mark of Sanctification (id=52025), Shadowblade Legplates (id=50090)";
-  app.modalConstants.ExtendedCost[2757] = "Vanquisher's Mark of Sanctification (id=52025), Shadowblade Helmet (id=50089)";
-  app.modalConstants.ExtendedCost[2758] = "Vanquisher's Mark of Sanctification (id=52025), Shadowblade Gauntlets (id=50088)";
-  app.modalConstants.ExtendedCost[2759] = "Vanquisher's Mark of Sanctification (id=52025), Shadowblade Breastplate (id=50087)";
-  app.modalConstants.ExtendedCost[2760] = "Vanquisher's Mark of Sanctification (id=52028), Sanctified Shadowblade Breastplate (id=51189)";
-  app.modalConstants.ExtendedCost[2761] = "Vanquisher's Mark of Sanctification (id=52028), Sanctified Shadowblade Gauntlets (id=51188)";
-  app.modalConstants.ExtendedCost[2762] = "Vanquisher's Mark of Sanctification (id=52028), Sanctified Shadowblade Helmet (id=51187)";
-  app.modalConstants.ExtendedCost[2763] = "Vanquisher's Mark of Sanctification (id=52028), Sanctified Shadowblade Legplates (id=51186)";
-  app.modalConstants.ExtendedCost[2764] = "Vanquisher's Mark of Sanctification (id=52028), Sanctified Shadowblade Pauldrons (id=51185)";
-  app.modalConstants.ExtendedCost[2765] = "Vanquisher's Mark of Sanctification (id=52025), Lasherweave Pauldrons (id=50113)";
-  app.modalConstants.ExtendedCost[2766] = "Vanquisher's Mark of Sanctification (id=52025), Lasherweave Legplates (id=50109)";
-  app.modalConstants.ExtendedCost[2767] = "Vanquisher's Mark of Sanctification (id=52025), Lasherweave Helmet (id=50108)";
-  app.modalConstants.ExtendedCost[2768] = "Vanquisher's Mark of Sanctification (id=52025), Lasherweave Gauntlets (id=50107)";
-  app.modalConstants.ExtendedCost[2769] = "Vanquisher's Mark of Sanctification (id=52025), Lasherweave Robes (id=50106)";
-  app.modalConstants.ExtendedCost[2770] = "Vanquisher's Mark of Sanctification (id=52028), Sanctified Lasherweave Robes (id=51139)";
-  app.modalConstants.ExtendedCost[2771] = "Vanquisher's Mark of Sanctification (id=52028), Sanctified Lasherweave Gauntlets (id=51138)";
-  app.modalConstants.ExtendedCost[2772] = "Vanquisher's Mark of Sanctification (id=52028), Sanctified Lasherweave Helmet (id=51137)";
-  app.modalConstants.ExtendedCost[2773] = "Vanquisher's Mark of Sanctification (id=52028), Sanctified Lasherweave Legplates (id=51136)";
-  app.modalConstants.ExtendedCost[2774] = "Vanquisher's Mark of Sanctification (id=52028), Sanctified Lasherweave Pauldrons (id=51135)";
-  app.modalConstants.ExtendedCost[2775] = "Vanquisher's Mark of Sanctification (id=52025), Lasherweave Vestment (id=50823)";
-  app.modalConstants.ExtendedCost[2776] = "Vanquisher's Mark of Sanctification (id=52025), Lasherweave Trousers (id=50820)";
-  app.modalConstants.ExtendedCost[2777] = "Vanquisher's Mark of Sanctification (id=52025), Lasherweave Mantle (id=50819)";
-  app.modalConstants.ExtendedCost[2778] = "Vanquisher's Mark of Sanctification (id=52025), Lasherweave Gloves (id=50822)";
-  app.modalConstants.ExtendedCost[2779] = "Vanquisher's Mark of Sanctification (id=52025), Lasherweave Cover (id=50821)";
-  app.modalConstants.ExtendedCost[2780] = "Vanquisher's Mark of Sanctification (id=52028), Sanctified Lasherweave Cover (id=51149)";
-  app.modalConstants.ExtendedCost[2781] = "Vanquisher's Mark of Sanctification (id=52028), Sanctified Lasherweave Gloves (id=51148)";
-  app.modalConstants.ExtendedCost[2782] = "Vanquisher's Mark of Sanctification (id=52028), Sanctified Lasherweave Mantle (id=51147)";
-  app.modalConstants.ExtendedCost[2783] = "Vanquisher's Mark of Sanctification (id=52028), Sanctified Lasherweave Trousers (id=51146)";
-  app.modalConstants.ExtendedCost[2784] = "Vanquisher's Mark of Sanctification (id=52028), Sanctified Lasherweave Vestment (id=51145)";
-  app.modalConstants.ExtendedCost[2785] = "Vanquisher's Mark of Sanctification (id=52025), Lasherweave Shoulderpads (id=50824)";
-  app.modalConstants.ExtendedCost[2786] = "Vanquisher's Mark of Sanctification (id=52025), Lasherweave Raiment (id=50828)";
-  app.modalConstants.ExtendedCost[2787] = "Vanquisher's Mark of Sanctification (id=52025), Lasherweave Legguards (id=50825)";
-  app.modalConstants.ExtendedCost[2788] = "Vanquisher's Mark of Sanctification (id=52025), Lasherweave Headguard (id=50826)";
-  app.modalConstants.ExtendedCost[2789] = "Vanquisher's Mark of Sanctification (id=52025), Lasherweave Handgrips (id=50827)";
-  app.modalConstants.ExtendedCost[2790] = "Vanquisher's Mark of Sanctification (id=52028), Sanctified Lasherweave Handgrips (id=51144)";
-  app.modalConstants.ExtendedCost[2791] = "Vanquisher's Mark of Sanctification (id=52028), Sanctified Lasherweave Headguard (id=51143)";
-  app.modalConstants.ExtendedCost[2792] = "Vanquisher's Mark of Sanctification (id=52028), Sanctified Lasherweave Legguards (id=51142)";
-  app.modalConstants.ExtendedCost[2793] = "Vanquisher's Mark of Sanctification (id=52028), Sanctified Lasherweave Raiment (id=51141)";
-  app.modalConstants.ExtendedCost[2794] = "Vanquisher's Mark of Sanctification (id=52028), Sanctified Lasherweave Shoulderpads (id=51140)";
-  app.modalConstants.ExtendedCost[2795] = "Vanquisher's Mark of Sanctification (id=52025), Scourgelord Shoulderplates (id=50098)";
-  app.modalConstants.ExtendedCost[2796] = "Vanquisher's Mark of Sanctification (id=52025), Scourgelord Legplates (id=50097)";
-  app.modalConstants.ExtendedCost[2797] = "Vanquisher's Mark of Sanctification (id=52025), Scourgelord Helmet (id=50096)";
-  app.modalConstants.ExtendedCost[2798] = "Vanquisher's Mark of Sanctification (id=52025), Scourgelord Gauntlets (id=50095)";
-  app.modalConstants.ExtendedCost[2799] = "Vanquisher's Mark of Sanctification (id=52025), Scourgelord Battleplate (id=50094)";
-  app.modalConstants.ExtendedCost[2800] = "Vanquisher's Mark of Sanctification (id=52028), Sanctified Scourgelord Battleplate (id=51129)";
-  app.modalConstants.ExtendedCost[2801] = "Vanquisher's Mark of Sanctification (id=52028), Sanctified Scourgelord Gauntlets (id=51128)";
-  app.modalConstants.ExtendedCost[2802] = "Vanquisher's Mark of Sanctification (id=52028), Sanctified Scourgelord Helmet (id=51127)";
-  app.modalConstants.ExtendedCost[2803] = "Vanquisher's Mark of Sanctification (id=52028), Sanctified Scourgelord Legplates (id=51126)";
-  app.modalConstants.ExtendedCost[2804] = "Vanquisher's Mark of Sanctification (id=52028), Sanctified Scourgelord Shoulderplates (id=51125)";
-  app.modalConstants.ExtendedCost[2805] = "Vanquisher's Mark of Sanctification (id=52025), Scourgelord Pauldrons (id=50853)";
-  app.modalConstants.ExtendedCost[2806] = "Vanquisher's Mark of Sanctification (id=52025), Scourgelord Legguards (id=50854)";
-  app.modalConstants.ExtendedCost[2807] = "Vanquisher's Mark of Sanctification (id=52025), Scourgelord Handguards (id=50856)";
-  app.modalConstants.ExtendedCost[2808] = "Vanquisher's Mark of Sanctification (id=52025), Scourgelord Faceguard (id=50855)";
-  app.modalConstants.ExtendedCost[2809] = "Vanquisher's Mark of Sanctification (id=52025), Scourgelord Chestguard (id=50857)";
-  app.modalConstants.ExtendedCost[2810] = "Vanquisher's Mark of Sanctification (id=52028), Sanctified Scourgelord Chestguard (id=51134)";
-  app.modalConstants.ExtendedCost[2811] = "Vanquisher's Mark of Sanctification (id=52028), Sanctified Scourgelord Faceguard (id=51133)";
-  app.modalConstants.ExtendedCost[2812] = "Vanquisher's Mark of Sanctification (id=52028), Sanctified Scourgelord Handguards (id=51132)";
-  app.modalConstants.ExtendedCost[2813] = "Vanquisher's Mark of Sanctification (id=52028), Sanctified Scourgelord Legguards (id=51131)";
-  app.modalConstants.ExtendedCost[2814] = "Vanquisher's Mark of Sanctification (id=52028), Sanctified Scourgelord Pauldrons (id=51130)";
-  app.modalConstants.ExtendedCost[2815] = "Conqueror's Mark of Sanctification (id=52027), Lightsworn Tunic (id=50869)";
-  app.modalConstants.ExtendedCost[2816] = "Conqueror's Mark of Sanctification (id=52027), Lightsworn Spaulders (id=50865)";
-  app.modalConstants.ExtendedCost[2817] = "Conqueror's Mark of Sanctification (id=52027), Lightsworn Headpiece (id=50867)";
-  app.modalConstants.ExtendedCost[2818] = "Conqueror's Mark of Sanctification (id=52027), Lightsworn Greaves (id=50866)";
-  app.modalConstants.ExtendedCost[2819] = "Conqueror's Mark of Sanctification (id=52027), Lightsworn Gloves (id=50868)";
-  app.modalConstants.ExtendedCost[2820] = "Conqueror's Mark of Sanctification (id=52030), Sanctified Lightsworn Gloves (id=51169)";
-  app.modalConstants.ExtendedCost[2821] = "Conqueror's Mark of Sanctification (id=52030), Sanctified Lightsworn Greaves (id=51168)";
-  app.modalConstants.ExtendedCost[2822] = "Conqueror's Mark of Sanctification (id=52030), Sanctified Lightsworn Headpiece (id=51167)";
-  app.modalConstants.ExtendedCost[2823] = "Conqueror's Mark of Sanctification (id=52030), Sanctified Lightsworn Spaulders (id=51166)";
-  app.modalConstants.ExtendedCost[2824] = "Conqueror's Mark of Sanctification (id=52030), Sanctified Lightsworn Tunic (id=51165)";
-  app.modalConstants.ExtendedCost[2825] = "Conqueror's Mark of Sanctification (id=52027), Lightsworn Shoulderplates (id=50324)";
-  app.modalConstants.ExtendedCost[2826] = "Conqueror's Mark of Sanctification (id=52027), Lightsworn Legplates (id=50325)";
-  app.modalConstants.ExtendedCost[2827] = "Conqueror's Mark of Sanctification (id=52027), Lightsworn Helmet (id=50326)";
-  app.modalConstants.ExtendedCost[2828] = "Conqueror's Mark of Sanctification (id=52027), Lightsworn Gauntlets (id=50327)";
-  app.modalConstants.ExtendedCost[2829] = "Conqueror's Mark of Sanctification (id=52027), Lightsworn Battleplate (id=50328)";
-  app.modalConstants.ExtendedCost[2830] = "Conqueror's Mark of Sanctification (id=52030), Sanctified Lightsworn Battleplate (id=51164)";
-  app.modalConstants.ExtendedCost[2831] = "Conqueror's Mark of Sanctification (id=52030), Sanctified Lightsworn Gauntlets (id=51163)";
-  app.modalConstants.ExtendedCost[2832] = "Conqueror's Mark of Sanctification (id=52030), Sanctified Lightsworn Helmet (id=51162)";
-  app.modalConstants.ExtendedCost[2833] = "Conqueror's Mark of Sanctification (id=52030), Sanctified Lightsworn Legplates (id=51161)";
-  app.modalConstants.ExtendedCost[2834] = "Conqueror's Mark of Sanctification (id=52030), Sanctified Lightsworn Shoulderplates (id=51160)";
-  app.modalConstants.ExtendedCost[2835] = "Conqueror's Mark of Sanctification (id=52027), Lightsworn Shoulderguards (id=50860)";
-  app.modalConstants.ExtendedCost[2836] = "Conqueror's Mark of Sanctification (id=52027), Lightsworn Legguards (id=50861)";
-  app.modalConstants.ExtendedCost[2837] = "Conqueror's Mark of Sanctification (id=52027), Lightsworn Handguards (id=50863)";
-  app.modalConstants.ExtendedCost[2838] = "Conqueror's Mark of Sanctification (id=52027), Lightsworn Faceguard (id=50862)";
-  app.modalConstants.ExtendedCost[2839] = "Conqueror's Mark of Sanctification (id=52027), Lightsworn Chestguard (id=50864)";
-  app.modalConstants.ExtendedCost[2840] = "Conqueror's Mark of Sanctification (id=52030), Sanctified Lightsworn Chestguard (id=51174)";
-  app.modalConstants.ExtendedCost[2841] = "Conqueror's Mark of Sanctification (id=52030), Sanctified Lightsworn Faceguard (id=51173)";
-  app.modalConstants.ExtendedCost[2842] = "Conqueror's Mark of Sanctification (id=52030), Sanctified Lightsworn Handguards (id=51172)";
-  app.modalConstants.ExtendedCost[2843] = "Conqueror's Mark of Sanctification (id=52030), Sanctified Lightsworn Legguards (id=51171)";
-  app.modalConstants.ExtendedCost[2844] = "Conqueror's Mark of Sanctification (id=52030), Sanctified Lightsworn Shoulderguards (id=51170)";
-  app.modalConstants.ExtendedCost[2845] = "Conqueror's Mark of Sanctification (id=52027), Dark Coven Shoulderpads (id=50244)";
-  app.modalConstants.ExtendedCost[2846] = "Conqueror's Mark of Sanctification (id=52027), Dark Coven Robe (id=50243)";
-  app.modalConstants.ExtendedCost[2847] = "Conqueror's Mark of Sanctification (id=52027), Dark Coven Leggings (id=50242)";
-  app.modalConstants.ExtendedCost[2848] = "Conqueror's Mark of Sanctification (id=52027), Dark Coven Hood (id=50241)";
-  app.modalConstants.ExtendedCost[2849] = "Conqueror's Mark of Sanctification (id=52027), Dark Coven Gloves (id=50240)";
-  app.modalConstants.ExtendedCost[2850] = "Conqueror's Mark of Sanctification (id=52030), Sanctified Dark Coven Gloves (id=51209)";
-  app.modalConstants.ExtendedCost[2851] = "Conqueror's Mark of Sanctification (id=52030), Sanctified Dark Coven Hood (id=51208)";
-  app.modalConstants.ExtendedCost[2852] = "Conqueror's Mark of Sanctification (id=52030), Sanctified Dark Coven Leggings (id=51207)";
-  app.modalConstants.ExtendedCost[2853] = "Conqueror's Mark of Sanctification (id=52030), Sanctified Dark Coven Robe (id=51206)";
-  app.modalConstants.ExtendedCost[2854] = "Conqueror's Mark of Sanctification (id=52030), Sanctified Dark Coven Shoulderpads (id=51205)";
-  app.modalConstants.ExtendedCost[2855] = "Conqueror's Mark of Sanctification (id=52027), Crimson Acolyte Shoulderpads (id=50767)";
-  app.modalConstants.ExtendedCost[2856] = "Conqueror's Mark of Sanctification (id=52027), Crimson Acolyte Robe (id=50768)";
-  app.modalConstants.ExtendedCost[2857] = "Conqueror's Mark of Sanctification (id=52027), Crimson Acolyte Leggings (id=50769)";
-  app.modalConstants.ExtendedCost[2858] = "Conqueror's Mark of Sanctification (id=52027), Crimson Acolyte Hood (id=50765)";
-  app.modalConstants.ExtendedCost[2859] = "Conqueror's Mark of Sanctification (id=52027), Crimson Acolyte Gloves (id=50766)";
-  app.modalConstants.ExtendedCost[2860] = "Conqueror's Mark of Sanctification (id=52030), Sanctified Crimson Acolyte Gloves (id=51179)";
-  app.modalConstants.ExtendedCost[2861] = "Conqueror's Mark of Sanctification (id=52030), Sanctified Crimson Acolyte Hood (id=51178)";
-  app.modalConstants.ExtendedCost[2862] = "Conqueror's Mark of Sanctification (id=52030), Sanctified Crimson Acolyte Leggings (id=51177)";
-  app.modalConstants.ExtendedCost[2863] = "Conqueror's Mark of Sanctification (id=52030), Sanctified Crimson Acolyte Robe (id=51176)";
-  app.modalConstants.ExtendedCost[2864] = "Conqueror's Mark of Sanctification (id=52030), Sanctified Crimson Acolyte Shoulderpads (id=51175)";
-  app.modalConstants.ExtendedCost[2865] = "Conqueror's Mark of Sanctification (id=52027), Crimson Acolyte Raiments (id=50394)";
-  app.modalConstants.ExtendedCost[2866] = "Conqueror's Mark of Sanctification (id=52027), Crimson Acolyte Pants (id=50393)";
-  app.modalConstants.ExtendedCost[2867] = "Conqueror's Mark of Sanctification (id=52027), Crimson Acolyte Mantle (id=50396)";
-  app.modalConstants.ExtendedCost[2868] = "Conqueror's Mark of Sanctification (id=52027), Crimson Acolyte Handwraps (id=50391)";
-  app.modalConstants.ExtendedCost[2869] = "Conqueror's Mark of Sanctification (id=52027), Crimson Acolyte Cowl (id=50392)";
-  app.modalConstants.ExtendedCost[2870] = "Conqueror's Mark of Sanctification (id=52030), Sanctified Crimson Acolyte Cowl (id=51184)";
-  app.modalConstants.ExtendedCost[2871] = "Conqueror's Mark of Sanctification (id=52030), Sanctified Crimson Acolyte Handwraps (id=51183)";
-  app.modalConstants.ExtendedCost[2872] = "Conqueror's Mark of Sanctification (id=52030), Sanctified Crimson Acolyte Mantle (id=51182)";
-  app.modalConstants.ExtendedCost[2873] = "Conqueror's Mark of Sanctification (id=52030), Sanctified Crimson Acolyte Pants (id=51181)";
-  app.modalConstants.ExtendedCost[2874] = "Conqueror's Mark of Sanctification (id=52030), Sanctified Crimson Acolyte Raiments (id=51180)";
-  app.modalConstants.ExtendedCost[2875] = "Protector's Mark of Sanctification (id=52026), Ymirjar Lord's Shoulderplates (id=50082)";
-  app.modalConstants.ExtendedCost[2876] = "Protector's Mark of Sanctification (id=52026), Ymirjar Lord's Legplates (id=50081)";
-  app.modalConstants.ExtendedCost[2877] = "Protector's Mark of Sanctification (id=52026), Ymirjar Lord's Helmet (id=50080)";
-  app.modalConstants.ExtendedCost[2878] = "Protector's Mark of Sanctification (id=52026), Ymirjar Lord's Gauntlets (id=50079)";
-  app.modalConstants.ExtendedCost[2879] = "Protector's Mark of Sanctification (id=52026), Ymirjar Lord's Battleplate (id=50078)";
-  app.modalConstants.ExtendedCost[2880] = "Protector's Mark of Sanctification (id=52029), Sanctified Ymirjar Lord's Battleplate (id=51214)";
-  app.modalConstants.ExtendedCost[2881] = "Protector's Mark of Sanctification (id=52029), Sanctified Ymirjar Lord's Gauntlets (id=51213)";
-  app.modalConstants.ExtendedCost[2882] = "Protector's Mark of Sanctification (id=52029), Sanctified Ymirjar Lord's Helmet (id=51212)";
-  app.modalConstants.ExtendedCost[2883] = "Protector's Mark of Sanctification (id=52029), Sanctified Ymirjar Lord's Legplates (id=51211)";
-  app.modalConstants.ExtendedCost[2884] = "Protector's Mark of Sanctification (id=52029), Sanctified Ymirjar Lord's Shoulderplates (id=51210)";
-  app.modalConstants.ExtendedCost[2885] = "Protector's Mark of Sanctification (id=52026), Ymirjar Lord's Pauldrons (id=50846)";
-  app.modalConstants.ExtendedCost[2886] = "Protector's Mark of Sanctification (id=52026), Ymirjar Lord's Legguards (id=50847)";
-  app.modalConstants.ExtendedCost[2887] = "Protector's Mark of Sanctification (id=52026), Ymirjar Lord's Handguards (id=50849)";
-  app.modalConstants.ExtendedCost[2888] = "Protector's Mark of Sanctification (id=52026), Ymirjar Lord's Greathelm (id=50848)";
-  app.modalConstants.ExtendedCost[2889] = "Protector's Mark of Sanctification (id=52026), Ymirjar Lord's Breastplate (id=50850)";
-  app.modalConstants.ExtendedCost[2890] = "Protector's Mark of Sanctification (id=52029), Sanctified Ymirjar Lord's Breastplate (id=51219)";
-  app.modalConstants.ExtendedCost[2891] = "Protector's Mark of Sanctification (id=52029), Sanctified Ymirjar Lord's Greathelm (id=51218)";
-  app.modalConstants.ExtendedCost[2892] = "Protector's Mark of Sanctification (id=52029), Sanctified Ymirjar Lord's Handguards (id=51217)";
-  app.modalConstants.ExtendedCost[2893] = "Protector's Mark of Sanctification (id=52029), Sanctified Ymirjar Lord's Legguards (id=51216)";
-  app.modalConstants.ExtendedCost[2894] = "Protector's Mark of Sanctification (id=52029), Sanctified Ymirjar Lord's Pauldrons (id=51215)";
-  app.modalConstants.ExtendedCost[2895] = "Protector's Mark of Sanctification (id=52026), Ahn'Kahar Blood Hunter's Tunic (id=50118)";
-  app.modalConstants.ExtendedCost[2896] = "Protector's Mark of Sanctification (id=52026), Ahn'Kahar Blood Hunter's Spaulders (id=50117)";
-  app.modalConstants.ExtendedCost[2897] = "Protector's Mark of Sanctification (id=52026), Ahn'Kahar Blood Hunter's Legguards (id=50116)";
-  app.modalConstants.ExtendedCost[2898] = "Protector's Mark of Sanctification (id=52026), Ahn'Kahar Blood Hunter's Headpiece (id=50115)";
-  app.modalConstants.ExtendedCost[2899] = "Protector's Mark of Sanctification (id=52026), Ahn'Kahar Blood Hunter's Handguards (id=50114)";
-  app.modalConstants.ExtendedCost[2900] = "Protector's Mark of Sanctification (id=52029), Sanctified Ahn'Kahar Blood Hunter's Handguards (id=51154)";
-  app.modalConstants.ExtendedCost[2901] = "Protector's Mark of Sanctification (id=52029), Sanctified Ahn'Kahar Blood Hunter's Headpiece (id=51153)";
-  app.modalConstants.ExtendedCost[2902] = "Protector's Mark of Sanctification (id=52029), Sanctified Ahn'Kahar Blood Hunter's Legguards (id=51152)";
-  app.modalConstants.ExtendedCost[2903] = "Protector's Mark of Sanctification (id=52029), Sanctified Ahn'Kahar Blood Hunter's Spaulders (id=51151)";
-  app.modalConstants.ExtendedCost[2904] = "Protector's Mark of Sanctification (id=52029), Sanctified Ahn'Kahar Blood Hunter's Tunic (id=51150)";
-  app.modalConstants.ExtendedCost[2905] = "Protector's Mark of Sanctification (id=52026), Frost Witch's Tunic (id=50835)";
-  app.modalConstants.ExtendedCost[2906] = "Protector's Mark of Sanctification (id=52026), Frost Witch's Handguards (id=50836)";
-  app.modalConstants.ExtendedCost[2907] = "Protector's Mark of Sanctification (id=52026), Frost Witch's Headpiece (id=50837)";
-  app.modalConstants.ExtendedCost[2908] = "Protector's Mark of Sanctification (id=52026), Frost Witch's Legguards (id=50838)";
-  app.modalConstants.ExtendedCost[2909] = "Protector's Mark of Sanctification (id=52026), Frost Witch's Spaulders (id=50839)";
-  app.modalConstants.ExtendedCost[2910] = "Protector's Mark of Sanctification (id=52029), Sanctified Frost Witch's Tunic (id=51190)";
-  app.modalConstants.ExtendedCost[2911] = "Protector's Mark of Sanctification (id=52029), Sanctified Frost Witch's Handguards (id=51191)";
-  app.modalConstants.ExtendedCost[2912] = "Protector's Mark of Sanctification (id=52029), Sanctified Frost Witch's Headpiece (id=51192)";
-  app.modalConstants.ExtendedCost[2913] = "Protector's Mark of Sanctification (id=52029), Sanctified Frost Witch's Legguards (id=51193)";
-  app.modalConstants.ExtendedCost[2914] = "Protector's Mark of Sanctification (id=52029), Sanctified Frost Witch's Spaulders (id=51194)";
-  app.modalConstants.ExtendedCost[2915] = "Protector's Mark of Sanctification (id=52026), Frost Witch's Chestguard (id=50830)";
-  app.modalConstants.ExtendedCost[2916] = "Protector's Mark of Sanctification (id=52026), Frost Witch's Grips (id=50831)";
-  app.modalConstants.ExtendedCost[2917] = "Protector's Mark of Sanctification (id=52026), Frost Witch's Faceguard (id=50832)";
-  app.modalConstants.ExtendedCost[2918] = "Protector's Mark of Sanctification (id=52026), Frost Witch's War-Kilt (id=50833)";
-  app.modalConstants.ExtendedCost[2919] = "Protector's Mark of Sanctification (id=52026), Frost Witch's Shoulderguards (id=50834)";
-  app.modalConstants.ExtendedCost[2920] = "Protector's Mark of Sanctification (id=52029), Sanctified Frost Witch's Chestguard (id=51195)";
-  app.modalConstants.ExtendedCost[2921] = "Protector's Mark of Sanctification (id=52029), Sanctified Frost Witch's Grips (id=51196)";
-  app.modalConstants.ExtendedCost[2922] = "Protector's Mark of Sanctification (id=52029), Sanctified Frost Witch's Faceguard (id=51197)";
-  app.modalConstants.ExtendedCost[2923] = "Protector's Mark of Sanctification (id=52029), Sanctified Frost Witch's War-Kilt (id=51198)";
-  app.modalConstants.ExtendedCost[2924] = "Protector's Mark of Sanctification (id=52029), Sanctified Frost Witch's War-Kilt (id=51198)";
-  app.modalConstants.ExtendedCost[2925] = "Protector's Mark of Sanctification (id=52026), Frost Witch's Hauberk (id=50841)";
-  app.modalConstants.ExtendedCost[2926] = "Protector's Mark of Sanctification (id=52026), Frost Witch's Gloves (id=50842)";
-  app.modalConstants.ExtendedCost[2927] = "Protector's Mark of Sanctification (id=52026), Frost Witch's Helm (id=50843)";
-  app.modalConstants.ExtendedCost[2928] = "Protector's Mark of Sanctification (id=52026), Frost Witch's Kilt (id=50844)";
-  app.modalConstants.ExtendedCost[2929] = "Protector's Mark of Sanctification (id=52026), Frost Witch's Shoulderpads (id=50845)";
-  app.modalConstants.ExtendedCost[2930] = "Protector's Mark of Sanctification (id=52029), Sanctified Frost Witch's Hauberk (id=51200)";
-  app.modalConstants.ExtendedCost[2931] = "Protector's Mark of Sanctification (id=52029), Sanctified Frost Witch's Gloves (id=51201)";
-  app.modalConstants.ExtendedCost[2932] = "Protector's Mark of Sanctification (id=52029), Sanctified Frost Witch's Helm (id=51202)";
-  app.modalConstants.ExtendedCost[2933] = "Protector's Mark of Sanctification (id=52029), Sanctified Frost Witch's Kilt (id=51203)";
-  app.modalConstants.ExtendedCost[2934] = "Protector's Mark of Sanctification (id=52029), Sanctified Frost Witch's Shoulderpads (id=51204)";
-  app.modalConstants.ExtendedCost[2935] = "Protector's Mark of Sanctification (id=52029), Sanctified Frost Witch's Shoulderguards (id=51199)";
-  app.modalConstants.ExtendedCost[2936] = "55000 honor pts, 1540 arena pts, 1800 arenarank";
+  app.modalConstants.ExtendedCost[2745] =
+    "Vanquisher's Mark of Sanctification (id=52025), Bloodmage Shoulderpads (id=50279)";
+  app.modalConstants.ExtendedCost[2746] =
+    "Vanquisher's Mark of Sanctification (id=52025), Bloodmage Robe (id=50278)";
+  app.modalConstants.ExtendedCost[2747] =
+    "Vanquisher's Mark of Sanctification (id=52025), Bloodmage Leggings (id=50277)";
+  app.modalConstants.ExtendedCost[2748] =
+    "Vanquisher's Mark of Sanctification (id=52025), Bloodmage Hood (id=50276)";
+  app.modalConstants.ExtendedCost[2749] =
+    "Vanquisher's Mark of Sanctification (id=52025), Bloodmage Gloves (id=50275)";
+  app.modalConstants.ExtendedCost[2750] =
+    "Vanquisher's Mark of Sanctification (id=52028), Sanctified Bloodmage Gloves (id=51159)";
+  app.modalConstants.ExtendedCost[2751] =
+    "Vanquisher's Mark of Sanctification (id=52028), Sanctified Bloodmage Hood (id=51158)";
+  app.modalConstants.ExtendedCost[2752] =
+    "Vanquisher's Mark of Sanctification (id=52028), Sanctified Bloodmage Leggings (id=51157)";
+  app.modalConstants.ExtendedCost[2753] =
+    "Vanquisher's Mark of Sanctification (id=52028), Sanctified Bloodmage Robe (id=51156)";
+  app.modalConstants.ExtendedCost[2754] =
+    "Vanquisher's Mark of Sanctification (id=52028), Sanctified Bloodmage Shoulderpads (id=51155)";
+  app.modalConstants.ExtendedCost[2755] =
+    "Vanquisher's Mark of Sanctification (id=52025), Shadowblade Pauldrons (id=50105)";
+  app.modalConstants.ExtendedCost[2756] =
+    "Vanquisher's Mark of Sanctification (id=52025), Shadowblade Legplates (id=50090)";
+  app.modalConstants.ExtendedCost[2757] =
+    "Vanquisher's Mark of Sanctification (id=52025), Shadowblade Helmet (id=50089)";
+  app.modalConstants.ExtendedCost[2758] =
+    "Vanquisher's Mark of Sanctification (id=52025), Shadowblade Gauntlets (id=50088)";
+  app.modalConstants.ExtendedCost[2759] =
+    "Vanquisher's Mark of Sanctification (id=52025), Shadowblade Breastplate (id=50087)";
+  app.modalConstants.ExtendedCost[2760] =
+    "Vanquisher's Mark of Sanctification (id=52028), Sanctified Shadowblade Breastplate (id=51189)";
+  app.modalConstants.ExtendedCost[2761] =
+    "Vanquisher's Mark of Sanctification (id=52028), Sanctified Shadowblade Gauntlets (id=51188)";
+  app.modalConstants.ExtendedCost[2762] =
+    "Vanquisher's Mark of Sanctification (id=52028), Sanctified Shadowblade Helmet (id=51187)";
+  app.modalConstants.ExtendedCost[2763] =
+    "Vanquisher's Mark of Sanctification (id=52028), Sanctified Shadowblade Legplates (id=51186)";
+  app.modalConstants.ExtendedCost[2764] =
+    "Vanquisher's Mark of Sanctification (id=52028), Sanctified Shadowblade Pauldrons (id=51185)";
+  app.modalConstants.ExtendedCost[2765] =
+    "Vanquisher's Mark of Sanctification (id=52025), Lasherweave Pauldrons (id=50113)";
+  app.modalConstants.ExtendedCost[2766] =
+    "Vanquisher's Mark of Sanctification (id=52025), Lasherweave Legplates (id=50109)";
+  app.modalConstants.ExtendedCost[2767] =
+    "Vanquisher's Mark of Sanctification (id=52025), Lasherweave Helmet (id=50108)";
+  app.modalConstants.ExtendedCost[2768] =
+    "Vanquisher's Mark of Sanctification (id=52025), Lasherweave Gauntlets (id=50107)";
+  app.modalConstants.ExtendedCost[2769] =
+    "Vanquisher's Mark of Sanctification (id=52025), Lasherweave Robes (id=50106)";
+  app.modalConstants.ExtendedCost[2770] =
+    "Vanquisher's Mark of Sanctification (id=52028), Sanctified Lasherweave Robes (id=51139)";
+  app.modalConstants.ExtendedCost[2771] =
+    "Vanquisher's Mark of Sanctification (id=52028), Sanctified Lasherweave Gauntlets (id=51138)";
+  app.modalConstants.ExtendedCost[2772] =
+    "Vanquisher's Mark of Sanctification (id=52028), Sanctified Lasherweave Helmet (id=51137)";
+  app.modalConstants.ExtendedCost[2773] =
+    "Vanquisher's Mark of Sanctification (id=52028), Sanctified Lasherweave Legplates (id=51136)";
+  app.modalConstants.ExtendedCost[2774] =
+    "Vanquisher's Mark of Sanctification (id=52028), Sanctified Lasherweave Pauldrons (id=51135)";
+  app.modalConstants.ExtendedCost[2775] =
+    "Vanquisher's Mark of Sanctification (id=52025), Lasherweave Vestment (id=50823)";
+  app.modalConstants.ExtendedCost[2776] =
+    "Vanquisher's Mark of Sanctification (id=52025), Lasherweave Trousers (id=50820)";
+  app.modalConstants.ExtendedCost[2777] =
+    "Vanquisher's Mark of Sanctification (id=52025), Lasherweave Mantle (id=50819)";
+  app.modalConstants.ExtendedCost[2778] =
+    "Vanquisher's Mark of Sanctification (id=52025), Lasherweave Gloves (id=50822)";
+  app.modalConstants.ExtendedCost[2779] =
+    "Vanquisher's Mark of Sanctification (id=52025), Lasherweave Cover (id=50821)";
+  app.modalConstants.ExtendedCost[2780] =
+    "Vanquisher's Mark of Sanctification (id=52028), Sanctified Lasherweave Cover (id=51149)";
+  app.modalConstants.ExtendedCost[2781] =
+    "Vanquisher's Mark of Sanctification (id=52028), Sanctified Lasherweave Gloves (id=51148)";
+  app.modalConstants.ExtendedCost[2782] =
+    "Vanquisher's Mark of Sanctification (id=52028), Sanctified Lasherweave Mantle (id=51147)";
+  app.modalConstants.ExtendedCost[2783] =
+    "Vanquisher's Mark of Sanctification (id=52028), Sanctified Lasherweave Trousers (id=51146)";
+  app.modalConstants.ExtendedCost[2784] =
+    "Vanquisher's Mark of Sanctification (id=52028), Sanctified Lasherweave Vestment (id=51145)";
+  app.modalConstants.ExtendedCost[2785] =
+    "Vanquisher's Mark of Sanctification (id=52025), Lasherweave Shoulderpads (id=50824)";
+  app.modalConstants.ExtendedCost[2786] =
+    "Vanquisher's Mark of Sanctification (id=52025), Lasherweave Raiment (id=50828)";
+  app.modalConstants.ExtendedCost[2787] =
+    "Vanquisher's Mark of Sanctification (id=52025), Lasherweave Legguards (id=50825)";
+  app.modalConstants.ExtendedCost[2788] =
+    "Vanquisher's Mark of Sanctification (id=52025), Lasherweave Headguard (id=50826)";
+  app.modalConstants.ExtendedCost[2789] =
+    "Vanquisher's Mark of Sanctification (id=52025), Lasherweave Handgrips (id=50827)";
+  app.modalConstants.ExtendedCost[2790] =
+    "Vanquisher's Mark of Sanctification (id=52028), Sanctified Lasherweave Handgrips (id=51144)";
+  app.modalConstants.ExtendedCost[2791] =
+    "Vanquisher's Mark of Sanctification (id=52028), Sanctified Lasherweave Headguard (id=51143)";
+  app.modalConstants.ExtendedCost[2792] =
+    "Vanquisher's Mark of Sanctification (id=52028), Sanctified Lasherweave Legguards (id=51142)";
+  app.modalConstants.ExtendedCost[2793] =
+    "Vanquisher's Mark of Sanctification (id=52028), Sanctified Lasherweave Raiment (id=51141)";
+  app.modalConstants.ExtendedCost[2794] =
+    "Vanquisher's Mark of Sanctification (id=52028), Sanctified Lasherweave Shoulderpads (id=51140)";
+  app.modalConstants.ExtendedCost[2795] =
+    "Vanquisher's Mark of Sanctification (id=52025), Scourgelord Shoulderplates (id=50098)";
+  app.modalConstants.ExtendedCost[2796] =
+    "Vanquisher's Mark of Sanctification (id=52025), Scourgelord Legplates (id=50097)";
+  app.modalConstants.ExtendedCost[2797] =
+    "Vanquisher's Mark of Sanctification (id=52025), Scourgelord Helmet (id=50096)";
+  app.modalConstants.ExtendedCost[2798] =
+    "Vanquisher's Mark of Sanctification (id=52025), Scourgelord Gauntlets (id=50095)";
+  app.modalConstants.ExtendedCost[2799] =
+    "Vanquisher's Mark of Sanctification (id=52025), Scourgelord Battleplate (id=50094)";
+  app.modalConstants.ExtendedCost[2800] =
+    "Vanquisher's Mark of Sanctification (id=52028), Sanctified Scourgelord Battleplate (id=51129)";
+  app.modalConstants.ExtendedCost[2801] =
+    "Vanquisher's Mark of Sanctification (id=52028), Sanctified Scourgelord Gauntlets (id=51128)";
+  app.modalConstants.ExtendedCost[2802] =
+    "Vanquisher's Mark of Sanctification (id=52028), Sanctified Scourgelord Helmet (id=51127)";
+  app.modalConstants.ExtendedCost[2803] =
+    "Vanquisher's Mark of Sanctification (id=52028), Sanctified Scourgelord Legplates (id=51126)";
+  app.modalConstants.ExtendedCost[2804] =
+    "Vanquisher's Mark of Sanctification (id=52028), Sanctified Scourgelord Shoulderplates (id=51125)";
+  app.modalConstants.ExtendedCost[2805] =
+    "Vanquisher's Mark of Sanctification (id=52025), Scourgelord Pauldrons (id=50853)";
+  app.modalConstants.ExtendedCost[2806] =
+    "Vanquisher's Mark of Sanctification (id=52025), Scourgelord Legguards (id=50854)";
+  app.modalConstants.ExtendedCost[2807] =
+    "Vanquisher's Mark of Sanctification (id=52025), Scourgelord Handguards (id=50856)";
+  app.modalConstants.ExtendedCost[2808] =
+    "Vanquisher's Mark of Sanctification (id=52025), Scourgelord Faceguard (id=50855)";
+  app.modalConstants.ExtendedCost[2809] =
+    "Vanquisher's Mark of Sanctification (id=52025), Scourgelord Chestguard (id=50857)";
+  app.modalConstants.ExtendedCost[2810] =
+    "Vanquisher's Mark of Sanctification (id=52028), Sanctified Scourgelord Chestguard (id=51134)";
+  app.modalConstants.ExtendedCost[2811] =
+    "Vanquisher's Mark of Sanctification (id=52028), Sanctified Scourgelord Faceguard (id=51133)";
+  app.modalConstants.ExtendedCost[2812] =
+    "Vanquisher's Mark of Sanctification (id=52028), Sanctified Scourgelord Handguards (id=51132)";
+  app.modalConstants.ExtendedCost[2813] =
+    "Vanquisher's Mark of Sanctification (id=52028), Sanctified Scourgelord Legguards (id=51131)";
+  app.modalConstants.ExtendedCost[2814] =
+    "Vanquisher's Mark of Sanctification (id=52028), Sanctified Scourgelord Pauldrons (id=51130)";
+  app.modalConstants.ExtendedCost[2815] =
+    "Conqueror's Mark of Sanctification (id=52027), Lightsworn Tunic (id=50869)";
+  app.modalConstants.ExtendedCost[2816] =
+    "Conqueror's Mark of Sanctification (id=52027), Lightsworn Spaulders (id=50865)";
+  app.modalConstants.ExtendedCost[2817] =
+    "Conqueror's Mark of Sanctification (id=52027), Lightsworn Headpiece (id=50867)";
+  app.modalConstants.ExtendedCost[2818] =
+    "Conqueror's Mark of Sanctification (id=52027), Lightsworn Greaves (id=50866)";
+  app.modalConstants.ExtendedCost[2819] =
+    "Conqueror's Mark of Sanctification (id=52027), Lightsworn Gloves (id=50868)";
+  app.modalConstants.ExtendedCost[2820] =
+    "Conqueror's Mark of Sanctification (id=52030), Sanctified Lightsworn Gloves (id=51169)";
+  app.modalConstants.ExtendedCost[2821] =
+    "Conqueror's Mark of Sanctification (id=52030), Sanctified Lightsworn Greaves (id=51168)";
+  app.modalConstants.ExtendedCost[2822] =
+    "Conqueror's Mark of Sanctification (id=52030), Sanctified Lightsworn Headpiece (id=51167)";
+  app.modalConstants.ExtendedCost[2823] =
+    "Conqueror's Mark of Sanctification (id=52030), Sanctified Lightsworn Spaulders (id=51166)";
+  app.modalConstants.ExtendedCost[2824] =
+    "Conqueror's Mark of Sanctification (id=52030), Sanctified Lightsworn Tunic (id=51165)";
+  app.modalConstants.ExtendedCost[2825] =
+    "Conqueror's Mark of Sanctification (id=52027), Lightsworn Shoulderplates (id=50324)";
+  app.modalConstants.ExtendedCost[2826] =
+    "Conqueror's Mark of Sanctification (id=52027), Lightsworn Legplates (id=50325)";
+  app.modalConstants.ExtendedCost[2827] =
+    "Conqueror's Mark of Sanctification (id=52027), Lightsworn Helmet (id=50326)";
+  app.modalConstants.ExtendedCost[2828] =
+    "Conqueror's Mark of Sanctification (id=52027), Lightsworn Gauntlets (id=50327)";
+  app.modalConstants.ExtendedCost[2829] =
+    "Conqueror's Mark of Sanctification (id=52027), Lightsworn Battleplate (id=50328)";
+  app.modalConstants.ExtendedCost[2830] =
+    "Conqueror's Mark of Sanctification (id=52030), Sanctified Lightsworn Battleplate (id=51164)";
+  app.modalConstants.ExtendedCost[2831] =
+    "Conqueror's Mark of Sanctification (id=52030), Sanctified Lightsworn Gauntlets (id=51163)";
+  app.modalConstants.ExtendedCost[2832] =
+    "Conqueror's Mark of Sanctification (id=52030), Sanctified Lightsworn Helmet (id=51162)";
+  app.modalConstants.ExtendedCost[2833] =
+    "Conqueror's Mark of Sanctification (id=52030), Sanctified Lightsworn Legplates (id=51161)";
+  app.modalConstants.ExtendedCost[2834] =
+    "Conqueror's Mark of Sanctification (id=52030), Sanctified Lightsworn Shoulderplates (id=51160)";
+  app.modalConstants.ExtendedCost[2835] =
+    "Conqueror's Mark of Sanctification (id=52027), Lightsworn Shoulderguards (id=50860)";
+  app.modalConstants.ExtendedCost[2836] =
+    "Conqueror's Mark of Sanctification (id=52027), Lightsworn Legguards (id=50861)";
+  app.modalConstants.ExtendedCost[2837] =
+    "Conqueror's Mark of Sanctification (id=52027), Lightsworn Handguards (id=50863)";
+  app.modalConstants.ExtendedCost[2838] =
+    "Conqueror's Mark of Sanctification (id=52027), Lightsworn Faceguard (id=50862)";
+  app.modalConstants.ExtendedCost[2839] =
+    "Conqueror's Mark of Sanctification (id=52027), Lightsworn Chestguard (id=50864)";
+  app.modalConstants.ExtendedCost[2840] =
+    "Conqueror's Mark of Sanctification (id=52030), Sanctified Lightsworn Chestguard (id=51174)";
+  app.modalConstants.ExtendedCost[2841] =
+    "Conqueror's Mark of Sanctification (id=52030), Sanctified Lightsworn Faceguard (id=51173)";
+  app.modalConstants.ExtendedCost[2842] =
+    "Conqueror's Mark of Sanctification (id=52030), Sanctified Lightsworn Handguards (id=51172)";
+  app.modalConstants.ExtendedCost[2843] =
+    "Conqueror's Mark of Sanctification (id=52030), Sanctified Lightsworn Legguards (id=51171)";
+  app.modalConstants.ExtendedCost[2844] =
+    "Conqueror's Mark of Sanctification (id=52030), Sanctified Lightsworn Shoulderguards (id=51170)";
+  app.modalConstants.ExtendedCost[2845] =
+    "Conqueror's Mark of Sanctification (id=52027), Dark Coven Shoulderpads (id=50244)";
+  app.modalConstants.ExtendedCost[2846] =
+    "Conqueror's Mark of Sanctification (id=52027), Dark Coven Robe (id=50243)";
+  app.modalConstants.ExtendedCost[2847] =
+    "Conqueror's Mark of Sanctification (id=52027), Dark Coven Leggings (id=50242)";
+  app.modalConstants.ExtendedCost[2848] =
+    "Conqueror's Mark of Sanctification (id=52027), Dark Coven Hood (id=50241)";
+  app.modalConstants.ExtendedCost[2849] =
+    "Conqueror's Mark of Sanctification (id=52027), Dark Coven Gloves (id=50240)";
+  app.modalConstants.ExtendedCost[2850] =
+    "Conqueror's Mark of Sanctification (id=52030), Sanctified Dark Coven Gloves (id=51209)";
+  app.modalConstants.ExtendedCost[2851] =
+    "Conqueror's Mark of Sanctification (id=52030), Sanctified Dark Coven Hood (id=51208)";
+  app.modalConstants.ExtendedCost[2852] =
+    "Conqueror's Mark of Sanctification (id=52030), Sanctified Dark Coven Leggings (id=51207)";
+  app.modalConstants.ExtendedCost[2853] =
+    "Conqueror's Mark of Sanctification (id=52030), Sanctified Dark Coven Robe (id=51206)";
+  app.modalConstants.ExtendedCost[2854] =
+    "Conqueror's Mark of Sanctification (id=52030), Sanctified Dark Coven Shoulderpads (id=51205)";
+  app.modalConstants.ExtendedCost[2855] =
+    "Conqueror's Mark of Sanctification (id=52027), Crimson Acolyte Shoulderpads (id=50767)";
+  app.modalConstants.ExtendedCost[2856] =
+    "Conqueror's Mark of Sanctification (id=52027), Crimson Acolyte Robe (id=50768)";
+  app.modalConstants.ExtendedCost[2857] =
+    "Conqueror's Mark of Sanctification (id=52027), Crimson Acolyte Leggings (id=50769)";
+  app.modalConstants.ExtendedCost[2858] =
+    "Conqueror's Mark of Sanctification (id=52027), Crimson Acolyte Hood (id=50765)";
+  app.modalConstants.ExtendedCost[2859] =
+    "Conqueror's Mark of Sanctification (id=52027), Crimson Acolyte Gloves (id=50766)";
+  app.modalConstants.ExtendedCost[2860] =
+    "Conqueror's Mark of Sanctification (id=52030), Sanctified Crimson Acolyte Gloves (id=51179)";
+  app.modalConstants.ExtendedCost[2861] =
+    "Conqueror's Mark of Sanctification (id=52030), Sanctified Crimson Acolyte Hood (id=51178)";
+  app.modalConstants.ExtendedCost[2862] =
+    "Conqueror's Mark of Sanctification (id=52030), Sanctified Crimson Acolyte Leggings (id=51177)";
+  app.modalConstants.ExtendedCost[2863] =
+    "Conqueror's Mark of Sanctification (id=52030), Sanctified Crimson Acolyte Robe (id=51176)";
+  app.modalConstants.ExtendedCost[2864] =
+    "Conqueror's Mark of Sanctification (id=52030), Sanctified Crimson Acolyte Shoulderpads (id=51175)";
+  app.modalConstants.ExtendedCost[2865] =
+    "Conqueror's Mark of Sanctification (id=52027), Crimson Acolyte Raiments (id=50394)";
+  app.modalConstants.ExtendedCost[2866] =
+    "Conqueror's Mark of Sanctification (id=52027), Crimson Acolyte Pants (id=50393)";
+  app.modalConstants.ExtendedCost[2867] =
+    "Conqueror's Mark of Sanctification (id=52027), Crimson Acolyte Mantle (id=50396)";
+  app.modalConstants.ExtendedCost[2868] =
+    "Conqueror's Mark of Sanctification (id=52027), Crimson Acolyte Handwraps (id=50391)";
+  app.modalConstants.ExtendedCost[2869] =
+    "Conqueror's Mark of Sanctification (id=52027), Crimson Acolyte Cowl (id=50392)";
+  app.modalConstants.ExtendedCost[2870] =
+    "Conqueror's Mark of Sanctification (id=52030), Sanctified Crimson Acolyte Cowl (id=51184)";
+  app.modalConstants.ExtendedCost[2871] =
+    "Conqueror's Mark of Sanctification (id=52030), Sanctified Crimson Acolyte Handwraps (id=51183)";
+  app.modalConstants.ExtendedCost[2872] =
+    "Conqueror's Mark of Sanctification (id=52030), Sanctified Crimson Acolyte Mantle (id=51182)";
+  app.modalConstants.ExtendedCost[2873] =
+    "Conqueror's Mark of Sanctification (id=52030), Sanctified Crimson Acolyte Pants (id=51181)";
+  app.modalConstants.ExtendedCost[2874] =
+    "Conqueror's Mark of Sanctification (id=52030), Sanctified Crimson Acolyte Raiments (id=51180)";
+  app.modalConstants.ExtendedCost[2875] =
+    "Protector's Mark of Sanctification (id=52026), Ymirjar Lord's Shoulderplates (id=50082)";
+  app.modalConstants.ExtendedCost[2876] =
+    "Protector's Mark of Sanctification (id=52026), Ymirjar Lord's Legplates (id=50081)";
+  app.modalConstants.ExtendedCost[2877] =
+    "Protector's Mark of Sanctification (id=52026), Ymirjar Lord's Helmet (id=50080)";
+  app.modalConstants.ExtendedCost[2878] =
+    "Protector's Mark of Sanctification (id=52026), Ymirjar Lord's Gauntlets (id=50079)";
+  app.modalConstants.ExtendedCost[2879] =
+    "Protector's Mark of Sanctification (id=52026), Ymirjar Lord's Battleplate (id=50078)";
+  app.modalConstants.ExtendedCost[2880] =
+    "Protector's Mark of Sanctification (id=52029), Sanctified Ymirjar Lord's Battleplate (id=51214)";
+  app.modalConstants.ExtendedCost[2881] =
+    "Protector's Mark of Sanctification (id=52029), Sanctified Ymirjar Lord's Gauntlets (id=51213)";
+  app.modalConstants.ExtendedCost[2882] =
+    "Protector's Mark of Sanctification (id=52029), Sanctified Ymirjar Lord's Helmet (id=51212)";
+  app.modalConstants.ExtendedCost[2883] =
+    "Protector's Mark of Sanctification (id=52029), Sanctified Ymirjar Lord's Legplates (id=51211)";
+  app.modalConstants.ExtendedCost[2884] =
+    "Protector's Mark of Sanctification (id=52029), Sanctified Ymirjar Lord's Shoulderplates (id=51210)";
+  app.modalConstants.ExtendedCost[2885] =
+    "Protector's Mark of Sanctification (id=52026), Ymirjar Lord's Pauldrons (id=50846)";
+  app.modalConstants.ExtendedCost[2886] =
+    "Protector's Mark of Sanctification (id=52026), Ymirjar Lord's Legguards (id=50847)";
+  app.modalConstants.ExtendedCost[2887] =
+    "Protector's Mark of Sanctification (id=52026), Ymirjar Lord's Handguards (id=50849)";
+  app.modalConstants.ExtendedCost[2888] =
+    "Protector's Mark of Sanctification (id=52026), Ymirjar Lord's Greathelm (id=50848)";
+  app.modalConstants.ExtendedCost[2889] =
+    "Protector's Mark of Sanctification (id=52026), Ymirjar Lord's Breastplate (id=50850)";
+  app.modalConstants.ExtendedCost[2890] =
+    "Protector's Mark of Sanctification (id=52029), Sanctified Ymirjar Lord's Breastplate (id=51219)";
+  app.modalConstants.ExtendedCost[2891] =
+    "Protector's Mark of Sanctification (id=52029), Sanctified Ymirjar Lord's Greathelm (id=51218)";
+  app.modalConstants.ExtendedCost[2892] =
+    "Protector's Mark of Sanctification (id=52029), Sanctified Ymirjar Lord's Handguards (id=51217)";
+  app.modalConstants.ExtendedCost[2893] =
+    "Protector's Mark of Sanctification (id=52029), Sanctified Ymirjar Lord's Legguards (id=51216)";
+  app.modalConstants.ExtendedCost[2894] =
+    "Protector's Mark of Sanctification (id=52029), Sanctified Ymirjar Lord's Pauldrons (id=51215)";
+  app.modalConstants.ExtendedCost[2895] =
+    "Protector's Mark of Sanctification (id=52026), Ahn'Kahar Blood Hunter's Tunic (id=50118)";
+  app.modalConstants.ExtendedCost[2896] =
+    "Protector's Mark of Sanctification (id=52026), Ahn'Kahar Blood Hunter's Spaulders (id=50117)";
+  app.modalConstants.ExtendedCost[2897] =
+    "Protector's Mark of Sanctification (id=52026), Ahn'Kahar Blood Hunter's Legguards (id=50116)";
+  app.modalConstants.ExtendedCost[2898] =
+    "Protector's Mark of Sanctification (id=52026), Ahn'Kahar Blood Hunter's Headpiece (id=50115)";
+  app.modalConstants.ExtendedCost[2899] =
+    "Protector's Mark of Sanctification (id=52026), Ahn'Kahar Blood Hunter's Handguards (id=50114)";
+  app.modalConstants.ExtendedCost[2900] =
+    "Protector's Mark of Sanctification (id=52029), Sanctified Ahn'Kahar Blood Hunter's Handguards (id=51154)";
+  app.modalConstants.ExtendedCost[2901] =
+    "Protector's Mark of Sanctification (id=52029), Sanctified Ahn'Kahar Blood Hunter's Headpiece (id=51153)";
+  app.modalConstants.ExtendedCost[2902] =
+    "Protector's Mark of Sanctification (id=52029), Sanctified Ahn'Kahar Blood Hunter's Legguards (id=51152)";
+  app.modalConstants.ExtendedCost[2903] =
+    "Protector's Mark of Sanctification (id=52029), Sanctified Ahn'Kahar Blood Hunter's Spaulders (id=51151)";
+  app.modalConstants.ExtendedCost[2904] =
+    "Protector's Mark of Sanctification (id=52029), Sanctified Ahn'Kahar Blood Hunter's Tunic (id=51150)";
+  app.modalConstants.ExtendedCost[2905] =
+    "Protector's Mark of Sanctification (id=52026), Frost Witch's Tunic (id=50835)";
+  app.modalConstants.ExtendedCost[2906] =
+    "Protector's Mark of Sanctification (id=52026), Frost Witch's Handguards (id=50836)";
+  app.modalConstants.ExtendedCost[2907] =
+    "Protector's Mark of Sanctification (id=52026), Frost Witch's Headpiece (id=50837)";
+  app.modalConstants.ExtendedCost[2908] =
+    "Protector's Mark of Sanctification (id=52026), Frost Witch's Legguards (id=50838)";
+  app.modalConstants.ExtendedCost[2909] =
+    "Protector's Mark of Sanctification (id=52026), Frost Witch's Spaulders (id=50839)";
+  app.modalConstants.ExtendedCost[2910] =
+    "Protector's Mark of Sanctification (id=52029), Sanctified Frost Witch's Tunic (id=51190)";
+  app.modalConstants.ExtendedCost[2911] =
+    "Protector's Mark of Sanctification (id=52029), Sanctified Frost Witch's Handguards (id=51191)";
+  app.modalConstants.ExtendedCost[2912] =
+    "Protector's Mark of Sanctification (id=52029), Sanctified Frost Witch's Headpiece (id=51192)";
+  app.modalConstants.ExtendedCost[2913] =
+    "Protector's Mark of Sanctification (id=52029), Sanctified Frost Witch's Legguards (id=51193)";
+  app.modalConstants.ExtendedCost[2914] =
+    "Protector's Mark of Sanctification (id=52029), Sanctified Frost Witch's Spaulders (id=51194)";
+  app.modalConstants.ExtendedCost[2915] =
+    "Protector's Mark of Sanctification (id=52026), Frost Witch's Chestguard (id=50830)";
+  app.modalConstants.ExtendedCost[2916] =
+    "Protector's Mark of Sanctification (id=52026), Frost Witch's Grips (id=50831)";
+  app.modalConstants.ExtendedCost[2917] =
+    "Protector's Mark of Sanctification (id=52026), Frost Witch's Faceguard (id=50832)";
+  app.modalConstants.ExtendedCost[2918] =
+    "Protector's Mark of Sanctification (id=52026), Frost Witch's War-Kilt (id=50833)";
+  app.modalConstants.ExtendedCost[2919] =
+    "Protector's Mark of Sanctification (id=52026), Frost Witch's Shoulderguards (id=50834)";
+  app.modalConstants.ExtendedCost[2920] =
+    "Protector's Mark of Sanctification (id=52029), Sanctified Frost Witch's Chestguard (id=51195)";
+  app.modalConstants.ExtendedCost[2921] =
+    "Protector's Mark of Sanctification (id=52029), Sanctified Frost Witch's Grips (id=51196)";
+  app.modalConstants.ExtendedCost[2922] =
+    "Protector's Mark of Sanctification (id=52029), Sanctified Frost Witch's Faceguard (id=51197)";
+  app.modalConstants.ExtendedCost[2923] =
+    "Protector's Mark of Sanctification (id=52029), Sanctified Frost Witch's War-Kilt (id=51198)";
+  app.modalConstants.ExtendedCost[2924] =
+    "Protector's Mark of Sanctification (id=52029), Sanctified Frost Witch's War-Kilt (id=51198)";
+  app.modalConstants.ExtendedCost[2925] =
+    "Protector's Mark of Sanctification (id=52026), Frost Witch's Hauberk (id=50841)";
+  app.modalConstants.ExtendedCost[2926] =
+    "Protector's Mark of Sanctification (id=52026), Frost Witch's Gloves (id=50842)";
+  app.modalConstants.ExtendedCost[2927] =
+    "Protector's Mark of Sanctification (id=52026), Frost Witch's Helm (id=50843)";
+  app.modalConstants.ExtendedCost[2928] =
+    "Protector's Mark of Sanctification (id=52026), Frost Witch's Kilt (id=50844)";
+  app.modalConstants.ExtendedCost[2929] =
+    "Protector's Mark of Sanctification (id=52026), Frost Witch's Shoulderpads (id=50845)";
+  app.modalConstants.ExtendedCost[2930] =
+    "Protector's Mark of Sanctification (id=52029), Sanctified Frost Witch's Hauberk (id=51200)";
+  app.modalConstants.ExtendedCost[2931] =
+    "Protector's Mark of Sanctification (id=52029), Sanctified Frost Witch's Gloves (id=51201)";
+  app.modalConstants.ExtendedCost[2932] =
+    "Protector's Mark of Sanctification (id=52029), Sanctified Frost Witch's Helm (id=51202)";
+  app.modalConstants.ExtendedCost[2933] =
+    "Protector's Mark of Sanctification (id=52029), Sanctified Frost Witch's Kilt (id=51203)";
+  app.modalConstants.ExtendedCost[2934] =
+    "Protector's Mark of Sanctification (id=52029), Sanctified Frost Witch's Shoulderpads (id=51204)";
+  app.modalConstants.ExtendedCost[2935] =
+    "Protector's Mark of Sanctification (id=52029), Sanctified Frost Witch's Shoulderguards (id=51199)";
+  app.modalConstants.ExtendedCost[2936] =
+    "55000 honor pts, 1540 arena pts, 1800 arenarank";
   app.modalConstants.ExtendedCost[2937] = "550 arena pts, 2350 arenarank";
   app.modalConstants.ExtendedCost[2938] = "550 arena pts, 2300 arenarank";
   app.modalConstants.ExtendedCost[2939] = "4670 arena pts, 2200 arenarank";
   app.modalConstants.ExtendedCost[2940] = "3950 arena pts, 2200 arenarank";
-  app.modalConstants.ExtendedCost[2941] = "55000 honor pts , 1540 arena pts, 1800 arenarank";
+  app.modalConstants.ExtendedCost[2941] =
+    "55000 honor pts , 1540 arena pts, 1800 arenarank";
   app.modalConstants.ExtendedCost[2942] = "4670 arena pts, 2200 arenarank";
-  app.modalConstants.ExtendedCost[2943] = "38500 honor pts, 1300 arena pts, 1800 arenarank";
+  app.modalConstants.ExtendedCost[2943] =
+    "38500 honor pts, 1300 arena pts, 1800 arenarank";
   app.modalConstants.ExtendedCost[2944] = "3300 arena pts, 2200 arenarank";
-  app.modalConstants.ExtendedCost[2945] = "38500 honor pts, 1090 arena pts, 1800 arenarank";
-  app.modalConstants.ExtendedCost[2946] = "16500 honor pts, 450 arena pts, 1800 arenarank";
+  app.modalConstants.ExtendedCost[2945] =
+    "38500 honor pts, 1090 arena pts, 1800 arenarank";
+  app.modalConstants.ExtendedCost[2946] =
+    "16500 honor pts, 450 arena pts, 1800 arenarank";
   app.modalConstants.ExtendedCost[2947] = "1370 arena pts, 2200 arenarank";
   app.modalConstants.ExtendedCost[2948] = "1930 arena pts, 2000 arenarank";
   app.modalConstants.ExtendedCost[2949] = "2370 arena pts, 1950 arenarank";
@@ -3420,24 +3957,37 @@
   app.modalConstants.ExtendedCost[2967] = "21700 honor pts";
   app.modalConstants.ExtendedCost[2968] = "26100 honor pts";
   app.modalConstants.ExtendedCost[2969] = "12000 honor pts";
-  app.modalConstants.ExtendedCost[2974] = "Ashen Band of Endless Vengeance (id=50402)";
-  app.modalConstants.ExtendedCost[2975] = "Ashen Band of Unmatched Vengeance (id=50401)";
-  app.modalConstants.ExtendedCost[2976] = "Ashen Band of Greater Vengeance (id=50387)";
+  app.modalConstants.ExtendedCost[2974] =
+    "Ashen Band of Endless Vengeance (id=50402)";
+  app.modalConstants.ExtendedCost[2975] =
+    "Ashen Band of Unmatched Vengeance (id=50401)";
+  app.modalConstants.ExtendedCost[2976] =
+    "Ashen Band of Greater Vengeance (id=50387)";
   app.modalConstants.ExtendedCost[2977] = "Ashen Band of Vengeance (id=50376)";
   app.modalConstants.ExtendedCost[2978] = "Ashen Band of Might (id=52569)";
-  app.modalConstants.ExtendedCost[2979] = "Ashen Band of Greater Might (id=52570)";
-  app.modalConstants.ExtendedCost[2980] = "Ashen Band of Unmatched Might (id=52571)";
-  app.modalConstants.ExtendedCost[2981] = "Ashen Band of Endless Might (id=52571)";
-  app.modalConstants.ExtendedCost[2982] = "Ashen Band of Endless Might (id=52572)";
+  app.modalConstants.ExtendedCost[2979] =
+    "Ashen Band of Greater Might (id=52570)";
+  app.modalConstants.ExtendedCost[2980] =
+    "Ashen Band of Unmatched Might (id=52571)";
+  app.modalConstants.ExtendedCost[2981] =
+    "Ashen Band of Endless Might (id=52571)";
+  app.modalConstants.ExtendedCost[2982] =
+    "Ashen Band of Endless Might (id=52572)";
   app.modalConstants.ExtendedCost[2985] = "1 Frozen Orb (id=43102)";
   app.modalConstants.ExtendedCost[2986] = "6 Frozen Orb (id=43102)";
   app.modalConstants.ExtendedCost[2987] = "4 Frozen Orb (id=43102)";
-  app.modalConstants.ExtendedCost[2991] = "1 Isle of Conquest Mark of Honor (id=47395)";
-  app.modalConstants.ExtendedCost[2992] = "1 Strand of the Ancients Mark of Honor (id=42425)";
-  app.modalConstants.ExtendedCost[2993] = "1 Eye of the Storm Mark of Honor (id=29024)";
-  app.modalConstants.ExtendedCost[2994] = "1 Arathi Basin Mark of Honor (id=20559)";
-  app.modalConstants.ExtendedCost[2995] = "1 Alterac Valley Mark of Honor(id=20560)";
-  app.modalConstants.ExtendedCost[2996] = "1 Warsong Gulch Mark of Honor (id=20558)";
+  app.modalConstants.ExtendedCost[2991] =
+    "1 Isle of Conquest Mark of Honor (id=47395)";
+  app.modalConstants.ExtendedCost[2992] =
+    "1 Strand of the Ancients Mark of Honor (id=42425)";
+  app.modalConstants.ExtendedCost[2993] =
+    "1 Eye of the Storm Mark of Honor (id=29024)";
+  app.modalConstants.ExtendedCost[2994] =
+    "1 Arathi Basin Mark of Honor (id=20559)";
+  app.modalConstants.ExtendedCost[2995] =
+    "1 Alterac Valley Mark of Honor(id=20560)";
+  app.modalConstants.ExtendedCost[2996] =
+    "1 Warsong Gulch Mark of Honor (id=20558)";
   app.modalConstants.ExtendedCost[2997] = "22 Emblem of Triumph (id=47241)";
 
   /* bonding constants */
@@ -3521,28 +4071,29 @@
 
   /* item BagFamily constants */
   app.modalConstants.bagFamily = [];
-  app.modalConstants.bagFamily[0] = { id : 0,     name : "None" };
-  app.modalConstants.bagFamily[1] = { id : 1,     name : "Arrows" };
-  app.modalConstants.bagFamily[2] = { id : 2,     name : "Bullets" };
-  app.modalConstants.bagFamily[3] = { id : 4,     name : "Soul Shards" };
-  app.modalConstants.bagFamily[4] = { id : 8,     name : "Leatherworking Supplies" };
-  app.modalConstants.bagFamily[5] = { id : 16,    name : "Inscription Supplies" };
-  app.modalConstants.bagFamily[6] = { id : 32,    name : "Herbs" };
-  app.modalConstants.bagFamily[7] = { id : 64,    name : "Enchanting Supplies" };
-  app.modalConstants.bagFamily[8] = { id : 128,   name : "Engineering Supplies" };
-  app.modalConstants.bagFamily[9] = { id : 256,   name : "Keys" };
-  app.modalConstants.bagFamily[10] = { id : 512,   name : "Gems" };
-  app.modalConstants.bagFamily[11] = { id : 1024,  name : "Mining Supplies" };
-  app.modalConstants.bagFamily[12] = { id : 2048,  name : "Soulbound Equipment" };
-  app.modalConstants.bagFamily[13] = { id : 4096,  name : "Vanity Pets" };
-  app.modalConstants.bagFamily[14] = { id : 8192,  name : "Currency Tokens" };
-  app.modalConstants.bagFamily[15] = { id : 16384, name : "QuestItems" };
+  app.modalConstants.bagFamily[0] = { id: 0, name: "None" };
+  app.modalConstants.bagFamily[1] = { id: 1, name: "Arrows" };
+  app.modalConstants.bagFamily[2] = { id: 2, name: "Bullets" };
+  app.modalConstants.bagFamily[3] = { id: 4, name: "Soul Shards" };
+  app.modalConstants.bagFamily[4] = { id: 8, name: "Leatherworking Supplies" };
+  app.modalConstants.bagFamily[5] = { id: 16, name: "Inscription Supplies" };
+  app.modalConstants.bagFamily[6] = { id: 32, name: "Herbs" };
+  app.modalConstants.bagFamily[7] = { id: 64, name: "Enchanting Supplies" };
+  app.modalConstants.bagFamily[8] = { id: 128, name: "Engineering Supplies" };
+  app.modalConstants.bagFamily[9] = { id: 256, name: "Keys" };
+  app.modalConstants.bagFamily[10] = { id: 512, name: "Gems" };
+  app.modalConstants.bagFamily[11] = { id: 1024, name: "Mining Supplies" };
+  app.modalConstants.bagFamily[12] = { id: 2048, name: "Soulbound Equipment" };
+  app.modalConstants.bagFamily[13] = { id: 4096, name: "Vanity Pets" };
+  app.modalConstants.bagFamily[14] = { id: 8192, name: "Currency Tokens" };
+  app.modalConstants.bagFamily[15] = { id: 16384, name: "QuestItems" };
 
   /* item sheath constants */
   app.modalConstants.sheath = [];
   app.modalConstants.sheath[0] = "NONE";
   app.modalConstants.sheath[1] = "2H Weapon - Accross the back pointing down";
-  app.modalConstants.sheath[2] = "Staff - Diagonally accross the back poiting up";
+  app.modalConstants.sheath[2] =
+    "Staff - Diagonally accross the back poiting up";
   app.modalConstants.sheath[3] = "One Handed - To the side";
   app.modalConstants.sheath[4] = "Shield - On the back in the middle";
   app.modalConstants.sheath[5] = "Enchanter's Rod ";
@@ -3593,9 +4144,12 @@
 
   /* item flags Custom constants */
   app.modalConstants.flagsCustom = [];
-  app.modalConstants.flagsCustom[1] = "DURATION_REAL_TIME (Item duration will tick even if player is offline)";
-  app.modalConstants.flagsCustom[2] = "IGNORE_QUEST_STATUS (No quest status will be checked when this item drops)";
-  app.modalConstants.flagsCustom[4] = "FOLLOW_LOOT_RULES (Item will always follow group/master/need before greed looting rules)";
+  app.modalConstants.flagsCustom[1] =
+    "DURATION_REAL_TIME (Item duration will tick even if player is offline)";
+  app.modalConstants.flagsCustom[2] =
+    "IGNORE_QUEST_STATUS (No quest status will be checked when this item drops)";
+  app.modalConstants.flagsCustom[4] =
+    "FOLLOW_LOOT_RULES (Item will always follow group/master/need before greed looting rules)";
 
   /* spell Trigger constants */
   app.modalConstants.spellTrigger = [];
@@ -3635,7 +4189,7 @@
   app.modalConstants.rank[2] = "Rare Elite";
   app.modalConstants.rank[3] = "Boss";
   app.modalConstants.rank[4] = "Rare";
-  
+
   /* Predefinied Immune */
   app.modalConstants.mechanic_immune_mask = [];
   app.modalConstants.mechanic_immune_mask[2147467263] = "Immune All Boss";
@@ -3643,7 +4197,6 @@
   //app.modalConstants.rank[2] = "Rare Elite";
   //app.modalConstants.rank[3] = "Boss";
   //app.modalConstants.rank[4] = "Rare";
-  
 
   /* trainer type constants */
   app.modalConstants.trainer_type = [];
@@ -3696,5 +4249,4 @@
   app.modalConstants.GameObjectType[33] = "DESTRUCTIBLE_BUILDING";
   app.modalConstants.GameObjectType[34] = "GUILD_BANK";
   app.modalConstants.GameObjectType[35] = "TRAPDOOR (REMOVED?)";
-
-}());
+})();

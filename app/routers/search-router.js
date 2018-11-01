@@ -4,12 +4,12 @@ module.exports = ({ app, controllers }) => {
     const controller = controllers.search;
     
     //Creature
-    app.get('/search/creature/:creature_id', controller.getCreatureByID);
-    app.get('/search/creature/name/:creature_name', controller.getCreatureByName);
+   // app.get('/search/creature/:creature_id', controller.getCreatureByID);
+ //   app.get('/search/creature/name/:creature_name', controller.getCreatureByName);
 
 
     // Quest
-    app.get('/search/quest/:quest_id/:quest_title', controller.getQuestByIdorName);
+    app.get('/search/:search_type/:value1', controller.SearchHandler);
     //Gameobject
     //app.get('/search/gameobject/', controller.getCreaturebyName);
 }
