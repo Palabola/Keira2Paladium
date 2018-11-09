@@ -395,7 +395,25 @@
     };
 
     /* Run AJAX Post SQL Query Detail for Server Side Query Builder */
-    /* TODO: OpenModal at Error!*/
+    $rootScope.POST_Creature_addon_edit = function(creature_entry, Rows) {
+      if (!$rootScope.isEntrySelected()) {
+        return;
+      }
+
+      let json = {};
+
+      json.creature_entry = creature_entry;
+      json.Rows = Rows;
+
+      $http({
+        method: "POST",
+        url: location.origin + "/TC_API/Creature/Creature_addon",
+        data: json,
+        headers: { "Content-Type": "text/plain" }
+      }).success(function(data) {});
+    };
+
+    /* Run AJAX Post SQL Query Detail for Server Side Query Builder */
     $rootScope.POST_DeleteInsert = function(tableName, primaryKeys, Rows) {
       if (!$rootScope.isEntrySelected()) {
         return;

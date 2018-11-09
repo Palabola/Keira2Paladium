@@ -8,6 +8,7 @@
         <option value="1">1 - GAMEOBJECT</option>
         <option value="2">2 - AREATRIGGER</option>
         <option value="9">9 - TIMED_ACTIONLIST</option>
+        <option value="10">10 - SCENE</option>
       </select>
     </div>
   </form>
@@ -106,6 +107,18 @@
     </div>
     <div class="form-group">
       <a href="./#/sai/9/{{ timedActionListId }}"><button class="btn btn-small btn-primary">Go</button></a>
+    </div>
+  </form>
+</div>
+
+<div ng-show="selectedSourceType == 10">
+  <form class="form-inline text-left col-xs-12">
+    <div class="form-group">
+      <label>Scene ID: &nbsp;</label>
+      <input class="form-control" type="text" placeholder="Scene ID" ng-model="sceneId">
+    </div>
+    <div class="form-group">
+      <a href="./#/sai/10/{{ sceneId }}"><button class="btn btn-small btn-primary">Go</button></a>
     </div>
   </form>
 </div>

@@ -1,23 +1,15 @@
 // LOGGER API
-var mysql = require('mysql');
-var settings = require('../settings');
+var mysql = require("mysql");
+var settings = require("../settings");
 
-var connection = mysql.createConnection({
-    host     : settings.host,
-    user     : settings.user,
-    port  : settings.db_port,
-    password : settings.password,
-    database : settings.database,
-    charset  : 'utf8'
+const pool = mysql.createPool({
+  connectionLimit: 20,
+  host: settings.host,
+  user: settings.user,
+  port: settings.db_port,
+  password: settings.password,
+  database: settings.database,
+  charset: "utf8"
 });
 
-connection.connect(function(err) {
-    if (err) throw err;
-});
-
-module.exports = connection;
-
-
-
-
-
+module.exports = pool;

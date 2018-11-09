@@ -12,6 +12,15 @@ module.exports = ({ TC_API }) => {
       );
 
       res.status(200).send("Done");
+    },
+
+    Creature_addon_edit(req, res) {
+      let query_data = JSON.parse(req.body);
+
+      TC_API.Creature_addon_edit(
+        query_data.creature_entry,
+        query_data.Rows
+      ).then(res.status(200).send("Done"));
     }
   };
 };

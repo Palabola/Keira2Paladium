@@ -21,13 +21,13 @@ const globalQueryConfig = {
 /* Save Query history to make it commitable into TC */
 
 /* [Function] getUpdateQuery
-   *  Description: Tracks difference between two row objects and generate UPDATE query
-   *  Inputs:
-   *  - tableName -> the name of the table (example: "creature_template")
-   *  - whereCondition -> the WHERE condition (example: "entry = 30")
-   *  - currentRow -> object of the original table
-   *  - newRow -> object bound with ng-model to view
-   */
+ *  Description: Tracks difference between two row objects and generate UPDATE query
+ *  Inputs:
+ *  - tableName -> the name of the table (example: "creature_template")
+ *  - whereCondition -> the WHERE condition (example: "entry = 30")
+ *  - currentRow -> object of the original table
+ *  - newRow -> object bound with ng-model to view
+ */
 function UpdateQuery(tableName, whereCondition, currentRow, newRow, callback) {
   var key,
     diff = false,
@@ -66,32 +66,70 @@ function UpdateQuery(tableName, whereCondition, currentRow, newRow, callback) {
   }
 }
 
-/* [Function] getDiffDeleteInsert (TWO PRIMARY KEYS)
-   *  Description: Tracks difference between two groups of rows and generate DELETE/INSERT query
-   *  Inputs:
-   *  - tableName -> the name of the table (example: "creature_loot_template")
-   *  - primaryKey1 -> first  primary key (example: "Entry")
-   *  - primaryKey2 -> second primary key (example: "Item")
-   *  - currentRows -> object of the original table   (group of rows)
-   *  - newRows -> object bound with ng-model to view (group of rows)
-   */
-async function DeleteInsertQuery(tableName, primaryKeys, Rows) {
-  console.log(tableName, primaryKeys, Rows);
+function search_creature_addon(creature_id) {
+  const creatureQueryStr =
+    "SELECT * FROM creature_addon WHERE guid IN (SELECT guid from creature where id =" +
+    creature_id +
+    ")";
 
-  await DeleteQuery(tableName, primaryKeys, Rows);
-  await InsterQuery(tableName, primaryKeys, Rows);
+  return new Promise((resolve, reject) => {
+    db.query(creatureQueryStr, (err, rows) =>
+      err ? reject(err) : resolve(rows)
+    );
+  });
 }
 
-async function InsterQuery(tableName, primaryKeys, Rows) {
+async function Creature_addon_edit(creature_entry, Rows) {
   try {
+    await Creature_addon_delete(creature_entry);
+
+    await InsertQuery("creature_addon", Rows);
+
+    return;
+  } catch (e) {}
+}
+
+async function Creature_addon_delete(creature_entry) {
+  try {
+    let clean_up_query =
+      "DELETE FROM creature_addon WHERE guid IN (SELECT guid from creature where id =" +
+      creature_entry +
+      ");";
+
+    db.query(clean_up_query, (err, rows) => {
+      if (!err) return;
+    });
+  } catch (e) {}
+}
+
+async function DeleteInsertQuery(tableName, primaryKeys, Rows) {
+  await DeleteQuery(tableName, primaryKeys, Rows);
+  await InsertQuery(tableName, Rows);
+}
+
+async function InsertQuery(tableName, Rows) {
+  try {
+    let insert_rows = [];
+
+    // Add support to insert single or multi rows
+    if (!Array.isArray(Rows)) {
+      insert_rows[0] = Rows;
+    } else {
+      insert_rows = Rows;
+    }
+
     let query_insert = squel
       .insert()
       .into(tableName)
-      .setFields(Rows)
+      .setFieldsRows(insert_rows)
       .toString();
 
     db.query(query_insert, (err, rows) => {
-      if (!err) return;
+      if (!err) {
+        return;
+      } else {
+        throw err;
+      }
     });
   } catch (e) {}
 }
@@ -154,8 +192,12 @@ function search_spell(spell_id) {
           /** if the wowhead page has been read but no spell name has matches, resolve with null */
           .on("end", () => {
             if (!SPELL_CACHE[spell_id]) {
-              SPELL_CACHE[spell_id] = null;
-              resolve(null);
+              SPELL_CACHE[spell_id] = {
+                id: spell_id,
+                name: ""
+              };
+
+              resolve(SPELL_CACHE[spell_id]);
             }
           })
           /** match a chunk against the regexp, if match succeeds, save the name
@@ -194,23 +236,8 @@ function search_creature(creature_id) {
     "SELECT * FROM creature_template WHERE entry =" + creature_id;
 
   return new Promise((resolve, reject) => {
-    db.query(
-      creatureQueryStr,
-      (err, rows) => (err ? reject(err) : resolve(rows))
-    );
-  });
-}
-
-function search_creature_addon(creature_id) {
-  const creatureQueryStr =
-    "SELECT * FROM creature_addon WHERE guid IN (SELECT guid from creature where id =" +
-    creature_id +
-    ")";
-
-  return new Promise((resolve, reject) => {
-    db.query(
-      creatureQueryStr,
-      (err, rows) => (err ? reject(err) : resolve(rows))
+    db.query(creatureQueryStr, (err, rows) =>
+      err ? reject(err) : resolve(rows)
     );
   });
 }
@@ -228,9 +255,8 @@ function get_object_entitiesbyEntry(entry, table) {
       "SELECT * FROM " + table + " WHERE " + where + " =" + entry;
 
     return new Promise((resolve, reject) => {
-      db.query(
-        creatureQueryStr,
-        (err, rows) => (err ? reject(err) : resolve(rows))
+      db.query(creatureQueryStr, (err, rows) =>
+        err ? reject(err) : resolve(rows)
       );
     });
   } else {
@@ -248,10 +274,8 @@ function search_creature_name(name) {
     pattern = "%" + name + "%";
 
   return new Promise((resolve, reject) => {
-    db.query(
-      queryString,
-      pattern,
-      (err, rows) => (err ? reject(err) : resolve(rows))
+    db.query(queryString, pattern, (err, rows) =>
+      err ? reject(err) : resolve(rows)
     );
   });
 }
@@ -266,10 +290,8 @@ function search_creature_name(name) {
     pattern = "%" + name + "%";
 
   return new Promise((resolve, reject) => {
-    db.query(
-      queryString,
-      pattern,
-      (err, rows) => (err ? reject(err) : resolve(rows))
+    db.query(queryString, pattern, (err, rows) =>
+      err ? reject(err) : resolve(rows)
     );
   });
 }
@@ -285,9 +307,8 @@ function search_quest(quest_id, quest_title) {
     "SELECT * FROM `quest_template` WHERE `ID` = " + quest_id + " LIMIT 1;";
 
   return new Promise((resolve, reject) => {
-    db.query(
-      questQueryString,
-      (err, rows) => (err ? reject(err) : resolve(rows))
+    db.query(questQueryString, (err, rows) =>
+      err ? reject(err) : resolve(rows)
     );
   });
 }
@@ -302,9 +323,8 @@ function search_gameobject(gameobject_id) {
     "SELECT * FROM gameobject_template WHERE entry = " + gameobject_id + ";";
 
   return new Promise((resolve, reject) => {
-    db.query(
-      gameobjectQuery,
-      (err, rows) => (err ? reject(err) : resolve(rows))
+    db.query(gameobjectQuery, (err, rows) =>
+      err ? reject(err) : resolve(rows)
     );
   });
 }
@@ -324,9 +344,8 @@ function search_sai(entry_id, source_type) {
     ";";
 
   return new Promise((resolve, reject) => {
-    db.query(
-      smartSaiQueryString,
-      (err, rows) => (err ? reject(err) : resolve(rows))
+    db.query(smartSaiQueryString, (err, rows) =>
+      err ? reject(err) : resolve(rows)
     );
   });
 }
@@ -359,6 +378,12 @@ function setup_sai(sai_data) {
         break;
       case 9: //TimedActionList
         var db_query = "";
+        break;
+      case 10: //Scene
+        var db_query =
+          "UPDATE `scene_template` SET `ScriptName` = 'SmartScene' WHERE `SceneId` = " +
+          sai_data[0].entryorguid +
+          " ;";
         break;
       default:
         break;
@@ -486,4 +511,5 @@ module.exports.clean_up_sai = clean_up_sai;
 module.exports.search_spell = search_spell;
 module.exports.UpdateQuery = UpdateQuery;
 module.exports.DeleteInsertQuery = DeleteInsertQuery;
+module.exports.Creature_addon_edit = Creature_addon_edit;
 module.exports.get_object_entitiesbyEntry = get_object_entitiesbyEntry;
