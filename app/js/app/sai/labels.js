@@ -217,6 +217,7 @@
   app.saiLabels.action_type.name[128] = "SMART_ACTION_PLAY_ANIMKIT";
   app.saiLabels.action_type.name[129] = "SMART_ACTION_SCENE_PLAY";
   app.saiLabels.action_type.name[130] = "SMART_ACTION_SCENE_CANCEL";
+  app.saiLabels.action_type.name[131] = "SMART_ACTION_START_CONVERSATION";
 
   /* EVENT NAMES */
   app.saiLabels.event_type.name[0] = "UPDATE_IC(Or TimedEvent)";
@@ -832,6 +833,7 @@
   app.saiLabels.action_type.param1[128] = "id";
   app.saiLabels.action_type.param1[129] = "sceneId";
   app.saiLabels.action_type.param1[130] = "sceneId";
+  app.saiLabels.action_type.param1[131] = "Conversation ID";
 
   /* ACTION PARAM2 NAMES */
   app.saiLabels.action_type.param2[1] = "Duration";
@@ -920,6 +922,7 @@
 
   /* ACTION PARAM5 NAMES */
   app.saiLabels.action_type.param5[10] = "Emote id 5";
+  app.saiLabels.action_type.param5[12] = "isPersonnal (0/1)";
   app.saiLabels.action_type.param5[29] = "Credit type (0 / 1)";
   app.saiLabels.action_type.param5[30] = "Phasemask 5";
   app.saiLabels.action_type.param5[53] = "Despawn time after path";
