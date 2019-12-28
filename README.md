@@ -1,3 +1,7 @@
+### News from Keira's authors
+
+- Keira2 is no longer mantained and it has been replaced by [Keira3](https://github.com/azerothcore/Keira3)
+
 # Keira2Paladium
 StandaloneSAIEditor
 
